@@ -4,38 +4,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const cookieBanner = document.getElementById('cookieBanner');
     const cookieAccept = document.getElementById('cookieAccept');
     const cookieDecline = document.getElementById('cookieDecline');
-
     const COOKIE_KEY = 'ts_cookie_consent';
 
     function dismissBanner() {
         cookieBanner?.classList.remove('show');
-        setTimeout(() => {
-            cookieBanner && (cookieBanner.style.display = 'none');
-        }, 600);
+        setTimeout(() => { cookieBanner && (cookieBanner.style.display = 'none'); }, 600);
     }
 
     if (cookieBanner && !localStorage.getItem(COOKIE_KEY)) {
-        // Show after 2 seconds
         setTimeout(() => cookieBanner.classList.add('show'), 2000);
     }
-
-    cookieAccept?.addEventListener('click', () => {
-        localStorage.setItem(COOKIE_KEY, 'accepted');
-        dismissBanner();
-    });
-
-    cookieDecline?.addEventListener('click', () => {
-        localStorage.setItem(COOKIE_KEY, 'essential');
-        dismissBanner();
-    });
+    cookieAccept?.addEventListener('click', () => { localStorage.setItem(COOKIE_KEY, 'accepted'); dismissBanner(); });
+    cookieDecline?.addEventListener('click', () => { localStorage.setItem(COOKIE_KEY, 'essential'); dismissBanner(); });
 
     // ── Scroll reveals ──
     const reveals = document.querySelectorAll('.reveal');
     if (reveals.length) {
         const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) entry.target.classList.add('visible');
-            });
+            entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
         }, { threshold: 0.1 });
         reveals.forEach((el) => observer.observe(el));
     }
@@ -43,28 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Sticky CTA ──
     const stickyCta = document.getElementById('stickyCta');
     if (stickyCta) {
-        window.addEventListener('scroll', () => {
-            stickyCta.classList.toggle('show', window.scrollY > 600);
-        });
+        window.addEventListener('scroll', () => { stickyCta.classList.toggle('show', window.scrollY > 600); });
     }
 
     // ── Nav scroll styling ──
     const nav = document.getElementById('mainNav');
     if (nav) {
-        window.addEventListener('scroll', () => {
-            nav.classList.toggle('scrolled', window.scrollY > 20);
-        });
+        window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
     }
 
     // ── Coming Soon links ──
     document.querySelectorAll('.coming-soon-link').forEach((link) => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            document.getElementById('comingSoon')?.classList.add('active');
-        });
+        link.addEventListener('click', (e) => { e.preventDefault(); document.getElementById('comingSoon')?.classList.add('active'); });
     });
 
-    // ── Exec chart bars ──
+    // ── Exec chart bars (replaced by full dashboard JS below) ──
     const execBars = document.getElementById('execChartBars');
     if (execBars) {
         const heights = [30, 45, 35, 55, 40, 70, 52, 65, 48, 80, 62, 90];
@@ -105,10 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
             closeMobileMenu();
         }
     });
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth > 960) closeMobileMenu();
-    });
+    window.addEventListener('resize', () => { if (window.innerWidth > 960) closeMobileMenu(); });
 
     // ── Smooth scroll ──
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -198,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('resize', () => { currentIndex = 0; buildDots(); goTo(0); });
     }
 
-    // ── Slider duplications ──
+    // ── Partners slider duplication ──
     const partnersTrack = document.getElementById('partnersTrack') || document.querySelector('.partners-track');
     if (partnersTrack && !partnersTrack.dataset.duplicated) {
         partnersTrack.innerHTML += partnersTrack.innerHTML;
@@ -211,6 +187,8 @@ document.addEventListener('DOMContentLoaded', () => {
         teamTrack.dataset.duplicated = 'true';
     }
 
+    // ── Agentic Dashboard Logic ──
+    initAgenticDashboard();
 
     // ────────────────────────────────────────────
     // ── ROBINA — Agentic Chatbot ──
@@ -224,17 +202,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const chatbotMsgs = document.getElementById('chatbotMessages');
     const chatSuggestions = document.getElementById('chatSuggestions');
 
-    // ── Privacy notice dismiss ──
     const privacyNotice = document.getElementById('chatPrivacyNotice');
     const privacyDismiss = document.getElementById('privacyDismiss');
 
     if (privacyDismiss && privacyNotice) {
         privacyDismiss.addEventListener('click', (e) => {
             e.stopPropagation();
-            privacyNotice.style.transition = 'opacity 0.25s ease, max-height 0.32s ease, padding 0.32s ease, border 0.32s ease';
+            privacyNotice.style.transition = 'opacity 0.25s ease, max-height 0.32s ease, padding 0.32s ease';
             privacyNotice.style.overflow = 'hidden';
             privacyNotice.style.maxHeight = privacyNotice.offsetHeight + 'px';
-            // Force reflow so transition fires
             privacyNotice.getBoundingClientRect();
             privacyNotice.style.opacity = '0';
             privacyNotice.style.maxHeight = '0';
@@ -245,68 +221,63 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Intent-based smart replies for Robina
     const robinaBrain = [
         {
             keywords: ['how', 'work', 'process', 'methodology', 'approach'],
-            reply: "Great question! 🤖 I work in two layers: first, we deploy **agentic AI workflows** that automate your operations — procurement, HR, field reporting — running 24/7. Then we pipe all that clean data into a **live executive dashboard** so your leadership sees everything in real time. All on Microsoft tools you already own!"
+            reply: "Great question! 🤖 We work in two layers:\n\n**Layer 1 — Agentic Operations:** We deploy intelligent agents that automate your workflows (procurement, HR, field reporting) 24/7.\n\n**Layer 2 — Executive Intelligence:** Clean data flows into a live dashboard so leadership sees everything in real time.\n\nAll on Microsoft tools you already own — zero new software."
         },
         {
             keywords: ['sector', 'who', 'industry', 'government', 'ngo', 'private'],
-            reply: "We're built for three sectors across Africa 🌍:\n• **Government MDAs** — digital governance, budget reporting, audit-readiness\n• **International NGOs** — donor reporting, grant tracking, beneficiary data\n• **Private Sector** — C-Suite dashboards, month-end automation, field sales reporting\n\nWhich one fits your organisation?"
+            reply: "We serve three sectors across Africa 🌍:\n\n• **Government MDAs** — digital governance, budget reporting, audit-readiness\n• **International NGOs** — donor reporting, grant tracking, beneficiary data\n• **Private Sector** — C-Suite dashboards, automation, field sales\n\nWhich fits your organisation?"
         },
         {
             keywords: ['time', 'timeline', 'quick', 'fast', 'weeks', 'live', 'long'],
-            reply: "We move fast ⚡ — here's the typical journey:\n• **Weeks 1–2:** Discovery & process mapping\n• **Weeks 3–6:** Agent deployment (your first automations go live!)\n• **Weeks 7–10:** Executive dashboard connected\n\nFrom zero to live intelligence in **10 weeks**. No new software needed."
+            reply: "We move fast ⚡\n\n• **Weeks 1–2:** Discovery & process mapping\n• **Weeks 3–6:** First agents go live\n• **Weeks 7–10:** Executive dashboard connected\n\nFrom zero to live intelligence in **10 weeks**. No new software needed."
         },
         {
             keywords: ['price', 'cost', 'pricing', 'fee', 'charge', 'expensive', 'afford'],
-            reply: "Our model is designed so you **don't buy new software** — we build on the Microsoft 365, Azure, and Power Platform licences you already pay for. 💡\n\nPricing depends on the scope of your transformation. The best next step is a **free 45-min discovery call** where we'll map your bottlenecks and give you a clear picture of what's possible. Want me to help you book one?"
+            reply: "You don't buy new software 💡 — we build on Microsoft 365, Azure, and Power Platform licences you already pay for.\n\nPricing depends on your scope. The best next step is a **free 45-min discovery call** — no obligation, just clarity. Want to book one?"
         },
         {
             keywords: ['book', 'call', 'discovery', 'meeting', 'schedule', 'consult', 'appointment'],
-            reply: "Absolutely! 📅 A discovery call is completely free — 45 minutes, no sales pitch, just clarity on what's possible for your organisation.\n\nJust scroll down to the **'Start Here'** section or click below and drop your email — our team will reach out within 24 hours. Want me to scroll you there?"
+            reply: "📅 A discovery call is completely free — 45 minutes, no sales pitch.\n\nScroll to the **'Start Here'** section and drop your email — our team will reach out within 24 hours. Want me to take you there?"
         },
         {
             keywords: ['microsoft', 'power bi', 'copilot', 'azure', 'fabric', 'teams', 'automate', '365'],
-            reply: "We're a certified Microsoft solutions partner 🔵 and we build across the full stack:\n• **Power BI** — live executive dashboards\n• **Power Automate + Copilot Studio** — intelligent workflow agents\n• **Microsoft Fabric + Azure Data** — enterprise data infrastructure\n• **M365 Copilot** — plain-English querying of your data\n\nAll inside your existing Microsoft environment — secured and compliant."
+            reply: "We're a certified Microsoft solutions partner 🔵 building across:\n\n• **Power BI** — live executive dashboards\n• **Power Automate + Copilot Studio** — intelligent agents\n• **Microsoft Fabric + Azure** — enterprise data pipelines\n• **M365 Copilot** — plain-English data queries\n\nAll inside your existing environment."
         },
         {
             keywords: ['agent', 'agentic', 'automation', 'workflow', 'ai', 'intelligent'],
-            reply: "This is where I get excited! 🤩 Our **agentic AI** approach means we don't just build static dashboards — we deploy agents that *act*:\n\n→ Automatically route procurement approvals\n→ Collect field data without manual entry\n→ Generate board reports before leadership even asks\n→ Flag anomalies and escalate in real time\n\nThink of it as hiring a tireless digital operations team that never sleeps."
+            reply: "Our agents *act*, not just report 🤩\n\n→ Route procurement approvals automatically\n→ Collect field data without manual entry\n→ Generate board reports before you ask\n→ Flag anomalies and escalate in real time\n\nThink of it as a tireless digital operations team."
         },
         {
             keywords: ['africa', 'nigeria', 'kenya', 'ghana', 'lagos', 'abuja', 'nairobi'],
-            reply: "We're proudly Made in Nigeria 🇳🇬 and operating across Africa! Our solutions are designed for the realities of African organisations — fragmented data, multi-system environments, WhatsApp-heavy workflows, and the pressure to deliver world-class results with limited resources.\n\nWe understand the context. That's our edge."
+            reply: "Proudly Made in Nigeria 🇳🇬, operating across Africa!\n\nOur solutions are designed for African realities — fragmented data, multi-system environments, WhatsApp-heavy workflows. We understand the context. That's our edge."
         },
         {
-            keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'howdy', 'hiya'],
-            reply: "Hey there! 😊 So glad you stopped by. I'm Robina — I'm here to help you understand how TechSpecialist can transform your organisation's data into a live intelligence system.\n\nWhat's on your mind? Feel free to ask me anything — no question is too basic!"
+            keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'howdy'],
+            reply: "Hey there! 😊 I'm Robina — TechSpecialist's AI assistant.\n\nI can walk you through how we transform your organisation's data into live executive intelligence. What would you like to explore?"
         },
         {
             keywords: ['thank', 'thanks', 'great', 'amazing', 'helpful', 'perfect', 'awesome'],
-            reply: "You're very welcome! 😄 That's what I'm here for. Is there anything else you'd like to explore? I can walk you through how we'd approach your specific sector, the tech stack we use, or help you book that free discovery call!"
+            reply: "You're welcome! 😄 Anything else you'd like to explore? I can walk you through our approach, the tech stack, or help you book a free discovery call!"
         }
     ];
 
     const defaultReplies = [
-        "That's a great question! 🤔 I want to make sure I give you the best answer. Could you tell me a bit more about your organisation — the sector you're in and the challenges you're facing? That way I can point you to exactly the right solution.",
-        "Ooh, I love a curious mind! 😄 I'm still learning everything, but I can tell you that TechSpecialist has helped dozens of African organisations go from data chaos to clarity in just 10 weeks. What aspect interests you most?",
-        "Interesting! Let me think about that... 🤖 What I can tell you is that our approach is built around your Microsoft environment — no new tools, no disruption. Just intelligence layered on top of what you already own. Want me to walk you through how it works?",
-        "Great to hear from you! Here's what I'd suggest — the fastest way to see what's possible for your organisation is a **free 45-minute discovery call**. Our team will map your top 3 bottlenecks and show you exactly what we can automate. No obligation at all!"
+        "Great question! 🤔 Could you tell me a bit more — what sector is your organisation in, and what's your biggest operational challenge right now? That'll help me point you to exactly the right solution.",
+        "Interesting! 🤖 What I can tell you is that our approach builds on your existing Microsoft environment — no new tools, no disruption. Just intelligence layered on what you already own. Want me to walk you through how it works?",
+        "The fastest way to see what's possible is a **free 45-minute discovery call** — we'll map your top 3 bottlenecks and show you what we can automate. No obligation at all. Shall I point you to the booking form?"
     ];
 
     function getSmartReply(message) {
         const lower = message.toLowerCase();
         for (const item of robinaBrain) {
-            if (item.keywords.some(k => lower.includes(k))) {
-                return item.reply;
-            }
+            if (item.keywords.some(k => lower.includes(k))) return item.reply;
         }
         return defaultReplies[Math.floor(Math.random() * defaultReplies.length)];
     }
 
-    // Format **bold** markdown in replies
     function formatMessage(text) {
         return text
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
@@ -315,21 +286,14 @@ document.addEventListener('DOMContentLoaded', () => {
             .replace(/\n/g, '<br>');
     }
 
-    const miniAvatarSVG = `<svg width="16" height="16" viewBox="0 0 80 80" fill="none">
-        <circle cx="40" cy="38" r="28" fill="#d4895a"/>
-        <path d="M14 30 C14 10 66 10 66 30Z" fill="#1a0a00"/>
-        <circle cx="31" cy="37" r="2.8" fill="#2d1a00"/>
-        <circle cx="49" cy="37" r="2.8" fill="#2d1a00"/>
-        <path d="M33 47 Q40 53 47 47" stroke="#c97a5a" stroke-width="2" stroke-linecap="round" fill="none"/>
-        <path d="M20 68 Q40 60 60 68 Q58 80 22 80Z" fill="#4584ED"/>
-    </svg>`;
+    const miniAvatarImg = `<img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7274.jpg_gmfio2.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" alt="Robina">`;
 
     function appendMessage(text, isUser) {
         if (!chatbotMsgs) return;
         const msg = document.createElement('div');
         msg.className = `chat-msg ${isUser ? 'user' : 'bot'}`;
         if (!isUser) {
-            msg.innerHTML = `<div class="chat-msg-avatar">${miniAvatarSVG}</div><div class="chat-bubble">${formatMessage(text)}</div>`;
+            msg.innerHTML = `<div class="chat-msg-avatar">${miniAvatarImg}</div><div class="chat-bubble">${formatMessage(text)}</div>`;
         } else {
             msg.innerHTML = `<div class="chat-bubble">${text}</div>`;
         }
@@ -341,11 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!chatbotMsgs) return null;
         const el = document.createElement('div');
         el.className = 'chat-msg bot typing-indicator-msg';
-        el.innerHTML = `<div class="chat-msg-avatar">${miniAvatarSVG}</div>
+        el.innerHTML = `<div class="chat-msg-avatar">${miniAvatarImg}</div>
             <div class="chat-bubble" style="display:flex;gap:4px;align-items:center;padding:12px 14px;">
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
-                <span class="typing-dot"></span>
+                <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
             </div>`;
         chatbotMsgs.appendChild(el);
         chatbotMsgs.scrollTop = chatbotMsgs.scrollHeight;
@@ -362,12 +324,8 @@ document.addEventListener('DOMContentLoaded', () => {
         appendMessage(text, true);
         const typing = showTyping();
         const reply = getSmartReply(text);
-        // Slight delay variance for realism
         const delay = 700 + Math.random() * 600;
-        setTimeout(() => {
-            typing?.remove();
-            appendMessage(reply, false);
-        }, delay);
+        setTimeout(() => { typing?.remove(); appendMessage(reply, false); }, delay);
     }
 
     function handleSend() {
@@ -377,22 +335,15 @@ document.addEventListener('DOMContentLoaded', () => {
         sendMessage(msg);
     }
 
-    // Exposed globally for inline suggestion buttons
-    window.sendSuggestion = function (btn, text) {
-        btn.disabled = true;
-        sendMessage(text);
-    };
+    window.sendSuggestion = function (btn, text) { btn.disabled = true; sendMessage(text); };
 
     function openChat() {
         chatbotWindow?.classList.add('open');
-        // Remove pulse once opened
         document.querySelector('.chatbot-toggle-pulse')?.remove();
         setTimeout(() => chatbotInput?.focus(), 100);
     }
 
-    function closeChat() {
-        chatbotWindow?.classList.remove('open');
-    }
+    function closeChat() { chatbotWindow?.classList.remove('open'); }
 
     if (chatbotToggle) {
         chatbotToggle.addEventListener('click', (e) => {
@@ -404,17 +355,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if (chatbotClose) chatbotClose.addEventListener('click', (e) => { e.stopPropagation(); closeChat(); });
     if (chatbotSend) chatbotSend.addEventListener('click', handleSend);
     if (chatbotInput) {
-        chatbotInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') { e.preventDefault(); handleSend(); }
-        });
+        chatbotInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); handleSend(); } });
     }
 
-    // Close when clicking outside
     document.addEventListener('click', (e) => {
         const widget = document.getElementById('chatbotWidget');
-        if (widget && chatbotWindow?.classList.contains('open') && !widget.contains(e.target)) {
-            closeChat();
-        }
+        if (widget && chatbotWindow?.classList.contains('open') && !widget.contains(e.target)) closeChat();
     });
 
 });
@@ -423,19 +369,190 @@ document.addEventListener('DOMContentLoaded', () => {
 (function () {
     const s = document.createElement('style');
     s.textContent = `
-        .typing-dot {
-            display: inline-block;
-            width: 7px; height: 7px;
-            border-radius: 50%;
-            background: #9ca3af;
-            animation: robinaTyping 1.2s ease-in-out infinite;
-        }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes robinaTyping {
-            0%, 100% { opacity: 0.3; transform: translateY(0); }
-            50%       { opacity: 1;   transform: translateY(-4px); }
-        }
+        .typing-dot { display:inline-block;width:7px;height:7px;border-radius:50%;background:#9ca3af;animation:robinaTyping 1.2s ease-in-out infinite; }
+        .typing-dot:nth-child(2){animation-delay:0.2s;}
+        .typing-dot:nth-child(3){animation-delay:0.4s;}
+        @keyframes robinaTyping{0%,100%{opacity:0.3;transform:translateY(0);}50%{opacity:1;transform:translateY(-4px);}}
     `;
     document.head.appendChild(s);
 })();
+
+// ── Agentic Dashboard ──
+function initAgenticDashboard() {
+    const canvas = document.getElementById('dashboardChart');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let animFrame;
+    let tick = 0;
+
+    // Live data simulation
+    const liveData = {
+        revenue: [62, 68, 71, 75, 73, 80, 84, 79, 88, 92, 87, 95],
+        ops: [44, 50, 47, 55, 52, 60, 58, 66, 63, 71, 68, 76],
+        labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+    };
+
+    // Live metric counters
+    const metrics = [
+        { id: 'dash-revenue', base: 18, suffix: '%', label: 'Revenue Growth', trend: '+', color: '#22c55e' },
+        { id: 'dash-risk', base: 3, suffix: ' alerts', label: 'Active Alerts', trend: '', color: '#f59e0b' },
+        { id: 'dash-sources', base: 12, suffix: ' live', label: 'Data Sources', trend: '', color: '#4584ed' }
+    ];
+
+    // Animate the canvas chart
+    function drawChart() {
+        const w = canvas.width;
+        const h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        const pts1 = liveData.revenue;
+        const pts2 = liveData.ops;
+        const pad = { l: 8, r: 8, t: 10, b: 20 };
+        const chartW = w - pad.l - pad.r;
+        const chartH = h - pad.t - pad.b;
+        const maxV = 110;
+
+        function xPos(i) { return pad.l + (i / (pts1.length - 1)) * chartW; }
+        function yPos(v) { return pad.t + chartH - (v / maxV) * chartH; }
+
+        // Animated wave offset
+        const waveOffset = Math.sin(tick * 0.015) * 2;
+
+        // Draw grid lines
+        ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+        ctx.lineWidth = 1;
+        for (let i = 0; i <= 4; i++) {
+            const y = pad.t + (i / 4) * chartH;
+            ctx.beginPath(); ctx.moveTo(pad.l, y); ctx.lineTo(w - pad.r, y); ctx.stroke();
+        }
+
+        // Fill area 2 (ops)
+        ctx.beginPath();
+        ctx.moveTo(xPos(0), yPos(pts2[0] + waveOffset));
+        for (let i = 1; i < pts2.length; i++) {
+            const cx1 = xPos(i - 0.5), cy1 = yPos(pts2[i - 1] + waveOffset);
+            const cx2 = xPos(i - 0.5), cy2 = yPos(pts2[i] + waveOffset);
+            ctx.bezierCurveTo(cx1, cy1, cx2, cy2, xPos(i), yPos(pts2[i] + waveOffset));
+        }
+        ctx.lineTo(xPos(pts2.length - 1), h); ctx.lineTo(xPos(0), h); ctx.closePath();
+        const grad2 = ctx.createLinearGradient(0, 0, 0, h);
+        grad2.addColorStop(0, 'rgba(239,101,38,0.18)'); grad2.addColorStop(1, 'rgba(239,101,38,0)');
+        ctx.fillStyle = grad2; ctx.fill();
+
+        // Ops line
+        ctx.beginPath();
+        ctx.moveTo(xPos(0), yPos(pts2[0] + waveOffset));
+        for (let i = 1; i < pts2.length; i++) {
+            const cx1 = xPos(i - 0.5), cy1 = yPos(pts2[i - 1] + waveOffset);
+            const cx2 = xPos(i - 0.5), cy2 = yPos(pts2[i] + waveOffset);
+            ctx.bezierCurveTo(cx1, cy1, cx2, cy2, xPos(i), yPos(pts2[i] + waveOffset));
+        }
+        ctx.strokeStyle = '#ef6526'; ctx.lineWidth = 2; ctx.stroke();
+
+        // Fill area 1 (revenue)
+        ctx.beginPath();
+        ctx.moveTo(xPos(0), yPos(pts1[0] - waveOffset));
+        for (let i = 1; i < pts1.length; i++) {
+            const cx1 = xPos(i - 0.5), cy1 = yPos(pts1[i - 1] - waveOffset);
+            const cx2 = xPos(i - 0.5), cy2 = yPos(pts1[i] - waveOffset);
+            ctx.bezierCurveTo(cx1, cy1, cx2, cy2, xPos(i), yPos(pts1[i] - waveOffset));
+        }
+        ctx.lineTo(xPos(pts1.length - 1), h); ctx.lineTo(xPos(0), h); ctx.closePath();
+        const grad1 = ctx.createLinearGradient(0, 0, 0, h);
+        grad1.addColorStop(0, 'rgba(69,132,237,0.25)'); grad1.addColorStop(1, 'rgba(69,132,237,0)');
+        ctx.fillStyle = grad1; ctx.fill();
+
+        // Revenue line
+        ctx.beginPath();
+        ctx.moveTo(xPos(0), yPos(pts1[0] - waveOffset));
+        for (let i = 1; i < pts1.length; i++) {
+            const cx1 = xPos(i - 0.5), cy1 = yPos(pts1[i - 1] - waveOffset);
+            const cx2 = xPos(i - 0.5), cy2 = yPos(pts1[i] - waveOffset);
+            ctx.bezierCurveTo(cx1, cy1, cx2, cy2, xPos(i), yPos(pts1[i] - waveOffset));
+        }
+        ctx.strokeStyle = '#4584ed'; ctx.lineWidth = 2.5; ctx.stroke();
+
+        // Animated dot on latest revenue point
+        const dotProgress = (Math.sin(tick * 0.05) + 1) / 2;
+        const dotX = xPos(pts1.length - 1);
+        const dotY = yPos(pts1[pts1.length - 1] - waveOffset);
+        ctx.beginPath(); ctx.arc(dotX, dotY, 4 + dotProgress * 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(69,132,237,${0.15 + dotProgress * 0.15})`; ctx.fill();
+        ctx.beginPath(); ctx.arc(dotX, dotY, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#4584ed'; ctx.fill();
+        ctx.beginPath(); ctx.arc(dotX, dotY, 2, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff'; ctx.fill();
+
+        // Month labels
+        ctx.fillStyle = 'rgba(255,255,255,0.35)';
+        ctx.font = '9px Inter, sans-serif';
+        ctx.textAlign = 'center';
+        [0, 3, 6, 9, 11].forEach(i => {
+            ctx.fillText(liveData.labels[i], xPos(i), h - 5);
+        });
+    }
+
+    // Live feed ticker
+    const feedItems = [
+        '⚡ Procurement approval auto-routed — 4 sec',
+        '📊 Q3 variance 12% above threshold — Lagos logistics',
+        '✅ Board report generated — Finance Dept',
+        '🔔 New data source connected — HR System',
+        '💡 Copilot insight: Recommend cost review in Ops',
+        '🔄 Power Automate flow executed — 847 records',
+        '📈 Revenue forecast updated — +18% vs Q2',
+        '⚠️ Anomaly detected — Supply Chain delay flagged'
+    ];
+    let feedIdx = 0;
+
+    function rotateFeed() {
+        const el = document.getElementById('dash-feed-text');
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(-8px)';
+        setTimeout(() => {
+            feedIdx = (feedIdx + 1) % feedItems.length;
+            el.textContent = feedItems[feedIdx];
+            el.style.transition = 'opacity 0.4s ease, transform 0.4s ease';
+            el.style.opacity = '1';
+            el.style.transform = 'translateY(0)';
+        }, 300);
+    }
+
+    // Live number fluctuation
+    function fluctuateMetrics() {
+        const revenueEl = document.getElementById('dash-revenue');
+        if (revenueEl) {
+            const val = 17 + Math.floor(Math.random() * 3);
+            revenueEl.textContent = `+${val}%`;
+        }
+        const sourcesEl = document.getElementById('dash-sources');
+        if (sourcesEl) {
+            const choices = ['12 live', '13 live', '12 live'];
+            sourcesEl.textContent = choices[Math.floor(Math.random() * choices.length)];
+        }
+    }
+
+    // Start animation loop
+    function animate() {
+        tick++;
+        drawChart();
+        animFrame = requestAnimationFrame(animate);
+    }
+
+    animate();
+    setInterval(rotateFeed, 3500);
+    setInterval(fluctuateMetrics, 4000);
+
+    // Resize canvas
+    function resizeCanvas() {
+        const container = canvas.parentElement;
+        if (container) {
+            canvas.width = container.offsetWidth;
+            canvas.height = container.offsetHeight;
+        }
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+}

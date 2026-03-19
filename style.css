@@ -1382,7 +1382,7 @@ nav.scrolled {
     font-weight: 700;
     color: var(--blue);
     letter-spacing: 0.08em;
-    text-transform: uppercase;
+    text-transform:uppercase;
     margin-bottom: 14px;
     background: rgba(69, 132, 237, 0.08);
     padding: 4px 10px;
