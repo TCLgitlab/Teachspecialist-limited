@@ -36,6 +36,19 @@
         padding: 0;
         box-sizing: border-box;
       }
+      body {
+        font-family: "Inter", sans-serif;
+        color: var(--heading);
+        background: #fff;
+        overflow-x: hidden;
+      }
+      *,
+      *::before,
+      *::after {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
       html {
         scroll-behavior: smooth;
       }
@@ -700,41 +713,51 @@
           transform: translateX(4px);
         }
       }
-
-      /* ── HERO STATS ── */
-      .hero-stats {
-        display: flex;
-        gap: 0;
-        margin-top: 36px;
-        animation: fadeUp 0.8s ease 0.4s both;
-      }
-      .hero-stat {
-        flex: 1;
-      }
-      .hero-stat-divider {
-        width: 1px;
-        height: 36px;
-        background: rgba(255, 255, 255, 0.2);
-        margin: 0 24px;
-        align-self: center;
-      }
-      .hero-stat-num {
-        font-size: 28px;
-        font-weight: 800;
-        color: #fff;
-        line-height: 1;
-        letter-spacing: -0.02em;
-      }
-      .hero-stat-num span {
-        color: #60a5fa;
-      }
-      .hero-stat-label {
-        font-size: 11px;
-        color: rgba(255, 255, 255, 0.55);
-        margin-top: 5px;
-        font-weight: 400;
-      }
-
+ /* ════════════════════════════════════════
+       HERO STATS — ALWAYS A ROW
+       Replace the entire .hero-stats block in your CSS with this.
+    ════════════════════════════════════════ */
+    .hero-stats {
+      display: flex;
+      flex-direction: row;         /* always row — never column */
+      align-items: center;
+      gap: 0;
+      flex-wrap: nowrap;           /* never wrap onto two lines */
+      margin-top: 36px;
+    }
+    .hero-stat {
+      flex: 1;
+      min-width: 0;               /* allow text to shrink */
+    }
+    .hero-stat-divider {
+      width: 1px;
+      height: 32px;
+      background: rgba(255,255,255,0.2);
+      margin: 0 18px;
+      align-self: center;
+      flex-shrink: 0;
+    }
+    .hero-stat-num {
+      font-size: clamp(17px, 3.5vw, 28px);   /* scales from 17px → 28px */
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+    }
+    .hero-stat-num span { color: #60a5fa; }
+    .hero-stat-label {
+      font-size: clamp(9px, 1.4vw, 11px);     /* scales from 9px → 11px */
+      color: rgba(255,255,255,0.55);
+      margin-top: 5px;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+    /* Small screens: keep row, just tighten divider margin */
+    @media (max-width: 480px) {
+      .hero-stat-divider { margin: 0 10px; }
+      .hero { padding: 64px 20px 40px; }
+    }
       /* ── PARTNERS ── */
       .partners-section {
         padding: 32px 0;
@@ -869,135 +892,780 @@
         font-weight: 400;
       }
 
-      /* ── EXECUTION GAP / PROBLEM ── */
-      .problem-section {
-        padding: 80px 64px;
+      /* ════════════════════════
+       EXECUTION GAP
+    ════════════════════════ */
+      .problem-section-v2 {
+        padding: 88px 64px;
+        background: #fff;
       }
-      .problem-layout {
+      .problem-inner-v2 {
         max-width: 1280px;
         margin: 0 auto;
+      }
+
+      .problem-header-v2 {
         display: grid;
-        grid-template-columns: 1fr 420px;
-        gap: 64px;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: end;
+        margin-bottom: 52px;
+      }
+      .problem-tag-v2 {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--blue);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .problem-tag-v2::before {
+        content: "";
+        width: 22px;
+        height: 2px;
+        background: var(--blue);
+        border-radius: 2px;
+      }
+      .problem-h2-v2 {
+        font-family: "Syne", "Inter", sans-serif;
+        font-size: clamp(30px, 3.5vw, 46px);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.03em;
+        color: var(--heading);
+      }
+      .problem-h2-v2 em {
+        font-style: normal;
+        color: var(--blue);
+      }
+      .problem-sub-v2 {
+        font-size: 15px;
+        color: var(--body);
+        line-height: 1.75;
+        max-width: 460px;
+        align-self: end;
+      }
+
+      .problem-body-v2 {
+        display: grid;
+        grid-template-columns: 1fr 400px;
+        gap: 40px;
         align-items: start;
       }
-      .problem-grid {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 14px;
-        margin-top: 32px;
+
+      /* Pain items */
+      .pain-list {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
       }
-      .problem-card {
+      .pain-item {
+        display: grid;
+        grid-template-columns: 52px 1fr 28px;
+        align-items: start;
+        gap: 18px;
         background: #fff;
         border: 1px solid var(--border);
-        border-radius: 10px;
-        padding: 22px 20px;
-        box-shadow: var(--shadow-sm);
+        border-radius: 12px;
+        padding: 20px 22px;
+        cursor: pointer;
         transition:
-          transform 0.25s,
-          box-shadow 0.25s,
-          border-color 0.25s;
+          background 0.22s,
+          border-color 0.22s,
+          transform 0.2s,
+          box-shadow 0.22s;
         position: relative;
         overflow: hidden;
       }
-      .problem-card::before {
+      .pain-item::before {
         content: "";
         position: absolute;
-        top: 0;
         left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(90deg, var(--blue), var(--orange));
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.35s ease;
-        border-radius: 10px 10px 0 0;
+        top: 0;
+        bottom: 0;
+        width: 3px;
+        background: linear-gradient(to bottom, var(--blue), var(--orange));
+        opacity: 0;
+        transition: opacity 0.22s;
+        border-radius: 3px 0 0 3px;
       }
-      .problem-card:hover {
-        transform: translateY(-2px);
-        box-shadow: var(--shadow-md);
-        border-color: rgba(69, 132, 237, 0.2);
+      .pain-item:hover,
+      .pain-item.active {
+        background: var(--bg-soft);
+        border-color: rgba(69, 132, 237, 0.22);
+        transform: translateX(3px);
+        box-shadow: var(--shadow-sm);
       }
-      .problem-card:hover::before {
-        transform: scaleX(1);
+      .pain-item:hover::before,
+      .pain-item.active::before {
+        opacity: 1;
       }
-      .problem-rank {
-        font-size: 9px;
-        font-weight: 700;
-        color: var(--body);
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-        margin-bottom: 8px;
-        opacity: 0.7;
+      .pain-num {
+        font-family: "Syne", sans-serif;
+        font-size: 28px;
+        font-weight: 800;
+        color: var(--border);
+        line-height: 1;
+        letter-spacing: -0.04em;
+        padding-top: 2px;
+        transition: color 0.22s;
       }
-      .problem-title {
-        font-size: 14px;
+      .pain-item:hover .pain-num,
+      .pain-item.active .pain-num {
+        color: rgba(69, 132, 237, 0.25);
+      }
+      .pain-title {
+        font-size: 15px;
         font-weight: 700;
         color: var(--heading);
-        margin-bottom: 6px;
-        line-height: 1.3;
+        letter-spacing: -0.01em;
+        padding-top: 4px;
       }
-      .problem-desc {
-        font-size: 12.5px;
+      .pain-desc {
+        font-size: 13px;
         color: var(--body);
-        line-height: 1.6;
+        line-height: 1.65;
+        max-height: 0;
+        overflow: hidden;
+        transition:
+          max-height 0.38s ease,
+          opacity 0.3s ease,
+          margin-top 0.3s ease;
+        opacity: 0;
+        margin-top: 0;
+      }
+      .pain-item.active .pain-desc,
+      .pain-item:hover .pain-desc {
+        max-height: 160px;
+        opacity: 1;
+        margin-top: 6px;
+      }
+      .pain-arrow {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--body);
+        font-size: 10px;
+        flex-shrink: 0;
+        margin-top: 4px;
+        transition:
+          border-color 0.2s,
+          color 0.2s,
+          background 0.2s,
+          transform 0.25s;
+      }
+      .pain-item:hover .pain-arrow,
+      .pain-item.active .pain-arrow {
+        border-color: var(--blue);
+        color: var(--blue);
+        background: rgba(69, 132, 237, 0.06);
+        transform: rotate(45deg);
       }
 
-      /* Problem video — portrait */
-      .problem-video-col {
+      /* Stats strip */
+      .problem-stats-strip {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1px;
+        background: var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        margin-top: 16px;
+        border: 1px solid var(--border);
+      }
+      .pstat {
+        background: var(--bg-soft);
+        padding: 18px 20px;
+        text-align: center;
+        transition: background 0.2s;
+      }
+      .pstat:hover {
+        background: #fff;
+      }
+      .pstat-num {
+        font-family: "Syne", sans-serif;
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--blue);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 4px;
+      }
+      .pstat-label {
+        font-size: 10.5px;
+        color: var(--body);
+        font-weight: 500;
+      }
+
+      /* Video card */
+      .problem-video-v2 {
         position: sticky;
         top: 100px;
       }
-      .video-card {
+      .video-card-v2 {
         background: #fff;
         border: 1px solid var(--border);
-        border-radius: 14px;
+        border-radius: 16px;
         overflow: hidden;
         box-shadow: var(--shadow-md);
       }
-      .video-label {
+      .video-label-v2 {
         padding: 14px 18px 0;
         font-size: 10px;
         font-weight: 700;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.1em;
         text-transform: uppercase;
         color: var(--blue);
       }
-      .video-container {
-        position: relative;
+
+      /* Custom video player */
+      .video-player-wrap {
         margin: 12px;
         border-radius: 10px;
         overflow: hidden;
         background: #000;
+        position: relative;
+        cursor: pointer;
       }
-      .video-container video {
+      .video-player-wrap video {
         width: 100%;
         height: auto;
         display: block;
         border-radius: 10px;
       }
-      .video-quote {
-        padding: 16px 18px 18px;
+      .video-overlay {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        background: rgba(0, 0, 0, 0.2);
+        transition: background 0.22s;
+        z-index: 2;
       }
-      .vq-icon {
-        font-size: 32px;
-        color: var(--blue);
-        line-height: 1;
-        margin-bottom: 4px;
-        font-family: Georgia, serif;
-        opacity: 0.3;
+      .video-overlay.playing {
+        background: transparent;
       }
-      .video-quote p {
+      .video-overlay.playing .play-btn-icon {
+        opacity: 0;
+      }
+      .video-overlay:hover {
+        background: rgba(0, 0, 0, 0.3);
+      }
+      .video-overlay.playing:hover {
+        background: rgba(0, 0, 0, 0.22);
+      }
+      .video-overlay.playing:hover .play-btn-icon {
+        opacity: 1;
+      }
+
+      .play-btn-icon {
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.93);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.38);
+        transition:
+          opacity 0.25s,
+          transform 0.2s;
+      }
+      .video-overlay:hover .play-btn-icon {
+        transform: scale(1.07);
+      }
+      .play-icon-tri {
+        display: block;
+      }
+      .pause-icon-bars {
+        display: none;
+      }
+      .video-overlay.playing .play-icon-tri {
+        display: none;
+      }
+      .video-overlay.playing .pause-icon-bars {
+        display: block;
+      }
+
+      .video-quote-v2 {
+        padding: 14px 18px 18px;
+      }
+      .vq-bar {
+        width: 28px;
+        height: 2px;
+        background: var(--blue);
+        border-radius: 2px;
+        margin-bottom: 10px;
+        opacity: 0.45;
+      }
+      .video-quote-v2 p {
         font-size: 13px;
         color: var(--body);
         line-height: 1.65;
         font-style: italic;
       }
-      .vq-author {
+      .vq-author-v2 {
         font-size: 11px;
         font-weight: 600;
         color: var(--heading);
+        margin-top: 8px;
+      }
+
+      @media (max-width: 960px) {
+        .problem-section-v2 {
+          padding: 64px 24px;
+        }
+        .problem-header-v2 {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .problem-body-v2 {
+          grid-template-columns: 1fr;
+        }
+        .problem-video-v2 {
+          position: static;
+        }
+      }
+      @media (max-width: 600px) {
+        .problem-stats-strip {
+          grid-template-columns: 1fr;
+        }
+        .pain-item {
+          grid-template-columns: 40px 1fr 24px;
+          gap: 12px;
+        }
+      }
+
+      /* ════════════════════════
+       TEAM SECTION
+    ════════════════════════ */
+      .team-section-v2 {
+        padding: 88px 64px;
+        background: var(--bg-soft);
+        border-top: 1px solid var(--border);
+        position: relative;
+        overflow: hidden;
+      }
+      .team-section-v2::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: radial-gradient(
+          circle,
+          rgba(69, 132, 237, 0.055) 1px,
+          transparent 1px
+        );
+        background-size: 28px 28px;
+        pointer-events: none;
+      }
+      .team-inner-v2 {
+        max-width: 1280px;
+        margin: 0 auto;
+        position: relative;
+        z-index: 2;
+      }
+
+      .team-header-v2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: end;
+        margin-bottom: 52px;
+      }
+      .team-tag-v2 {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--blue);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 14px;
+      }
+      .team-tag-v2::before {
+        content: "";
+        width: 22px;
+        height: 2px;
+        background: var(--blue);
+        border-radius: 2px;
+      }
+      .team-h2-v2 {
+        font-family: "Syne", "Inter", sans-serif;
+        font-size: clamp(28px, 3.2vw, 44px);
+        font-weight: 800;
+        line-height: 1.1;
+        letter-spacing: -0.025em;
+        color: var(--heading);
+      }
+      .team-h2-v2 em {
+        font-style: normal;
+        color: var(--blue);
+      }
+      .team-sub-v2 {
+        font-size: 15px;
+        color: var(--body);
+        line-height: 1.75;
+        max-width: 440px;
+        align-self: end;
+      }
+
+      /* Featured 3 */
+      .team-featured-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr;
+        gap: 20px;
+        margin-bottom: 16px;
+      }
+      .team-card-founder {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        display: grid;
+        grid-template-columns: 1.05fr 1fr;
+        transition:
+          transform 0.28s,
+          box-shadow 0.28s,
+          border-color 0.28s;
+      }
+      .team-card-founder:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(69, 132, 237, 0.25);
+      }
+      .founder-photo {
+        overflow: hidden;
+        min-height: 320px;
+      }
+      .founder-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 0.4s ease;
+      }
+      .team-card-founder:hover .founder-photo img {
+        transform: scale(1.04);
+      }
+      .founder-body {
+        padding: 28px 26px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #fff;
+      }
+      .fc-role-tag {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--blue);
+        background: rgba(69, 132, 237, 0.08);
+        border: 1px solid rgba(69, 132, 237, 0.18);
+        padding: 4px 10px;
+        border-radius: 100px;
+        display: inline-block;
+        margin-bottom: 12px;
+      }
+      .fc-name {
+        font-family: "Syne", sans-serif;
+        font-size: 21px;
+        font-weight: 800;
+        color: var(--heading);
+        letter-spacing: -0.02em;
+        margin-bottom: 3px;
+      }
+      .fc-title {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--blue);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        margin-bottom: 14px;
+      }
+      .fc-divider {
+        width: 32px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--blue), var(--orange));
+        border-radius: 2px;
+        margin-bottom: 14px;
+      }
+      .fc-bio {
+        font-size: 13px;
+        color: var(--body);
+        line-height: 1.7;
+      }
+
+      .team-card-large {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        flex-direction: column;
+        transition:
+          transform 0.28s,
+          box-shadow 0.28s,
+          border-color 0.28s;
+      }
+      .team-card-large:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(69, 132, 237, 0.25);
+      }
+      .large-photo {
+        width: 100%;
+        aspect-ratio: 3/4;
+        overflow: hidden;
+      }
+      .large-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 0.4s ease;
+      }
+      .team-card-large:hover .large-photo img {
+        transform: scale(1.04);
+      }
+      .large-body {
+        padding: 18px 20px 20px;
+      }
+      .lc-role {
+        font-size: 9.5px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--blue);
+        margin-bottom: 5px;
+      }
+      .lc-name {
+        font-size: 16px;
+        font-weight: 700;
+        color: var(--heading);
+        letter-spacing: -0.01em;
+      }
+      .lc-divider {
+        width: 24px;
+        height: 2px;
+        background: var(--blue);
+        border-radius: 2px;
         margin-top: 10px;
+        opacity: 0.35;
+      }
+
+      /* Secondary small cards */
+      .team-secondary-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        position: relative;
+      }
+      .team-secondary-row.masked::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 100px;
+        
+      
+      }
+      .team-secondary-row.expanded::after {
+        opacity: 0;
+      }
+
+      .team-card-small {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        transition:
+          transform 0.25s,
+          box-shadow 0.25s,
+          border-color 0.25s;
+      }
+      .team-card-small:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.09);
+        border-color: rgba(69, 132, 237, 0.2);
+      }
+      .team-card-small.hidden {
+        display: none;
+      }
+      .small-photo {
+        width: 100%;
+        aspect-ratio: 3/4;
+        overflow: hidden;
+      }
+      .small-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: top center;
+        transition: transform 0.35s ease;
+      }
+      .team-card-small:hover .small-photo img {
+        transform: scale(1.05);
+      }
+      .small-body {
+        padding: 12px 14px 14px;
+      }
+      .sc-role {
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--blue);
+        margin-bottom: 3px;
+      }
+      .sc-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--heading);
+        line-height: 1.3;
+      }
+      .sc-divider {
+        width: 18px;
+        height: 2px;
+        background: var(--blue);
+        border-radius: 2px;
+        margin-top: 8px;
+        opacity: 0.3;
+      }
+
+      /* Expand button */
+      .team-expand-wrap {
+        text-align: center;
+        margin-top: 36px;
+      }
+      .team-expand-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: var(--navy);
+        color: #fff;
+        border: none;
+        padding: 14px 30px;
+        border-radius: 100px;
+        font-family: "Inter", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        cursor: pointer;
+        transition:
+          background 0.2s,
+          transform 0.15s,
+          box-shadow 0.2s;
+        box-shadow: 0 4px 20px rgba(8, 14, 30, 0.18);
+        position: relative;
+        overflow: hidden;
+      }
+      .team-expand-btn::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          135deg,
+          rgba(69, 132, 237, 0.3) 0%,
+          transparent 60%
+        );
+        opacity: 0;
+        transition: opacity 0.2s;
+      }
+      .team-expand-btn:hover {
+        background: #1a2440;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(8, 14, 30, 0.26);
+      }
+      .team-expand-btn:hover::before {
+        opacity: 1;
+      }
+      .expand-icon {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+        transition:
+          transform 0.3s ease,
+          background 0.2s;
+        flex-shrink: 0;
+      }
+      .team-expand-btn.expanded .expand-icon {
+        transform: rotate(180deg);
+        background: rgba(239, 101, 38, 0.3);
+      }
+      .expand-count {
+        background: rgba(69, 132, 237, 0.2);
+        color: #7eb4ff;
+        font-size: 10px;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 100px;
+        border: 1px solid rgba(69, 132, 237, 0.28);
+      }
+
+      @keyframes fadeInCard {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 1100px) {
+        .team-featured-row {
+          grid-template-columns: 1fr 1fr;
+        }
+        .team-card-founder {
+          grid-column: span 2;
+        }
+        .team-secondary-row {
+          grid-template-columns: repeat(3, 1fr);
+        }
+      }
+      @media (max-width: 768px) {
+        .team-section-v2 {
+          padding: 64px 24px;
+        }
+        .team-header-v2 {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        .team-featured-row {
+          grid-template-columns: 1fr;
+        }
+        .team-card-founder {
+          grid-column: span 1;
+          grid-template-columns: 1fr;
+        }
+        .founder-photo {
+          min-height: 240px;
+          aspect-ratio: 3/2;
+        }
+        .team-secondary-row {
+          grid-template-columns: repeat(2, 1fr);
+        }
       }
 
       /* ── HOW WE WORK ── */
@@ -2817,7 +3485,7 @@
         /></a>
       </div>
       <div class="nav-links" id="navLinks">
-        <a href="#problem">The Execution Gap</a>
+        <a href="#problem">The Pain Points</a>
         <a href="#how">How We Work</a>
         <a href="#cases">Use Cases</a>
         <a href="#our-team">Our Team</a>
@@ -2855,8 +3523,7 @@
       <div class="hero-layout">
         <div class="hero-content">
           <div class="hero-badge">
-            <span class="badge-dot"></span>Agentic AI · Built on Microsoft ·
-            Made for Africa
+            <span class="badge-dot"></span> Redefining Africa's Digital Future with AI
           </div>
           <h1>
             Your leadership<br />should <em>never</em> fly<br /><span
@@ -3040,7 +3707,7 @@
                 alt="ITF"
               />
             </div>
-            
+
             <div class="partner-logo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/t_new/macarthur_foundation_logo_bgu5s4"
@@ -3082,106 +3749,151 @@
       </div>
     </section>
 
-    <!-- EXECUTION GAP -->
-    <section class="problem-section" id="problem">
-      <div class="problem-layout">
-        <div class="problem-cards-col">
-          <div class="section-tag">The Execution Gap</div>
-          <h2 class="section-title reveal">
-            Your data exists.<br /><em>Your leaders can't see it.</em>
-          </h2>
-          <p class="section-body reveal reveal-delay-1" style="font-size: 15px">
+    <!-- The Pain Points -->
+    <section class="problem-section-v2" id="problem">
+      <div class="problem-inner-v2">
+        <div class="problem-header-v2">
+          <div>
+            <div class="problem-tag-v2">The Pain Points</div>
+            <h2 class="problem-h2-v2">
+              Your data exists.<br /><em>Your leaders can't see it.</em>
+            </h2>
+          </div>
+          <p class="problem-sub-v2">
             Most organisations run on 6–12 different systems. Finance in one
             place. HR in another. Operations in spreadsheets. Field reports on
             WhatsApp. By the time someone compiles it all — the decision has
             already been made badly, or not at all.
           </p>
-
-          <div class="problem-grid" style="margin-top: 28px">
-            <div class="problem-card reveal">
-              <div class="problem-rank">Pain #01</div>
-              <div class="problem-title">Data Lives in Silos</div>
-              <div class="problem-desc" id="desc1">
-                Every department runs its own system, its own format, its own
-                version of the truth. Finance, HR, operations, and field teams
-                can't see each other — and neither can leadership.
-              </div>
-              <span
-                class="dropdown-toggle"
-                onclick="toggleDropdown('desc1', this)"
-                >Read more</span
-              >
-            </div>
-            <div class="problem-card reveal reveal-delay-1">
-              <div class="problem-rank">Pain #02</div>
-              <div class="problem-title">Reports Take Weeks to Compile</div>
-              <div class="problem-desc" id="desc2">
-                Board meetings arrive and someone is still pulling Excel files
-                together, chasing department heads on WhatsApp. By the time the
-                report reaches the DG's desk, the data is already stale.
-              </div>
-              <span
-                class="dropdown-toggle"
-                onclick="toggleDropdown('desc2', this)"
-                >Read more</span
-              >
-            </div>
-            <div class="problem-card reveal">
-              <div class="problem-rank">Pain #03</div>
-              <div class="problem-title">Microsoft Licences Sitting Idle</div>
-              <div class="problem-desc" id="desc3">
-                Your organisation already pays for Microsoft 365, Power
-                Platform, and Azure every month — and uses less than 20% of its
-                capability. Power BI. Copilot. Power Automate. All paid for. All
-                untouched.
-              </div>
-              <span
-                class="dropdown-toggle"
-                onclick="toggleDropdown('desc3', this)"
-                >Read more</span
-              >
-            </div>
-            <div class="problem-card reveal reveal-delay-1">
-              <div class="problem-rank">Pain #04</div>
-              <div class="problem-title">
-                Leadership Can't Trust the Numbers
-              </div>
-              <div class="problem-desc" id="desc4">
-                Ask three departments for the same figure and get three
-                different answers. When data is inconsistent and unverified,
-                confident strategic decisions become impossible.
-              </div>
-              <span
-                class="dropdown-toggle"
-                onclick="toggleDropdown('desc4', this)"
-                >Read more</span
-              >
-            </div>
-          </div>
         </div>
 
-        <!-- Portrait video column -->
-        <div class="problem-video-col reveal reveal-delay-2">
-          <div class="video-card">
-            <div class="video-label">Founder's Story</div>
-            <div class="video-container">
-              <video
-                src="https://res.cloudinary.com/daqmbfctv/video/upload/v1772185357/1772185333283.publer.com_slnguv.mp4"
-                poster="https://res.cloudinary.com/daqmbfctv/image/upload/v1772185357/1772185333283.publer.com_slnguv.jpg"
-                controls
-                preload="metadata"
-              >
-                Your browser does not support the video tag.
-              </video>
+        <div class="problem-body-v2">
+          <div class="pain-list">
+            <div class="pain-item active">
+              <div class="pain-num">01</div>
+              <div class="pain-content">
+                <div class="pain-title">Data Lives in Silos</div>
+                <div class="pain-desc">
+                  Every department runs its own system, its own format, its own
+                  version of the truth. Finance, HR, operations, and field teams
+                  can't see each other — and neither can leadership.
+                </div>
+              </div>
+              <div class="pain-arrow">↗</div>
             </div>
-            <div class="video-quote">
-              <div class="vq-icon">"</div>
-              <p>
-                We built TechSpecialist because African organisations deserve
-                the same intelligence infrastructure as the world's best-run
-                companies — using tools they already own.
-              </p>
-              <div class="vq-author">— Kadir Salami, Founder & CEO</div>
+            <div class="pain-item">
+              <div class="pain-num">02</div>
+              <div class="pain-content">
+                <div class="pain-title">Reports Take Weeks to Compile</div>
+                <div class="pain-desc">
+                  Board meetings arrive and someone is still pulling Excel files
+                  together, chasing department heads on WhatsApp. By the time
+                  the report reaches the DG's desk, the data is already stale.
+                </div>
+              </div>
+              <div class="pain-arrow">↗</div>
+            </div>
+            <div class="pain-item">
+              <div class="pain-num">03</div>
+              <div class="pain-content">
+                <div class="pain-title">Microsoft Licences Sitting Idle</div>
+                <div class="pain-desc">
+                  Your organisation already pays for Microsoft 365, Power
+                  Platform, and Azure every month — and uses less than 20% of
+                  its capability. Power BI. Copilot. Power Automate. All paid
+                  for. All untouched.
+                </div>
+              </div>
+              <div class="pain-arrow">↗</div>
+            </div>
+            <div class="pain-item">
+              <div class="pain-num">04</div>
+              <div class="pain-content">
+                <div class="pain-title">Leadership Can't Trust the Numbers</div>
+                <div class="pain-desc">
+                  Ask three departments for the same figure and get three
+                  different answers. When data is inconsistent and unverified,
+                  confident strategic decisions become impossible.
+                </div>
+              </div>
+              <div class="pain-arrow">↗</div>
+            </div>
+
+            <div class="problem-stats-strip">
+              <div class="pstat">
+                <div class="pstat-num">80%</div>
+                <div class="pstat-label">Manual data entry eliminated</div>
+              </div>
+              <div class="pstat">
+                <div class="pstat-num">10×</div>
+                <div class="pstat-label">Faster board reporting</div>
+              </div>
+              <div class="pstat">
+                <div class="pstat-num">₦0</div>
+                <div class="pstat-label">New software to buy</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Video column -->
+          <div class="problem-video-v2">
+            <div class="video-card-v2">
+              <div class="video-label-v2">Founder's Story</div>
+              <div class="video-player-wrap" id="videoWrap">
+                <video
+                  id="founderVideo"
+                  src="https://res.cloudinary.com/daqmbfctv/video/upload/v1772185357/1772185333283.publer.com_slnguv.mp4"
+                  poster="https://res.cloudinary.com/daqmbfctv/image/upload/v1772185357/1772185333283.publer.com_slnguv.jpg"
+                  preload="metadata"
+                  playsinline
+                ></video>
+                <div class="video-overlay" id="videoOverlay">
+                  <div class="play-btn-icon">
+                    <svg
+                      class="play-icon-tri"
+                      width="26"
+                      height="28"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <polygon points="7,3 21,12 7,21" fill="#1e293b" />
+                    </svg>
+                    <svg
+                      class="pause-icon-bars"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                    >
+                      <rect
+                        x="5"
+                        y="4"
+                        width="4"
+                        height="16"
+                        rx="1.5"
+                        fill="#1e293b"
+                      />
+                      <rect
+                        x="15"
+                        y="4"
+                        width="4"
+                        height="16"
+                        rx="1.5"
+                        fill="#1e293b"
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="video-quote-v2">
+                <div class="vq-bar"></div>
+                <p>
+                  "We built TechSpecialist because African organisations deserve
+                  the same intelligence infrastructure as the world's best-run
+                  companies — using tools they already own."
+                </p>
+                <!-- <div class="vq-author-v2">— Kadir Salami, Founder & CEO</div> -->
+              </div>
             </div>
           </div>
         </div>
@@ -3402,8 +4114,7 @@
       </div>
       <div class="outcomes-grid">
         <div class="outcome reveal">
-          <span class="outcome-icon"></span
-          ><span class="outcome-num">10×</span>
+          <span class="outcome-icon"></span><span class="outcome-num">10×</span>
           <div class="outcome-label">Faster Board Reporting</div>
           <div class="outcome-desc">
             From 3-week manual compilation to automated reports generated on
@@ -3411,8 +4122,7 @@
           </div>
         </div>
         <div class="outcome reveal reveal-delay-1">
-          <span class="outcome-icon"></span
-          ><span class="outcome-num">80%</span>
+          <span class="outcome-icon"></span><span class="outcome-num">80%</span>
           <div class="outcome-label">Reduction in Manual Data Entry</div>
           <div class="outcome-desc">
             Agents handle the repetitive capture. Your team focuses on work
@@ -3428,8 +4138,7 @@
           </div>
         </div>
         <div class="outcome reveal">
-          <span class="outcome-icon"></span
-          ><span class="outcome-num">6wk</span>
+          <span class="outcome-icon"></span><span class="outcome-num">6wk</span>
           <div class="outcome-label">First Workflow Automated</div>
           <div class="outcome-desc">
             From discovery to first live agent — six weeks. You see results
@@ -3589,92 +4298,44 @@
         <div class="msft-tiles">
           <div class="msft-tile reveal">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 23 23">
-                <rect x="1" y="1" width="10" height="10" fill="#f25022" />
-                <rect x="12" y="1" width="10" height="10" fill="#7fba00" />
-                <rect x="1" y="12" width="10" height="10" fill="#00a4ef" />
-                <rect x="12" y="12" width="10" height="10" fill="#ffb900" />
+              <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269850/microsoft_365_icon_p8pvxv.png" alt="">
               </svg>
             </div>
             <div class="msft-tile-name">Microsoft 365</div>
           </div>
           <div class="msft-tile reveal reveal-delay-1">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" fill="#0078D4" />
-                <path
-                  d="M7 12l3 3 7-7"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
+             <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269850/Power_Automate_icon_kjnhlq.png" alt="">
             </div>
             <div class="msft-tile-name">Power Automate</div>
           </div>
           <div class="msft-tile reveal reveal-delay-2">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#107C41" />
-                <path
-                  d="M12 4l6 4v8l-6 4-6-4V8z"
-                  stroke="white"
-                  stroke-width="1.5"
-                />
-              </svg>
+            <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269850/Copilot_Studio_icon_n7tkby.jpg" alt="">
             </div>
             <div class="msft-tile-name">Copilot Studio</div>
           </div>
           <div class="msft-tile reveal">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#F2C811" />
-                <path
-                  d="M4 16l4-8 4 5 3-3 5 6"
-                  stroke="#1A1A2E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
+             <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269850/power-bi-icon_wczztj.webp" alt="">
             </div>
             <div class="msft-tile-name">Power BI</div>
           </div>
           <div class="msft-tile reveal reveal-delay-1">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#0078D4" />
-                <path
-                  d="M12 4v16M4 12h16"
-                  stroke="white"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg>
+             <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269852/Microsoft_Azure.svg_dv1bj1.png" alt="">
             </div>
             <div class="msft-tile-name">Azure Data</div>
           </div>
           <div class="msft-tile reveal reveal-delay-2">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#5C2D91" />
-                <circle cx="12" cy="12" r="5" stroke="white" stroke-width="2" />
-                <circle cx="12" cy="12" r="2" fill="white" />
-              </svg>
+             <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269850/Microsoft_Fabric_icon_u5tekn.jpg" alt="">
             </div>
             <div class="msft-tile-name">Microsoft Fabric</div>
           </div>
           <div class="msft-tile reveal">
             <div class="msft-tile-icon">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-                <rect width="24" height="24" rx="4" fill="#0078D4" />
-                <path
-                  d="M6 12s1-4 6-4 6 4 6 4-1 4-6 4-6-4-6-4z"
-                  stroke="white"
-                  stroke-width="1.5"
-                />
-                <circle cx="12" cy="12" r="2" fill="white" />
-              </svg>
+             <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1774269851/M365_Copilot_icon_wk1td8.png" alt="">
             </div>
             <div class="msft-tile-name">M365 Copilot</div>
           </div>
@@ -3682,148 +4343,154 @@
       </div>
     </section>
 
-    <!-- TEAM SECTION -->
-    <section class="team-section" id="our-team">
-      <div class="team-section-inner">
-        <div class="team-header">
+    <!-- TEAM -->
+    <section class="team-section-v2" id="our-team">
+      <div class="team-inner-v2">
+        <div class="team-header-v2">
           <div>
-            <div class="section-tag">Our Team</div>
-            <h2 class="section-title reveal">
+            <div class="team-tag-v2">Our Team</div>
+            <!-- <h2 class="team-h2-v2">
               The people behind<br />your <em>transformation.</em>
-            </h2>
+            </h2> -->
           </div>
-          <p class="section-body reveal reveal-delay-1" style="font-size: 15px">
+          <!-- <p class="team-sub-v2">
             A tight-knit team of Microsoft-certified engineers, data architects,
             and transformation specialists — built specifically for Africa's
             most complex organisations.
-          </p>
+          </p> -->
         </div>
 
-        <div class="team-grid">
-          <!-- Featured: Founder -->
-          <div class="team-card-new team-card-featured reveal">
-            <div class="team-card-photo">
+        <!-- Featured 3 -->
+        <div class="team-featured-row">
+          <div class="team-card-founder">
+            <div class="founder-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7478_1.jpg_p7ahff.jpg"
                 alt="Kadir Salami"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Kadir Salami</div>
-              <div class="team-card-role">Founder & CEO</div>
-              <div class="team-card-divider"></div>
-              <div class="team-card-bio">
+            <div class="founder-body">
+              <div class="fc-role-tag">Founder</div>
+              <div class="fc-name">Kadir Salami</div>
+              <div class="fc-title">CEO & Founder</div>
+              <div class="fc-divider"></div>
+              <div class="fc-bio">
                 Kadir built TechSpecialist on the conviction that African
                 organisations deserve world-class intelligence infrastructure —
-                powered by tools they already own. With a decade of Microsoft
-                solutions experience, he leads the firm's transformation vision
-                across government, NGOs, and private sector.
+                powered by tools they already own. A decade of Microsoft
+                solutions experience across government, NGOs, and private
+                sector.
               </div>
             </div>
           </div>
-
-          <!-- Team members -->
-          <div class="team-card-new reveal reveal-delay-1">
-            <div class="team-card-photo">
-              <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2931,w_3148/TBS_7279.jpg_iwkhrb.jpg"
-                alt="Suleman Olalomi"
+          <div class="team-card-large">
+            <div class="large-photo">
+                <img
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_1064,w_1024,y_56/e_brightness:10/e_vibrance:23/e_saturation:17/e_contrast:level_10;type_sigmoidal/e_improve:outdoor:33/e_sharpen:678/ChatGPT_Image_Mar_23_2026_12_32_54_PM_gdcoow.png"
+                alt="Oluwagbolahan Aina"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Suleman Olalomi</div>
-              <div class="team-card-role">Project Manager</div>
-              <div class="team-card-divider"></div>
+            <div class="large-body">
+              <div class="sc-role">Client Technology Specialist</div>
+              <div class="sc-name">Oluwagbolahan Aina</div>
+              <div class="lc-divider"></div>
             </div>
           </div>
-
-          <div class="team-card-new reveal reveal-delay-2">
-            <div class="team-card-photo">
+          <div class="team-card-large">
+            <div class="large-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773841034/team8_yingf2.png"
                 alt="Zainab Sanni"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Zainab Sanni</div>
-              <div class="team-card-role">
-                Lead, Technical Services & InfoSec
-              </div>
-              <div class="team-card-divider"></div>
+            <div class="large-body">
+              <div class="lc-role">Head of Technical Services & Information Security</div>
+              <div class="lc-name">Zainab Sanni</div>
+              <div class="lc-divider"></div>
             </div>
           </div>
-          <div class="team-card-new reveal reveal-delay-2">
-            <div class="team-card-photo">
-              <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_390,w_429,y_28/e_brightness:2/e_contrast:level_1;type_sigmoidal/e_saturation:2/e_vibrance:2/e_improve:outdoor:3/e_sharpen:15/e_gamma:1/WhatsApp_Image_2026-03-18_at_14.41.00-removebg-preview_jzvp9r.png"
-                alt="Zainab Sanni"
+        </div>
+
+        <!-- Secondary 4 visible, extras hidden -->
+        <div class="team-secondary-row masked" id="teamSecondaryRow">
+          <div class="team-card-small">
+            <div class="small-photo">
+            <img
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2931,w_3148/TBS_7279.jpg_iwkhrb.jpg"
+                alt="Suleman Olalomi"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Oluwagbolahan Aina</div>
-              <div class="team-card-role">
-                Lead, Technical Services & InfoSec
-              </div>
-              <div class="team-card-divider"></div>
+            <div class="small-body">
+               <div class="lc-role">Project Management</div>
+              <div class="lc-name">Suleman Olalomi</div>
+              <div class="sc-divider"></div>
             </div>
           </div>
-
-           <div class="team-card-new reveal">
-            <div class="team-card-photo">
+          <div class="team-card-small">
+            <div class="small-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2930,w_3106/TBS_7248.jpg_ipltwe.jpg"
                 alt="Joy Adah"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Joy Adah</div>
-              <div class="team-card-role">Operations & Admin</div>
-              <div class="team-card-divider"></div>
+            <div class="small-body">
+              <div class="sc-role">People & Culture Manager </div>
+              <div class="sc-name">Joy Adah</div>
+              <div class="sc-divider"></div>
             </div>
           </div>
-
-            <div class="team-card-new reveal reveal-delay-2">
-            <div class="team-card-photo">
+          <div class="team-card-small">
+            <div class="small-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2931,w_3141/TBS_7297.jpg_myh9kb.jpg"
                 alt="Charles Onyeso"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Charles Onyeso</div>
-              <div class="team-card-role">IT Support Technician</div>
-              <div class="team-card-divider"></div>
+            <div class="small-body">
+              <div class="sc-role">Microsoft 365 Solutions Engineer</div>
+              <div class="sc-name">Charles Onyeso</div>
+              <div class="sc-divider"></div>
             </div>
           </div>
-          
-
-          <div class="team-card-new reveal">
-            <div class="team-card-photo">
+          <div class="team-card-small">
+            <div class="small-photo">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2932,w_3148/TBS_7307.jpg_bmhshv.jpg"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_1064,w_1024,y_56/e_brightness:10/e_vibrance:23/e_saturation:17/e_contrast:level_10;type_sigmoidal/e_improve:outdoor:33/e_sharpen:678/tobe_twnd5m.png"
                 alt="Praise Jacob"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Praise Jacob</div>
-              <div class="team-card-role">Business Development Manager</div>
-              <div class="team-card-divider"></div>
+            <div class="small-body">
+              <div class="sc-role">Growth Specialist</div>
+              <div class="sc-name">Praise Jacob</div>
+              <div class="sc-divider"></div>
             </div>
           </div>
-
-          <div class="team-card-new reveal reveal-delay-1">
-            <div class="team-card-photo">
+          <!-- Hidden extras -->
+          <div class="team-card-small hidden" data-extra="true">
+            <div class="small-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2675,w_2696/TBS_7274.jpg_gmfio2.jpg"
                 alt="Robinah Abdulaziz"
               />
             </div>
-            <div class="team-card-body">
-              <div class="team-card-name">Robinah Abdulaziz</div>
-              <div class="team-card-role">Marketing & Communications</div>
-              <div class="team-card-divider"></div>
+            <div class="small-body">
+              <div class="sc-role">Marketing & Communications Associate</div>
+              <div class="sc-name">Robinah Abdulaziz</div>
+              <div class="sc-divider"></div>
             </div>
           </div>
+        </div>
+
+        <div class="team-expand-wrap" id="teamExpandWrap">
+          <button
+            class="team-expand-btn"
+            id="teamExpandBtn"
+            onclick="toggleTeam()"
+          >
+            <span class="expand-icon">▾</span>
+            <span id="expandLabel">Meet the Full Crew</span>
+            <span class="expand-count" id="expandCount">+1 more</span>
+          </button>
         </div>
       </div>
     </section>

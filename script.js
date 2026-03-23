@@ -556,3 +556,60 @@ function initAgenticDashboard() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 }
+
+  /* Pain item hover */
+  document.querySelectorAll('.pain-item').forEach(item => {
+    item.addEventListener('mouseenter', () => {
+      document.querySelectorAll('.pain-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+    });
+  });
+ 
+  /* ── Custom video player ── */
+  const video   = document.getElementById('founderVideo');
+  const overlay = document.getElementById('videoOverlay');
+ 
+  function playVid()  { video.play();  overlay.classList.add('playing'); }
+  function pauseVid() { video.pause(); overlay.classList.remove('playing'); }
+ 
+  overlay.addEventListener('click', () => video.paused ? playVid() : pauseVid());
+  video.addEventListener('ended', () => overlay.classList.remove('playing'));
+ 
+  /* Auto-pause when the problem section scrolls out of view */
+  const problemSection = document.getElementById('problem');
+  new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting && !video.paused) pauseVid();
+    });
+  }, { threshold: 0.08 }).observe(problemSection);
+ 
+  /* ── Team expand ── */
+  function toggleTeam() {
+    const btn    = document.getElementById('teamExpandBtn');
+    const row    = document.getElementById('teamSecondaryRow');
+    const label  = document.getElementById('expandLabel');
+    const count  = document.getElementById('expandCount');
+    const extras = document.querySelectorAll('.team-card-small[data-extra="true"]');
+    const open   = btn.classList.contains('expanded');
+ 
+    if (!open) {
+      extras.forEach((c, i) => { c.classList.remove('hidden'); c.style.animation = `fadeInCard 0.4s ease ${i * 0.08}s both`; });
+      row.classList.replace('masked','expanded') || (row.classList.remove('masked'), row.classList.add('expanded'));
+      btn.classList.add('expanded');
+      label.textContent = 'Showing the Full Crew';
+      count.textContent = 'Collapse ↑';
+    } else {
+      extras.forEach(c => c.classList.add('hidden'));
+      row.classList.replace('expanded','masked') || (row.classList.remove('expanded'), row.classList.add('masked'));
+      btn.classList.remove('expanded');
+      label.textContent = 'Meet the Full Crew';
+      count.textContent = '+' + extras.length + ' more';
+    }
+  }
+ 
+  document.addEventListener('DOMContentLoaded', () => {
+    const extras = document.querySelectorAll('.team-card-small[data-extra="true"]');
+    const el = document.getElementById('expandCount');
+    if (el) el.textContent = '+' + extras.length + ' more';
+    if (extras.length === 0) document.getElementById('teamExpandWrap').style.display = 'none';
+  });
