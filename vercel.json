@@ -1,6 +1,6 @@
 {
-  "redirects": [
-    { "source": "/services", "destination": "/services.html" },
-    { "source": "/home", "destination": "/index.html" }
+  "rewrites": [
+    { "source": "/home", "destination": "/index.html" },
+    { "source": "/services", "destination": "/services.html" }
   ]
 }
