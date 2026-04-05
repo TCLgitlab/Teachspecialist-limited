@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/services", "destination": "/services.html" },
+    { "source": "/home", "destination": "/index.html" }
+  ]
+}
