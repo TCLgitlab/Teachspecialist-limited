@@ -7,10 +7,15 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="preconnect" href="https://cdn.botframework.com" />
+  <link rel="preconnect" href="https://res.cloudinary.com" />
+  <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* ── DESIGN SYSTEM ── */
@@ -2310,375 +2315,9 @@
         margin-top: 12px;
       }
 
-      /* ========== TECHSPECIALIST COPILOT WIDGET ========== */
 
-.ts-chat-widget {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 1000;
-  font-family: "Inter", sans-serif;
-}
-
-.ts-chat-panel {
-  position: absolute;
-  right: 0;
-  bottom: 80px;
-  width: 380px;
-  height: 500px;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 
-    0 25px 50px -12px rgba(0, 0, 0, 0.25),
-    0 0 0 1px rgba(0, 0, 0, 0.05);
-  display: none;
-  flex-direction: column;
-  overflow: hidden;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transform-origin: bottom right;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.ts-chat-panel.open {
-  display: flex;
-  animation: chatSlideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes chatSlideIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9) translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-.ts-chat-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 16px 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #ffffff;
-  border-radius: 20px 20px 0 0;
-  position: relative;
-  overflow: hidden;
-}
-
-.ts-chat-header::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%);
-  pointer-events: none;
-}
-
-.ts-chat-header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  min-width: 0;
-}
-
-.ts-chat-avatar-wrap {
-  position: relative;
-  flex-shrink: 0;
-}
-
-.ts-chat-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: transform 0.2s ease;
-}
-
-.ts-chat-avatar:hover {
-  transform: scale(1.05);
-}
-
-.ts-chat-status {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #4ade80;
-  border: 2px solid #ffffff;
-  animation: pulse 2s infinite;
-}
-
-@keyframes pulse {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-.ts-chat-meta {
-  min-width: 0;
-}
-
-.ts-chat-name {
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: 2px;
-}
-
-.ts-chat-role {
-  font-size: 11px;
-  line-height: 1.35;
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-.ts-chat-close {
-  width: 32px;
-  height: 32px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  color: #ffffff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
-  position: relative;
-  z-index: 1;
-}
-
-.ts-chat-close:hover {
-  background: rgba(255, 255, 255, 0.25);
-  transform: scale(1.1);
-}
-
-.ts-chat-body {
-  flex: 1;
-  min-height: 0;
-  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
-  position: relative;
-  overflow: hidden;
-}
-
-.ts-chat-iframe {
-  width: 100%;
-  height: 100%;
-  border: 0;
-  background: transparent;
-}
-
-.ts-chat-footer {
-  padding: 12px 16px;
-  text-align: center;
-  font-size: 10px;
-  color: #64748b;
-  background: #ffffff;
-  border-top: 1px solid #f1f5f9;
-  font-weight: 500;
-}
-
-.ts-chat-toggle {
-  position: relative;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: #ffffff;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 
-    0 8px 25px rgba(102, 126, 234, 0.4),
-    0 0 0 1px rgba(255, 255, 255, 0.1);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-}
-
-.ts-chat-toggle::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 50%);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.ts-chat-toggle:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 
-    0 12px 35px rgba(102, 126, 234, 0.5),
-    0 0 0 1px rgba(255, 255, 255, 0.2);
-}
-
-.ts-chat-toggle:hover::before {
-  opacity: 1;
-}
-
-.ts-chat-toggle:active {
-  transform: translateY(-1px) scale(1.02);
-}
-
-.ts-chat-toggle-avatar {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  flex-shrink: 0;
-  transition: transform 0.2s ease;
-}
-
-.ts-chat-toggle:hover .ts-chat-toggle-avatar {
-  transform: scale(1.1);
-}
-
-.ts-chat-toggle-text {
-  display: none;
-}
-
-.ts-chat-toggle-ping {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
-  animation: ping 2s infinite;
-  border: 2px solid #ffffff;
-}
-
-@keyframes ping {
-  0% {
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 10px rgba(74, 222, 128, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(74, 222, 128, 0);
-  }
-}
-
-/* Compact mode for smaller screens */
-@media (max-width: 480px) {
-  .ts-chat-widget {
-    right: 16px;
-    bottom: 16px;
-  }
-
-  .ts-chat-panel {
-    width: calc(100vw - 32px);
-    height: 70vh;
-    max-height: 600px;
-    right: -10px;
-    bottom: 76px;
-    border-radius: 20px 20px 0 0;
-  }
-
-  .ts-chat-toggle {
-    width: 56px;
-    height: 56px;
-  }
-
-  .ts-chat-toggle-avatar {
-    width: 32px;
-    height: 32px;
-  }
-
-  .ts-chat-header {
-    padding: 14px 16px;
-  }
-
-  .ts-chat-avatar {
-    width: 36px;
-    height: 36px;
-  }
-
-  .ts-chat-name {
-    font-size: 14px;
-  }
-
-  .ts-chat-role {
-    font-size: 10px;
-  }
-
-  .ts-chat-footer {
-    padding: 12px;
-  }
-}
-
-/* Tablet adjustments */
-@media (min-width: 481px) and (max-width: 768px) {
-  .ts-chat-panel {
-    width: 340px;
-    height: 520px;
-  }
-}
-
-/* Large desktop optimizations */
-@media (min-width: 1200px) {
-  .ts-chat-panel {
-    width: 400px;
-    height: 550px;
-  }
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .ts-chat-panel {
-    background: #1e293b;
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .ts-chat-body {
-    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
-  }
-
-  .ts-chat-footer {
-    background: #0f172a;
-    color: #94a3b8;
-    border-color: #334155;
-  }
-}
-
-/* Reduced motion support */
-@media (prefers-reduced-motion: reduce) {
-  .ts-chat-panel,
-  .ts-chat-toggle,
-  .ts-chat-avatar,
-  .ts-chat-status,
-  .ts-chat-toggle-ping {
-    animation: none;
-    transition: none;
-  }
-
-  .ts-chat-toggle:hover {
-    transform: none;
-  }
-}
+  /* ========== END OF TECHSPECIALIST COPILOT WIDGET ========== */
+  /* ========== END OF TECHSPECIALIST COPILOT WIDGET ========== */
 
       /* ── CTA SECTION ── */
       .cta-section {
@@ -4430,58 +4069,194 @@
     </section>
 
     <!-- CHATBOT -->
-  <!-- TECHSPECIALIST COPILOT WIDGET -->
-<div class="ts-chat-widget" id="tsChatWidget">
-  <div class="ts-chat-panel" id="tsChatPanel">
-    <div class="ts-chat-header">
-      <div class="ts-chat-header-left">
-        <div class="ts-chat-avatar-wrap">
-          <img
-            class="ts-chat-avatar"
-            src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7274.jpg_gmfio2.jpg"
-            alt="Robina"
-          />
-          <span class="ts-chat-status"></span>
+ <div class="ts-widget" id="tsChatWidget">
+    <div
+      class="ts-panel"
+      id="tsChatPanel"
+      aria-hidden="true"
+      role="dialog"
+      aria-label="Chat with Robina"
+    >
+      <div class="ts-panel-header">
+        <div class="ts-panel-header-noise"></div>
+
+        <div class="ts-header-left">
+          <div class="ts-avatar-stack">
+            <img
+              class="ts-avatar"
+              src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7274.jpg_gmfio2.jpg"
+              alt="Robina"
+            />
+            <span class="ts-status-dot" aria-label="Online"></span>
+          </div>
+
+          <div class="ts-header-copy">
+            <div class="ts-header-eyebrow">TechSpecialist Intelligence</div>
+            <div class="ts-header-name">Robina</div>
+          </div>
         </div>
 
-        <div class="ts-chat-meta">
-          <div class="ts-chat-name">Robina</div>
-          <div class="ts-chat-role">Your Intelligence Guide · TechSpecialist</div>
+        <div class="ts-header-right">
+          <div class="ts-copilot-badge">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path
+                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Copilot
+          </div>
+
+          <button class="ts-btn-icon ts-close-btn" id="tsChatClose" aria-label="Close chat">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path
+                d="M1 1l10 10M11 1L1 11"
+                stroke="currentColor"
+                stroke-width="1.8"
+                stroke-linecap="round"
+              />
+            </svg>
+          </button>
         </div>
       </div>
 
-      <button class="ts-chat-close" id="tsChatClose" aria-label="Close chat">
-        <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
-          <path d="M1 1l10 10M11 1L1 11" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <div class="ts-intro" id="tsChatIntro">
+        <div class="ts-intro-spark">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"
+              stroke="currentColor"
+              stroke-width="1.8"
+              stroke-linecap="round"
+            />
+          </svg>
+          <span>Ready to assist</span>
+        </div>
+
+        <h2 class="ts-intro-heading">How can I help you today?</h2>
+        <p class="ts-intro-body">
+          I can walk you through TechSpecialist’s services, sector expertise,
+          implementation approach, and help identify your ideal next step.
+        </p>
+
+        <div class="ts-starters">
+          <button type="button" class="ts-starter" data-message="What services does TechSpecialist offer?">
+            <span class="ts-starter-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <rect x="3" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+                <rect x="14" y="3" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+                <rect x="3" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+                <rect x="14" y="14" width="7" height="7" rx="1.5" stroke="currentColor" stroke-width="1.8" />
+              </svg>
+            </span>
+            <span class="ts-starter-label">Services &amp; Solutions</span>
+          </button>
+
+          <button type="button" class="ts-starter" data-message="Which industries and sectors do you support?">
+            <span class="ts-starter-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M3 21h18M5 21V10l7-7 7 7v11"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M10 21v-6h4v6"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+            <span class="ts-starter-label">Sectors We Serve</span>
+          </button>
+
+          <button type="button" class="ts-starter" data-message="What does your implementation timeline look like?">
+            <span class="ts-starter-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.8" />
+                <path
+                  d="M12 7v5l3.5 3.5"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+            <span class="ts-starter-label">Timeline &amp; Delivery</span>
+          </button>
+
+          <button type="button" class="ts-starter" data-message="How do I get in touch with your team?">
+            <span class="ts-starter-icon">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                <path
+                  d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+            <span class="ts-starter-label">Contact the Team</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="ts-body">
+        <div id="webchat" role="main" aria-label="Conversation with Robina"></div>
+      </div>
+
+      <div class="ts-panel-footer">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path
+            d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
         </svg>
-      </button>
+        Powered by Microsoft Copilot Studio
+      </div>
     </div>
 
-    <div class="ts-chat-body">
-      <iframe
-        src="https://copilotstudio.microsoft.com/environments/fa643270-63b1-ee6c-b6ac-5ab348f9f901/bots/cr86a_websiteQA/webchat?__version__=2"
-        frameborder="0"
-        class="ts-chat-iframe"
-        title="TechSpecialist Copilot"
-        allow="microphone"
-      ></iframe>
-    </div>
-
-    <div class="ts-chat-footer">
-      Powered by Microsoft Copilot
-    </div>
+    <button
+      class="ts-launcher"
+      id="tsChatToggle"
+      aria-label="Chat with Robina, TechSpecialist's intelligence guide"
+      aria-expanded="false"
+    >
+      <span class="ts-launcher-ping"></span>
+      <img
+        class="ts-launcher-avatar"
+        src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7274.jpg_gmfio2.jpg"
+        alt=""
+        aria-hidden="true"
+      />
+      <div class="ts-launcher-copy">
+        <span class="ts-launcher-label">Chat with Robina</span>
+        <span class="ts-launcher-sub">Intelligence Guide · Online now</span>
+      </div>
+      <span class="ts-launcher-chevron" aria-hidden="true">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path
+            d="M2.5 4.5L6 8l3.5-3.5"
+            stroke="currentColor"
+            stroke-width="1.6"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          />
+        </svg>
+      </span>
+    </button>
   </div>
 
-  <button class="ts-chat-toggle" id="tsChatToggle" aria-label="Chat with Robina">
-    <span class="ts-chat-toggle-ping"></span>
-    <img
-      class="ts-chat-toggle-avatar"
-      src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7274.jpg_gmfio2.jpg"
-      alt="Robina"
-    />
-    <span class="ts-chat-toggle-text">Chat with Robina</span>
-  </button>
-</div>
+  <!-- End of Chat Panel -->
 
     <!-- CTA SECTION -->
     <section class="cta-section" id="discovery">
@@ -4654,7 +4429,8 @@
     </footer>
 
     <script src="script.js"></script>
-
+    <script src="https://cdn.botframework.com/botframework-webchat/latest/webchat.js"></script>
+  <script src="app.js"></script>
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>

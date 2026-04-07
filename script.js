@@ -196,36 +196,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // ── Agentic Dashboard ──
+
+  //Robina Chatbot
   initAgenticDashboard();
 
-  // ─────────────────────────────────────────────────
-  const tsChatToggle = document.getElementById("tsChatToggle");
-  const tsChatPanel = document.getElementById("tsChatPanel");
-  const tsChatClose = document.getElementById("tsChatClose");
-  const tsChatWidget = document.getElementById("tsChatWidget");
 
-  tsChatToggle.addEventListener("click", function () {
-    tsChatPanel.classList.toggle("open");
-  });
-
-  tsChatClose.addEventListener("click", function () {
-    tsChatPanel.classList.remove("open");
-  });
-
-  document.addEventListener("click", function (event) {
-    if (!tsChatWidget.contains(event.target)) {
-      tsChatPanel.classList.remove("open");
-    }
-  });
-  // ── Pain item hover (Execution Gap) ──
-  document.querySelectorAll(".pain-item").forEach((item) => {
-    item.addEventListener("mouseenter", () => {
-      document
-        .querySelectorAll(".pain-item")
-        .forEach((i) => i.classList.remove("active"));
-      item.classList.add("active");
-    });
-  });
 
   // ── Custom video player ──
   const video = document.getElementById("founderVideo");
