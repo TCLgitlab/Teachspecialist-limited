@@ -1,4 +1,5 @@
-const TOKEN_ENDPOINT = "https://fa64327063b1ee6cb6ac5ab348f9f9.01.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cr86a_websiteQA/directline/token?api-version=2022-03-01-preview";
+const TOKEN_ENDPOINT = "https://fa64327063b1ee6cb6ac5ab348f9f9.01.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cr86a_robinaIntelligenceGuide/directline/token?api-version=2022-03-01-preview";
+// const TOKEN_ENDPOINT = "https://fa64327063b1ee6cb6ac5ab348f9f9.01.environment.api.powerplatform.com/powervirtualagents/botsbyschema/cr86a_websiteQA/directline/token?api-version=2022-03-01-preview";
 
 const elToggle = document.getElementById("tsChatToggle");
 const elPanel = document.getElementById("tsChatPanel");
@@ -113,7 +114,7 @@ async function renderWebChat(initialMessage = "") {
 
     suggestedActionBackground: "#ffffff",
     suggestedActionBorderColor: "rgba(37,99,235,0.22)",
-    suggestedActionBorderRadius: 999,
+    suggestedActionBorderRadius: 8,
     suggestedActionBorderWidth: 1,
     suggestedActionTextColor: "#1a4faa",
     suggestedActionBackgroundColorOnHover: "#eef3ff",

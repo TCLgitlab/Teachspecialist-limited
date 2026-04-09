@@ -295,16 +295,16 @@ body {
 }
 
 .ts-starters {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 8px;
 }
 
 .ts-starter {
   display: flex;
   align-items: center;
-  gap: 9px;
-  padding: 10px 12px;
+  gap: 10px;
+  padding: 12px 14px;
   background: var(--surface-0);
   border: 1px solid var(--border-strong);
   border-radius: var(--r-md);
@@ -315,6 +315,7 @@ body {
     transform 0.18s var(--ease-expo),
     box-shadow 0.18s ease;
   text-align: left;
+  width: 100%;
 }
 
 .ts-starter:hover {
@@ -375,6 +376,29 @@ body {
   #webchat > * {
     width: 100% !important;
     height: 100% !important;
+  }
+
+  /* Bot suggested actions - vertical layout */
+  #webchat .webchat__stacked-layout,
+  #webchat .webchat__suggested-actions,
+  #webchat [data-testid="suggested-actions"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    overflow: visible !important;
+    justify-content: flex-start !important;
+  }
+
+  #webchat .webchat__suggested-actions__action-button,
+  #webchat button[aria-label*="suggested"],
+  #webchat [data-testid="suggested-action"] {
+    border-radius: 8px !important;
+    padding: 12px 16px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    text-align: left !important;
+    white-space: normal !important;
   }
 
   #webchat button[aria-label="Send"],
@@ -613,7 +637,12 @@ body {
   }
 
   .ts-starters {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .ts-starter {
+    padding: 10px 12px;
   }
 
   .ts-intro {
