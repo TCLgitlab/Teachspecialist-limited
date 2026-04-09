@@ -1317,7 +1317,7 @@
         overflow: hidden;
         box-shadow: var(--shadow-sm);
         display: grid;
-        grid-template-columns: 1.05fr 1fr;
+        grid-template-columns: 1fr 1fr;
         transition:
           transform 0.28s,
           box-shadow 0.28s,
@@ -1331,6 +1331,27 @@
       .founder-photo {
         overflow: hidden;
         min-height: 320px;
+        position: relative;
+        cursor: pointer;
+      }
+      .founder-photo::after {
+        content: "Tap to read more";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0,0,0,0.6));
+        color: #fff;
+        text-align: center;
+        padding: 20px 10px 10px;
+        font-size: 11px;
+        font-weight: 600;
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .founder-photo:hover::after,
+      .founder-photo.revealed::after {
+        opacity: 1;
       }
       .founder-photo img {
         width: 100%;
@@ -1389,6 +1410,29 @@
         font-size: 13px;
         color: var(--body);
         line-height: 1.7;
+        display: none;
+      }
+      .fc-bio.revealed {
+        display: block;
+        animation: fadeInCard 0.4s ease;
+      }
+      .fc-short {
+        display: block;
+      }
+      .fc-short.hidden {
+        display: none;
+      }
+      .fc-click-hint {
+        display: none;
+        font-size: 10px;
+        color: var(--blue);
+        font-weight: 600;
+        margin-top: 8px;
+      }
+      .fc-click-hint.show {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
       }
 
       .team-card-large {
@@ -1644,8 +1688,18 @@
           grid-template-columns: 1fr;
         }
         .founder-photo {
-          min-height: 240px;
-          aspect-ratio: 3/2;
+          width: 100%;
+          aspect-ratio: 3/4;
+          min-height: unset;
+        }
+        .founder-photo::after {
+          opacity: 1;
+        }
+        .founder-body {
+          padding: 16px 18px 18px;
+        }
+        .fc-name {
+          font-size: 18px;
         }
         .team-secondary-row {
           grid-template-columns: repeat(2, 1fr);
@@ -3918,30 +3972,34 @@
         <!-- Featured 3 -->
         <div class="team-featured-row">
           <div class="team-card-founder">
-            <div class="founder-photo">
+            <div class="founder-photo" id="founderPhoto" onclick="revealFounderBio()">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773840810/TBS_7478_1.jpg_p7ahff.jpg"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_3291,w_3428/TBS_7478_1.jpg_p7ahff.jpg"
                 alt="Kadir Salami"
               />
             </div>
             <div class="founder-body">
-              <div class="fc-role-tag">Founder</div>
+              <!-- <div class="fc-role-tag">Founder</div> -->
               <div class="fc-name">Kadir Salami</div>
               <div class="fc-title">CEO & Founder</div>
               <div class="fc-divider"></div>
-              <div class="fc-bio">
+              <p class="fc-short">A decade of Microsoft solutions experience across government, NGOs, and private sector.</p>
+              <div class="fc-bio" id="founderBio">
                 Kadir built TechSpecialist on the conviction that African
                 organisations deserve world-class intelligence infrastructure —
                 powered by tools they already own. A decade of Microsoft
                 solutions experience across government, NGOs, and private
                 sector.
               </div>
+              <div class="fc-click-hint" id="founderHint">
+                <span>👆</span> Tap image to read more
+              </div>
             </div>
           </div>
           <div class="team-card-large">
             <div class="large-photo">
                 <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_1064,w_1024,y_56/e_brightness:10/e_vibrance:23/e_saturation:17/e_contrast:level_10;type_sigmoidal/e_improve:outdoor:33/e_sharpen:678/ChatGPT_Image_Mar_23_2026_12_32_54_PM_gdcoow.png"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_930,w_1024/ChatGPT_Image_Mar_23_2026_12_32_54_PM_gdcoow.png"
                 alt="Oluwagbolahan Aina"
               />
             </div>
@@ -3954,7 +4012,7 @@
           <div class="team-card-large">
             <div class="large-photo">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/v1773841034/team8_yingf2.png"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_459,w_407/team8_yingf2.png"
                 alt="Zainab Sanni"
               />
             </div>
@@ -3966,12 +4024,12 @@
           </div>
         </div>
 
-        <!-- Secondary 4 visible, extras hidden -->
+        <!-- Secondary row - all hidden initially -->
         <div class="team-secondary-row masked" id="teamSecondaryRow">
-          <div class="team-card-small">
+          <div class="team-card-small hidden" data-team-card="true">
             <div class="small-photo">
             <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2931,w_3148/TBS_7279.jpg_iwkhrb.jpg"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2502,w_2696/tbs_7279jpg_iwkhrb_68362b.jpg"
                 alt="Suleman Olalomi"
               />
             </div>
@@ -3981,7 +4039,7 @@
               <div class="sc-divider"></div>
             </div>
           </div>
-          <div class="team-card-small">
+          <div class="team-card-small hidden" data-team-card="true">
             <div class="small-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2930,w_3106/TBS_7248.jpg_ipltwe.jpg"
@@ -3994,7 +4052,7 @@
               <div class="sc-divider"></div>
             </div>
           </div>
-          <div class="team-card-small">
+          <div class="team-card-small hidden" data-team-card="true">
             <div class="small-photo">
               <img
                 src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_995,w_1024/IMG_0582_bs7gmt.png"
@@ -4007,10 +4065,10 @@
               <div class="sc-divider"></div>
             </div>
           </div>
-          <div class="team-card-small">
+          <div class="team-card-small hidden" data-team-card="true">
             <div class="small-photo">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2931,w_3141/TBS_7297.jpg_myh9kb.jpg"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2206,w_2696/tbs_7297jpg_myh9kb_68362b.jpg"
                 alt="Charles Onyeso"
               />
             </div>
@@ -4020,10 +4078,10 @@
               <div class="sc-divider"></div>
             </div>
           </div>
-          <div class="team-card-small hidden" data-extra="true">
+          <div class="team-card-small hidden" data-team-card="true">
             <div class="small-photo">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_1064,w_1024,y_56/e_brightness:10/e_vibrance:23/e_saturation:17/e_contrast:level_10;type_sigmoidal/e_improve:outdoor:33/e_sharpen:678/tobe_twnd5m.png"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_1008,w_1024/tobe_twnd5m.png"
                 alt="Praise Jacob"
               />
             </div>
@@ -4033,11 +4091,10 @@
               <div class="sc-divider"></div>
             </div>
           </div>
-          <!-- Hidden extras -->
-          <div class="team-card-small hidden" data-extra="true">
+          <div class="team-card-small hidden" data-team-card="true">
             <div class="small-photo">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2675,w_2696/TBS_7274.jpg_gmfio2.jpg"
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2206,w_2696/tbs_7274jpg_gmfio2_68362b.jpg"
                 alt="Robinah Abdulaziz"
               />
             </div>
@@ -4057,7 +4114,7 @@
           >
             <span class="expand-icon">▾</span>
             <span id="expandLabel">Meet the Full Crew</span>
-            <span class="expand-count" id="expandCount">+1 more</span>
+            <span class="expand-count" id="expandCount">+6 more</span>
           </button>
         </div>
       </div>

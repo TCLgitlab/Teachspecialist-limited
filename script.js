@@ -241,13 +241,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = document.getElementById("teamSecondaryRow");
     const label = document.getElementById("expandLabel");
     const count = document.getElementById("expandCount");
-    const extras = document.querySelectorAll(
-      '.team-card-small[data-extra="true"]',
+    const cards = document.querySelectorAll(
+      '.team-card-small[data-team-card="true"]',
     );
     const open = btn.classList.contains("expanded");
 
     if (!open) {
-      extras.forEach((c, i) => {
+      cards.forEach((c, i) => {
         c.classList.remove("hidden");
         c.style.animation = `fadeInCard 0.4s ease ${i * 0.08}s both`;
       });
@@ -257,25 +257,51 @@ document.addEventListener("DOMContentLoaded", () => {
       label.textContent = "Showing the Full Crew";
       count.textContent = "Collapse ↑";
     } else {
-      extras.forEach((c) => c.classList.add("hidden"));
+      cards.forEach((c) => c.classList.add("hidden"));
       row.classList.remove("expanded");
       row.classList.add("masked");
       btn.classList.remove("expanded");
       label.textContent = "Meet the Full Crew";
-      count.textContent = "+" + extras.length + " more";
+      count.textContent = "+" + cards.length + " more";
+    }
+  };
+
+  // ── Founder bio reveal ──
+  window.revealFounderBio = function () {
+    const photo = document.getElementById("founderPhoto");
+    const bio = document.getElementById("founderBio");
+    const short = document.querySelector(".fc-short");
+    const hint = document.getElementById("founderHint");
+    
+    if (bio.classList.contains("revealed")) {
+      bio.classList.remove("revealed");
+      photo.classList.remove("revealed");
+      short.classList.remove("hidden");
+      hint.classList.remove("show");
+    } else {
+      bio.classList.add("revealed");
+      photo.classList.add("revealed");
+      short.classList.add("hidden");
+      hint.classList.add("show");
     }
   };
 
   // Set initial hidden count
   (function () {
-    const extras = document.querySelectorAll(
-      '.team-card-small[data-extra="true"]',
+    const cards = document.querySelectorAll(
+      '.team-card-small[data-team-card="true"]',
     );
     const countEl = document.getElementById("expandCount");
-    if (countEl) countEl.textContent = "+" + extras.length + " more";
-    if (extras.length === 0) {
+    if (countEl) countEl.textContent = "+" + cards.length + " more";
+    if (cards.length === 0) {
       const wrap = document.getElementById("teamExpandWrap");
       if (wrap) wrap.style.display = "none";
+    }
+    
+    // Show founder hint
+    const hint = document.getElementById("founderHint");
+    if (hint) {
+      hint.classList.add("show");
     }
   })();
 });
