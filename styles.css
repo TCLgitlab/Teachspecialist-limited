@@ -431,7 +431,7 @@ body {
 
   #webchat button[aria-label="Send"],
   #webchat .webchat__send-box__button {
-    background: linear-gradient(145deg, #2563eb, #1a4faa) !important;
+    /* background: linear-gradient(145deg, #2563eb, #1a4faa) !important; */
     border-radius: 10px !important;
     width: 44px !important;
     height: 44px !important;
