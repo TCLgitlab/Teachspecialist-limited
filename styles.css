@@ -377,6 +377,20 @@ body {
   height: 100% !important;
 }
 
+/* Mobile-specific styles for better input visibility */
+@media (max-width: 768px) {
+  #webchat .webchat__send-box {
+    height: 70px !important;
+    border-top: 3px solid rgba(13, 31, 60, 0.2) !important;
+    background: var(--surface-0) !important;
+    margin-bottom: 20px !important;
+  }
+
+  #webchat .webchat__send-box__input {
+    font-size: 16px !important; /* Prevent zoom on iOS */
+  }
+}
+
 .ts-panel-footer {
   padding: 9px 16px 11px;
   display: flex;

@@ -154,6 +154,7 @@ async function openChat(initialMessage = "") {
   elPanel.classList.add("open");
   elPanel.setAttribute("aria-hidden", "false");
   elToggle.setAttribute("aria-expanded", "true");
+  elToggle.style.display = 'none'; // Hide the launcher when chat is open
 
   try {
     await renderWebChat(initialMessage);
@@ -169,6 +170,7 @@ function closeChat() {
   elPanel.classList.remove("open");
   elPanel.setAttribute("aria-hidden", "true");
   elToggle.setAttribute("aria-expanded", "false");
+  elToggle.style.display = 'block'; // Show the launcher when chat is closed
 }
 
 elToggle.addEventListener("click", () => {
