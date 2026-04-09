@@ -92,7 +92,7 @@ async function renderWebChat(initialMessage = "") {
   const styleOptions = {
     hideUploadButton: true,
 
-    botAvatarInitials: "R",
+    botAvatarImage: "https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2206,w_2696/tbs_7274jpg_gmfio2_68362b.jpg",
     userAvatarInitials: "You",
     botAvatarBackgroundColor: "#0d1f3c",
     userAvatarBackgroundColor: "#2563eb",
@@ -134,7 +134,7 @@ async function renderWebChat(initialMessage = "") {
     rootWidth: "100%",
 
     bubbleMinHeight: 32,
-    avatarSize: 36,
+    avatarSize: 38,
     messageActivityWordBreak: "break-word"
   };
 
