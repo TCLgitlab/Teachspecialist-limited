@@ -1,0 +1,12 @@
+RewriteEngine On
+
+# Redirect root to index.html
+RewriteRule ^$ index.html [L]
+
+# Clean URL for services page (without .html)
+RewriteRule ^services/?$ services.html [L]
+
+# If the clean URL path exists as a file, serve it
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ $1.html [L]
