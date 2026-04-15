@@ -40,6 +40,62 @@
         -webkit-font-smoothing: antialiased;
       }
 
+      /* ── SCROLL PROGRESS INDICATOR ── */
+      .scroll-progress {
+        position: fixed;
+        top: 72px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        z-index: 99;
+        background: rgba(59, 111, 209, 0.1);
+      }
+      .scroll-progress-bar {
+        height: 100%;
+        background: linear-gradient(90deg, var(--blue), var(--orange));
+        width: 0%;
+        transition: width 0.1s linear;
+      }
+
+      /* ── STICKY SERVICE NAV ── */
+      .sticky-service-nav {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 98;
+        display: flex;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 8px 12px;
+        border-radius: 100px;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        border: 1px solid var(--border);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.4s ease;
+      }
+      .sticky-service-nav.visible {
+        opacity: 1;
+        visibility: visible;
+      }
+      .sticky-service-nav a {
+        padding: 10px 20px;
+        border-radius: 100px;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--body);
+        text-decoration: none;
+        transition: all 0.3s;
+        white-space: nowrap;
+      }
+      .sticky-service-nav a:hover,
+      .sticky-service-nav a.active {
+        background: var(--blue);
+        color: #fff;
+      }
+
       /* ── ANIMATIONS ── */
       @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes fadeLeft { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
@@ -121,7 +177,7 @@
 
       /* ── HERO ── */
       .services-hero {
-        min-height: 100vh;
+        min-height: 85vh;
         position: relative;
         display: flex;
         align-items: center;
@@ -432,6 +488,93 @@
         transform: translateX(8px);
       }
 
+      /* Hero Tabs */
+      .hero-tabs {
+        display: flex;
+        gap: 8px;
+        margin-top: 24px;
+        flex-wrap: wrap;
+      }
+      .hero-tab {
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 100px;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .hero-tab:hover {
+        background: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border-color: rgba(59, 111, 209, 0.5);
+      }
+      .hero-tab.active {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+        box-shadow: 0 4px 20px rgba(59, 111, 209, 0.4);
+      }
+      .hero-tab-icon {
+        font-size: 16px;
+      }
+      .pillar-preview {
+        display: none;
+        margin-top: 32px;
+        padding: 28px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+      }
+      .pillar-preview.active {
+        display: block;
+        animation: fadeUp 0.5s ease both;
+      }
+      .pillar-preview-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.5);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+      }
+      .pillar-preview-features {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+      .pillar-preview-feature {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: rgba(255, 255, 255, 0.85);
+        font-size: 13px;
+      }
+      .pillar-preview-feature svg {
+        color: var(--blue);
+        flex-shrink: 0;
+      }
+      .pillar-preview-cta {
+        margin-top: 20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--blue);
+        font-size: 13px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: gap 0.3s;
+      }
+      .pillar-preview-cta:hover {
+        gap: 12px;
+      }
+
       /* ── TRUST BAR ── */
       .partners-section {
         background: #fff;
@@ -716,6 +859,40 @@
       }
       .service-cta:hover svg { transform: translateX(6px); }
 
+      /* Service Filter Tabs */
+      .service-filters {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 32px;
+        flex-wrap: wrap;
+      }
+      .service-filter-btn {
+        padding: 12px 24px;
+        background: #fff;
+        border: 1.5px solid var(--border);
+        border-radius: 100px;
+        color: var(--body);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .service-filter-btn:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .service-filter-btn.active {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+      }
+      .service-card.hidden {
+        display: none;
+      }
+      .service-card.filtered {
+        animation: fadeUp 0.4s ease both;
+      }
+
       /* ── PROCESS SECTION ── */
       .process-section {
         padding: 100px 0;
@@ -928,6 +1105,59 @@
         border-radius: 100px;
         letter-spacing: 0.02em;
         border: 1px solid rgba(59, 111, 209, 0.15);
+      }
+      .process-connector {
+        position: absolute;
+        top: 32px;
+        left: calc(50% + 40px);
+        width: calc(100% - 80px);
+        height: 2px;
+        background: linear-gradient(90deg, var(--border) 0%, var(--blue) 50%, var(--border) 100%);
+        z-index: 0;
+      }
+      .process-step:last-child .process-connector {
+        display: none;
+      }
+      .process-arrow {
+        position: absolute;
+        top: 26px;
+        right: -12px;
+        width: 24px;
+        height: 24px;
+        background: #fff;
+        border: 2px solid var(--blue);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
+      }
+      .process-arrow svg {
+        width: 12px;
+        height: 12px;
+        color: var(--blue);
+      }
+      .process-step:hover .process-arrow {
+        background: var(--blue);
+      }
+      .process-step:hover .process-arrow svg {
+        color: #fff;
+      }
+      .process-mini-test {
+        margin-top: 16px;
+        padding: 16px;
+        background: var(--bg-soft);
+        border-radius: 12px;
+        font-size: 12px;
+        color: var(--body);
+        font-style: italic;
+        line-height: 1.6;
+      }
+      .process-mini-test::before {
+        content: '"';
+        font-size: 20px;
+        color: var(--blue);
+        font-weight: 700;
       }
 
       /* ── WHY SECTION ── */
@@ -1142,6 +1372,43 @@
         color: var(--body);
         margin-top: 6px;
       }
+      .why-card-expand {
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border);
+        display: none;
+      }
+      .why-card.expanded .why-card-expand {
+        display: block;
+        animation: fadeUp 0.3s ease both;
+      }
+      .why-expand-btn {
+        width: 100%;
+        padding: 10px;
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        color: var(--blue);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .why-expand-btn:hover {
+        background: var(--blue);
+        color: #fff;
+        border-color: var(--blue);
+      }
+      .why-expand-btn svg {
+        transition: transform 0.3s;
+      }
+      .why-card.expanded .why-expand-btn svg {
+        transform: rotate(180deg);
+      }
 
       /* ── FAQ SECTION ── */
       .faq-section {
@@ -1245,6 +1512,81 @@
         font-size: 15px;
         color: var(--body);
         line-height: 1.8;
+      }
+
+      /* FAQ Search & Categories */
+      .faq-search {
+        position: relative;
+        margin-bottom: 24px;
+      }
+      .faq-search-input {
+        width: 100%;
+        padding: 16px 20px 16px 48px;
+        background: #fff;
+        border: 1.5px solid var(--border);
+        border-radius: 12px;
+        font-size: 14px;
+        color: var(--heading);
+        transition: all 0.3s;
+      }
+      .faq-search-input:focus {
+        outline: none;
+        border-color: var(--blue);
+        box-shadow: 0 0 0 4px rgba(59, 111, 209, 0.1);
+      }
+      .faq-search-icon {
+        position: absolute;
+        left: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--body);
+      }
+      .faq-categories {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 24px;
+        flex-wrap: wrap;
+      }
+      .faq-category-btn {
+        padding: 8px 16px;
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        border-radius: 100px;
+        color: var(--body);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .faq-category-btn:hover {
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .faq-category-btn.active {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+      }
+      .faq-group {
+        margin-bottom: 32px;
+      }
+      .faq-group-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--blue);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 16px;
+        padding-left: 4px;
+      }
+      .faq-item.no-results {
+        display: none;
+        padding: 32px;
+        text-align: center;
+        color: var(--body);
+      }
+      .faq-item.hidden {
+        display: none;
       }
 
       /* ── BOTTOM CTA SECTION ── */
@@ -1792,6 +2134,109 @@
       }
       .panel-back:hover { color: var(--blue); }
 
+      /* Panel Tabs */
+      .panel-tabs {
+        display: flex;
+        gap: 4px;
+        margin-bottom: 24px;
+        background: var(--bg-soft);
+        padding: 4px;
+        border-radius: 12px;
+      }
+      .panel-tab {
+        flex: 1;
+        padding: 12px 16px;
+        background: transparent;
+        border: none;
+        border-radius: 10px;
+        color: var(--body);
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+      }
+      .panel-tab:hover {
+        color: var(--heading);
+      }
+      .panel-tab.active {
+        background: #fff;
+        color: var(--blue);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      }
+      .panel-tab-content {
+        display: none;
+      }
+      .panel-tab-content.active {
+        display: block;
+      }
+
+      /* Related Services */
+      .panel-related {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid var(--border);
+      }
+      .panel-related-title {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--heading);
+        margin-bottom: 16px;
+      }
+      .panel-related-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      .panel-related-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px;
+        background: var(--bg-soft);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+      .panel-related-item:hover {
+        border-color: var(--blue);
+        background: rgba(59, 111, 209, 0.05);
+      }
+      .panel-related-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--navy);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        flex-shrink: 0;
+      }
+      .panel-related-info h4 {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--heading);
+        margin-bottom: 2px;
+      }
+      .panel-related-info p {
+        font-size: 11px;
+        color: var(--body);
+      }
+      .panel-related-arrow {
+        margin-left: auto;
+        color: var(--body);
+        transition: all 0.3s;
+      }
+      .panel-related-item:hover .panel-related-arrow {
+        color: var(--blue);
+        transform: translateX(4px);
+      }
+
       /* ── STICKY CTA ── */
       .sticky-cta {
         position: fixed;
@@ -1991,6 +2436,8 @@
         .cta-inner { grid-template-columns: 1fr; gap: 48px; }
         .footer-top { grid-template-columns: 1fr 1fr; }
         .services-header { grid-template-columns: 1fr; }
+        .sticky-service-nav { display: none; }
+        .pillar-preview-features { grid-template-columns: 1fr; }
       }
       @media (max-width: 960px) {
         nav { padding: 0 20px; height: 64px; }
@@ -2024,6 +2471,10 @@
         .hero-stat-num { font-size: 32px; }
         .hero-stat-label { font-size: 12px; }
         
+        .hero-tabs { justify-content: center; }
+        .hero-tab { padding: 10px 16px; font-size: 12px; }
+        .pillar-preview { text-align: left; }
+        
         .services-section { padding: 60px 0; }
         .services-header { 
           grid-template-columns: 1fr; 
@@ -2037,12 +2488,16 @@
           padding: 0 24px; 
           gap: 24px;
         }
+        .service-filters { justify-content: center; }
+        .service-filter-btn { padding: 10px 16px; font-size: 12px; }
         
         .process-section { padding: 60px 0; }
         .process-inner { padding: 0 24px; }
         .process-header { margin-bottom: 40px; }
         .process-grid { gap: 24px; }
         .process-step { padding: 20px; }
+        .process-arrow { display: none; }
+        .process-mini-test { display: none; }
         
         .why-section { padding: 60px 0; }
         .why-inner { padding: 0 24px; }
@@ -2053,6 +2508,11 @@
         .faq-section { padding: 60px 0; }
         .faq-inner { padding: 0 24px; }
         .faq-header { margin-bottom: 40px; }
+        .faq-categories { justify-content: center; }
+        .faq-category-btn { padding: 8px 14px; font-size: 11px; }
+        
+        .panel-tabs { flex-wrap: wrap; }
+        .panel-tab { padding: 10px 12px; font-size: 12px; }
         
         .cta-inner { 
           grid-template-columns: 1fr; 
@@ -2210,6 +2670,20 @@
       </button>
     </nav>
 
+    <!-- SCROLL PROGRESS -->
+    <div class="scroll-progress">
+      <div class="scroll-progress-bar" id="scrollProgressBar"></div>
+    </div>
+
+    <!-- STICKY SERVICE NAV -->
+    <nav class="sticky-service-nav" id="stickyServiceNav">
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#why">Why Us</a>
+      <a href="#faq">FAQ</a>
+      <a href="#discovery">Contact</a>
+    </nav>
+
     <!-- HERO -->
     <section class="services-hero">
       <div class="hero-bg">
@@ -2229,10 +2703,104 @@
             <a href="#discovery" class="btn-primary">Book a Discovery Call</a>
             <a href="#services" class="btn-secondary">Explore Services →</a>
           </div>
+          <div class="hero-tabs">
+            <button class="hero-tab active" data-service="advisory"><span class="hero-tab-icon">📋</span> Digital Transformation Advisory</button>
+            <button class="hero-tab" data-service="automation"><span class="hero-tab-icon">⚡</span> Business Process Automation</button>
+            <button class="hero-tab" data-service="security"><span class="hero-tab-icon">🔒</span> Information Security</button>
+            <button class="hero-tab" data-service="itsm"><span class="hero-tab-icon">🖥️</span> IT Service Management</button>
+          </div>
+          <div class="pillar-preview active" id="pillar-preview-advisory">
+            <div class="pillar-preview-title">Quick View</div>
+            <div class="pillar-preview-features">
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                AI Readiness Assessment
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                IT Strategy Development
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Process Optimization
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Change Management Planning
+              </div>
+            </div>
+            <a href="#services" class="pillar-preview-cta" data-service="advisory">View full details →</a>
+          </div>
+          <div class="pillar-preview" id="pillar-preview-automation">
+            <div class="pillar-preview-title">Quick View</div>
+            <div class="pillar-preview-features">
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Agentic AI Deployment
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Executive Dashboards
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Workflow Automation
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Data Integration
+              </div>
+            </div>
+            <a href="#services" class="pillar-preview-cta" data-service="automation">View full details →</a>
+          </div>
+          <div class="pillar-preview" id="pillar-preview-security">
+            <div class="pillar-preview-title">Quick View</div>
+            <div class="pillar-preview-features">
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Zero Trust Architecture
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Data Loss Prevention
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Compliance Management
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Security Awareness Training
+              </div>
+            </div>
+            <a href="#services" class="pillar-preview-cta" data-service="security">View full details →</a>
+          </div>
+          <div class="pillar-preview" id="pillar-preview-itsm">
+            <div class="pillar-preview-title">Quick View</div>
+            <div class="pillar-preview-features">
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                IT Asset Setup
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Helpdesk Support
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Asset Lifecycle Management
+              </div>
+              <div class="pillar-preview-feature">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+                Cloud Infrastructure
+              </div>
+            </div>
+            <a href="#services" class="pillar-preview-cta" data-service="itsm">View full details →</a>
+          </div>
           <div class="hero-stats">
             <div class="hero-stat">
-              <div class="hero-stat-num">4<span>Pillars</span></div>
-              <div class="hero-stat-label">Complete digital transformation</div>
+              <div class="hero-stat-num">4<span>Services</span></div>
+              <div class="hero-stat-label">Complete digital support</div>
             </div>
             <div class="hero-stat">
               <div class="hero-stat-num">10<span>wk</span></div>
@@ -2246,35 +2814,35 @@
         </div>
         <div class="hero-right">
           <div class="pillars-container">
-            <div class="pillar-item" data-service="digital">
-              <div class="pillar-icon">🚀</div>
+            <div class="pillar-item" data-service="advisory">
+              <div class="pillar-icon">📋</div>
               <div class="pillar-info">
                 <div class="pillar-num">01</div>
-                <div class="pillar-name">Digital Transformation</div>
+                <div class="pillar-name">Digital Transformation Advisory</div>
               </div>
               <div class="pillar-arrow">→</div>
             </div>
-            <div class="pillar-item" data-service="infrastructure">
-              <div class="pillar-icon">🛡️</div>
+            <div class="pillar-item" data-service="automation">
+              <div class="pillar-icon">⚡</div>
               <div class="pillar-info">
                 <div class="pillar-num">02</div>
-                <div class="pillar-name">IT Infrastructure Support</div>
+                <div class="pillar-name">Business Process Automation</div>
               </div>
               <div class="pillar-arrow">→</div>
             </div>
-            <div class="pillar-item" data-service="data">
-              <div class="pillar-icon">📊</div>
+            <div class="pillar-item" data-service="security">
+              <div class="pillar-icon">🔒</div>
               <div class="pillar-info">
                 <div class="pillar-num">03</div>
-                <div class="pillar-name">Data Unification</div>
+                <div class="pillar-name">Information Security</div>
               </div>
               <div class="pillar-arrow">→</div>
             </div>
-            <div class="pillar-item" data-service="capacity">
-              <div class="pillar-icon">🎓</div>
+            <div class="pillar-item" data-service="itsm">
+              <div class="pillar-icon">🖥️</div>
               <div class="pillar-info">
                 <div class="pillar-num">04</div>
-                <div class="pillar-name">Capacity Building</div>
+                <div class="pillar-name">IT Service Management</div>
               </div>
               <div class="pillar-arrow">→</div>
             </div>
@@ -2365,27 +2933,33 @@
     <section class="services-section" id="services">
       <div class="services-header">
         <div>
-          <div class="section-tag">What We Offer</div>
-          <h2 class="section-title">Four pillars.<br/><em>Endless possibilities.</em></h2>
+          <div class="section-tag">Our Services</div>
+          <h2 class="section-title">Comprehensive support<br/><em>for your digital journey.</em></h2>
         </div>
-        <p class="section-sub">From workflow automation to executive dashboards, we cover every aspect of your digital transformation journey. Click any service to explore what's included.</p>
+        <p class="section-sub">From strategic planning to day-to-day IT support, we provide end-to-end services that transform how your organization operates — using Microsoft tools you already own.</p>
       </div>
-      <div class="services-grid">
-        <!-- Service 01: Digital Transformation (Featured) -->
-        <div class="service-card featured" data-service="digital">
+      <div class="services-grid" style="padding: 0 64px;">
+        <div class="service-filters" style="grid-column: 1 / -1; justify-content: center;">
+          <button class="service-filter-btn active" data-filter="all">All Services</button>
+          <button class="service-filter-btn" data-filter="advisory">📋 Digital Transformation Advisory</button>
+          <button class="service-filter-btn" data-filter="automation">⚡ Business Process Automation</button>
+          <button class="service-filter-btn" data-filter="security">🔒 Information Security</button>
+          <button class="service-filter-btn" data-filter="itsm">🖥️ IT Service Management</button>
+        </div>
+        <!-- Service 01: Digital Transformation Advisory -->
+        <div class="service-card featured" data-service="advisory">
           <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80" alt="Digital Transformation">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80" alt="Digital Transformation Advisory">
             <div class="service-overlay"></div>
             <div class="service-num-badge">01</div>
-            <!-- <div class="service-icon-float"></div> -->
           </div>
           <div class="service-body">
-            <h3 class="service-name">Digital Transformation</h3>
-            <p class="service-intro">Modernize how your organization works from the inside out.</p>
+            <h3 class="service-name">Digital Transformation Advisory</h3>
+            <p class="service-intro">Before you transform, you need a plan that fits.</p>
             <div class="service-features">
-              <span class="service-feature-tag">Workflow Automation</span>
-              <span class="service-feature-tag">Agent Deployment</span>
-              <span class="service-feature-tag">Legacy Migration</span>
+              <span class="service-feature-tag">AI Readiness Assessment</span>
+              <span class="service-feature-tag">IT Strategy</span>
+              <span class="service-feature-tag">Change Management</span>
             </div>
             <a href="#" class="service-cta">
               See What's Included
@@ -2394,21 +2968,20 @@
           </div>
         </div>
 
-        <!-- Service 02: IT Infrastructure -->
-        <div class="service-card" data-service="infrastructure">
+        <!-- Service 02: Business Process Automation -->
+        <div class="service-card" data-service="automation">
           <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="IT Infrastructure">
+            <img src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80" alt="Business Process Automation">
             <div class="service-overlay"></div>
             <div class="service-num-badge">02</div>
-            <!-- <div class="service-icon-float">🛡️</div> -->
           </div>
           <div class="service-body">
-            <h3 class="service-name">IT Infrastructure Support</h3>
-            <p class="service-intro">Infrastructure that's secure, scalable, and always on.</p>
+            <h3 class="service-name">Business Process Automation</h3>
+            <p class="service-intro">Where strategy becomes reality.</p>
             <div class="service-features">
-              <span class="service-feature-tag">Cloud Migration</span>
-              <span class="service-feature-tag">Cybersecurity</span>
-              <span class="service-feature-tag">24/7 Monitoring</span>
+              <span class="service-feature-tag">Agentic AI</span>
+              <span class="service-feature-tag">Dashboards</span>
+              <span class="service-feature-tag">Workflows</span>
             </div>
             <a href="#" class="service-cta">
               See What's Included
@@ -2417,21 +2990,20 @@
           </div>
         </div>
 
-        <!-- Service 03: Data Unification -->
-        <div class="service-card" data-service="data">
+        <!-- Service 03: Information Security -->
+        <div class="service-card" data-service="security">
           <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Data Unification">
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80" alt="Information Security">
             <div class="service-overlay"></div>
             <div class="service-num-badge">03</div>
-            <!-- <div class="service-icon-float">📊</div> -->
           </div>
           <div class="service-body">
-            <h3 class="service-name">Data Unification</h3>
-            <p class="service-intro">Turn your data into a live decision-making engine.</p>
+            <h3 class="service-name">Information Security</h3>
+            <p class="service-intro">Your people, data, and systems are valuable. Protect it like it is.</p>
             <div class="service-features">
-              <span class="service-feature-tag">Power BI</span>
-              <span class="service-feature-tag">Predictive Analytics</span>
-              <span class="service-feature-tag">Auto Reports</span>
+              <span class="service-feature-tag">Zero Trust</span>
+              <span class="service-feature-tag">DLP</span>
+              <span class="service-feature-tag">Compliance</span>
             </div>
             <a href="#" class="service-cta">
               See What's Included
@@ -2440,21 +3012,20 @@
           </div>
         </div>
 
-        <!-- Service 04: Capacity Building -->
-        <div class="service-card" data-service="capacity">
+        <!-- Service 04: IT Service Management -->
+        <div class="service-card" data-service="itsm">
           <div class="service-img-wrap">
-            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" alt="Capacity Building">
+            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80" alt="IT Service Management">
             <div class="service-overlay"></div>
             <div class="service-num-badge">04</div>
-            <!-- <div class="service-icon-float">🎓</div> -->
           </div>
           <div class="service-body">
-            <h3 class="service-name">Capacity Building</h3>
-            <p class="service-intro">Build the internal capability to lead and thrive digitally.</p>
+            <h3 class="service-name">IT Service Management</h3>
+            <p class="service-intro">IT that works so your team can too.</p>
             <div class="service-features">
-              <span class="service-feature-tag">Microsoft Training</span>
-              <span class="service-feature-tag">AI Workshops</span>
-              <span class="service-feature-tag">Certifications</span>
+              <span class="service-feature-tag">Helpdesk</span>
+              <span class="service-feature-tag">Asset Management</span>
+              <span class="service-feature-tag">Cloud Infrastructure</span>
             </div>
             <a href="#" class="service-cta">
               See What's Included
@@ -2466,7 +3037,7 @@
     </section>
 
     <!-- PROCESS SECTION -->
-    <section class="process-section">
+    <section class="process-section" id="process">
       <div class="process-inner">
         <div class="process-header">
           <div class="section-tag">How It Works</div>
@@ -2474,30 +3045,39 @@
           <p class="section-sub">A proven process that delivers results, not just reports.</p>
         </div>
         <div class="process-grid">
-          <div class="process-step">
+          <div class="process-step" style="position: relative;">
             <div class="process-num">01</div>
+            <div class="process-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
             <h3>Discovery & Mapping</h3>
             <p>We map your top 3-5 operational bottlenecks and show you exactly what's possible before anything is built.</p>
             <div class="process-time">Weeks 1–2</div>
+            <div class="process-mini-test">They mapped our entire workflow in 2 weeks — we finally saw where all the time was going.</div>
           </div>
-          <div class="process-step">
+          <div class="process-step" style="position: relative;">
             <div class="process-num">02</div>
+            <div class="process-arrow">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
             <h3>Build & Deploy</h3>
             <p>Intelligent agents go live on your existing Microsoft environment. Workflows automated. Data flowing cleanly.</p>
             <div class="process-time">Weeks 3–6</div>
+            <div class="process-mini-test">Our first automation was live in week 4 — it replaced a process that took 3 days manually.</div>
           </div>
-          <div class="process-step">
+          <div class="process-step" style="position: relative;">
             <div class="process-num">03</div>
             <h3>Launch & Grow</h3>
             <p>Executive dashboards connected. Copilot activated. Monthly retainer keeps your system evolving with your organisation.</p>
             <div class="process-time">Weeks 7–10</div>
+            <div class="process-mini-test">Leadership can now ask Copilot anything about our data — no more waiting weeks for reports.</div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- WHY SECTION -->
-    <section class="why-section">
+    <section class="why-section" id="why">
       <div class="why-inner">
         <div class="why-header">
           <div class="section-tag">Why TechSpecialist</div>
@@ -2513,6 +3093,13 @@
               <div class="why-stat-num">₦0</div>
               <div class="why-stat-label">New software required</div>
             </div>
+            <div class="why-card-expand">
+              <p style="font-size: 13px; color: var(--body); line-height: 1.7;">We leverage your existing M365 E3/E5, Power Platform, and Azure subscriptions. No new vendors, no new contracts, no new training overhead.</p>
+              <button class="why-expand-btn" onclick="this.parentElement.parentElement.classList.toggle('expanded')">
+                <span>Learn more</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
           </div>
           <div class="why-card">
             <div class="why-icon">⚡</div>
@@ -2521,6 +3108,13 @@
             <div class="why-stat">
               <div class="why-stat-num">10wk</div>
               <div class="why-stat-label">To first live system</div>
+            </div>
+            <div class="why-card-expand">
+              <p style="font-size: 13px; color: var(--body); line-height: 1.7;">Our agile approach means you'll see tangible results within the first month. Week 1-2: discovery. Week 3-6: first automation live. Week 7-10: full deployment.</p>
+              <button class="why-expand-btn" onclick="this.parentElement.parentElement.classList.toggle('expanded')">
+                <span>Learn more</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
             </div>
           </div>
           <div class="why-card">
@@ -2531,63 +3125,92 @@
               <div class="why-stat-num">3</div>
               <div class="why-stat-label">Sectors served across Africa</div>
             </div>
+            <div class="why-card-expand">
+              <p style="font-size: 13px; color: var(--body); line-height: 1.7;">We've worked with government MDAs, international NGOs, and private enterprises across Nigeria and beyond. Each sector has unique needs — we speak their language.</p>
+              <button class="why-expand-btn" onclick="this.parentElement.parentElement.classList.toggle('expanded')">
+                <span>Learn more</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- FAQ SECTION -->
-    <section class="faq-section">
+    <section class="faq-section" id="faq">
       <div class="faq-inner">
         <div class="faq-header">
           <div class="section-tag" style="justify-content: center;">FAQ</div>
           <h2 class="section-title" style="text-align: center; margin-top: 16px;">Questions before<br/><em>you start</em></h2>
         </div>
-        <div class="faq-list">
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>Do we need to buy new software or licenses?</h3>
-              <div class="faq-toggle">+</div>
+        <div class="faq-search">
+          <svg class="faq-search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" class="faq-search-input" id="faqSearchInput" placeholder="Search questions...">
+        </div>
+        <div class="faq-categories">
+          <button class="faq-category-btn active" data-category="all">All</button>
+          <button class="faq-category-btn" data-category="pricing">Pricing & Process</button>
+          <button class="faq-category-btn" data-category="technical">Technical</button>
+          <button class="faq-category-btn" data-category="sectors">Sectors</button>
+        </div>
+        <div class="faq-list" id="faqList">
+          <div class="faq-group">
+            <div class="faq-group-title">Pricing & Process</div>
+            <div class="faq-item" data-category="pricing" data-keywords="software licenses cost money buy purchase">
+              <div class="faq-question">
+                <h3>Do we need to buy new software or licenses?</h3>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">No. We build exclusively on Microsoft tools your organization already pays for — M365, Power Platform, Azure, and Copilot. There are no additional license costs, no new software to deploy, and no vendor lock-in.</div>
+              </div>
             </div>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">No. We build exclusively on Microsoft tools your organization already pays for — M365, Power Platform, Azure, and Copilot. There are no additional license costs, no new software to deploy, and no vendor lock-in.</div>
+            <div class="faq-item" data-category="pricing" data-keywords="duration timeline weeks months years how long">
+              <div class="faq-question">
+                <h3>How long does a typical engagement take?</h3>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">From signed contract to your first live system takes just 10 weeks. Our phased approach means you'll see results early — typically within 6 weeks with the first workflow automated and running.</div>
+              </div>
+            </div>
+            <div class="faq-item" data-category="pricing" data-keywords="after deployment ongoing support retainer support">
+              <div class="faq-question">
+                <h3>What happens after the initial deployment?</h3>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Every engagement includes a monthly managed service retainer. This covers new agents, new dashboards, new departments, and continuous improvement. As your organisation evolves, your intelligence system evolves with it.</div>
+              </div>
             </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>How long does a typical engagement take?</h3>
-              <div class="faq-toggle">+</div>
-            </div>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">From signed contract to your first live system takes just 10 weeks. Our phased approach means you'll see results early — typically within 6 weeks with the first workflow automated and running.</div>
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>Which sectors do you work with?</h3>
-              <div class="faq-toggle">+</div>
-            </div>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">We specialize in three sectors: Government MDAs (digital governance, budget reporting, audit-readiness), International NGOs (donor reporting, grant tracking, beneficiary data), and Private Sector (C-suite dashboards, automation, field operations).</div>
+          <div class="faq-group">
+            <div class="faq-group-title">Technical</div>
+            <div class="faq-item" data-category="technical" data-keywords="security safe data protection iso">
+              <div class="faq-question">
+                <h3>Is our data secure?</h3>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">Absolutely. We're ISO 27001 aligned, implement Zero Trust architecture, and all work stays within your Microsoft environment. Your data never leaves your tenant, and we maintain the highest security standards throughout.</div>
+              </div>
             </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>What happens after the initial deployment?</h3>
-              <div class="faq-toggle">+</div>
-            </div>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">Every engagement includes a monthly managed service retainer. This covers new agents, new dashboards, new departments, and continuous improvement. As your organisation evolves, your intelligence system evolves with it.</div>
+          <div class="faq-group">
+            <div class="faq-group-title">Sectors</div>
+            <div class="faq-item" data-category="sectors" data-keywords="government NGO private company sectors industries">
+              <div class="faq-question">
+                <h3>Which sectors do you work with?</h3>
+                <div class="faq-toggle">+</div>
+              </div>
+              <div class="faq-answer">
+                <div class="faq-answer-inner">We specialize in three sectors: Government MDAs (digital governance, budget reporting, audit-readiness), International NGOs (donor reporting, grant tracking, beneficiary data), and Private Sector (C-suite dashboards, automation, field operations).</div>
+              </div>
             </div>
           </div>
-          <div class="faq-item">
-            <div class="faq-question">
-              <h3>Is our data secure?</h3>
-              <div class="faq-toggle">+</div>
-            </div>
-            <div class="faq-answer">
-              <div class="faq-answer-inner">Absolutely. We're ISO 27001 aligned, implement Zero Trust architecture, and all work stays within your Microsoft environment. Your data never leaves your tenant, and we maintain the highest security standards throughout.</div>
-            </div>
+          <div class="faq-item no-results" id="faqNoResults">
+            No questions match your search. Try different keywords.
           </div>
         </div>
       </div>
@@ -2859,10 +3482,10 @@
         </div>
         <div class="footer-col">
           <div class="footer-col-title">Services</div>
-          <a href="#digital">Digital Transformation</a>
-          <a href="#infrastructure">IT Infrastructure</a>
-          <a href="#data">Data Unification</a>
-          <a href="#capacity">Capacity Building</a>
+          <a href="#advisory">Digital Transformation Advisory</a>
+          <a href="#automation">Business Process Automation</a>
+          <a href="#security">Information Security</a>
+          <a href="#itsm">IT Service Management</a>
         </div>
         <div class="footer-col">
           <div class="footer-col-title">Get in Touch</div>
@@ -2914,47 +3537,34 @@
         <h2 class="panel-title" id="panelTitle"></h2>
         <p class="panel-intro" id="panelIntro"></p>
 
-        <div class="panel-section" id="sectionIncluded">
-          <div class="panel-section-header">
-            <span class="panel-section-title">What's Included</span>
-            <div class="panel-section-toggle">+</div>
-          </div>
-          <div class="panel-section-content">
-            <div class="panel-section-inner">
-              <ul class="panel-list" id="panelIncludedList"></ul>
-            </div>
+        <div class="panel-tabs">
+          <button class="panel-tab active" data-tab="included">📋 What's Included</button>
+          <button class="panel-tab" data-tab="deliver">🎯 What We Deliver</button>
+          <button class="panel-tab" data-tab="industries">🏢 Industries</button>
+        </div>
+
+        <div class="panel-tab-content active" id="tab-included">
+          <ul class="panel-list" id="panelIncludedList"></ul>
+        </div>
+
+        <div class="panel-tab-content" id="tab-deliver">
+          <div class="panel-deliverable">
+            <p id="panelDeliverText"></p>
+            <div class="panel-deliverable-stat" id="panelDeliverStat"></div>
           </div>
         </div>
 
-        <div class="panel-section" id="sectionDeliver">
-          <div class="panel-section-header">
-            <span class="panel-section-title">What We Deliver</span>
-            <div class="panel-section-toggle">+</div>
-          </div>
-          <div class="panel-section-content">
-            <div class="panel-section-inner">
-              <div class="panel-deliverable">
-                <p id="panelDeliverText"></p>
-                <div class="panel-deliverable-stat" id="panelDeliverStat"></div>
-              </div>
-            </div>
-          </div>
+        <div class="panel-tab-content" id="tab-industries">
+          <ul class="panel-list" id="panelIndustriesList"></ul>
         </div>
 
-        <div class="panel-section" id="sectionIndustries">
-          <div class="panel-section-header">
-            <span class="panel-section-title">Industries We Serve</span>
-            <div class="panel-section-toggle">+</div>
-          </div>
-          <div class="panel-section-content">
-            <div class="panel-section-inner">
-              <ul class="panel-list" id="panelIndustriesList"></ul>
-            </div>
-          </div>
+        <div class="panel-related" id="panelRelated">
+          <div class="panel-related-title">Explore Related Services</div>
+          <div class="panel-related-list" id="panelRelatedList"></div>
         </div>
 
         <div class="panel-ctas">
-          <a href="#discovery" class="btn-primary panel-cta-primary">Book Discovery Call →</a>
+          <a href="#discovery" class="btn-primary panel-cta-primary" onclick="closePanel()">Book Discovery Call →</a>
           <button class="panel-cta-secondary" id="panelChatBtn" onclick="if(typeof openChat==='function'){closePanel();setTimeout(openChat,300);}else{closePanel();}">
             <span>💬</span> Chat with Robina
           </button>
@@ -2977,75 +3587,68 @@
 
       // Service data
       const serviceData = {
-        digital: {
+        advisory: {
           num: '01',
-          title: 'Digital Transformation',
-          intro: 'We redesign and automate your core business processes, replace legacy systems with fit-for-purpose digital infrastructure, and deliver a strategic roadmap that guides your organization\'s evolution — not just its technology.',
+          title: 'Digital Transformation Advisory',
+          intro: 'Before you transform, you need a plan that fits. Most digital initiatives fail not because of bad technology, but because they start in the wrong place. Digital Transformation Advisory is where every TechSpecialist engagement begins: a structured, honest assessment of where you are, what\'s holding you back, and what the smartest path forward looks like before a single tool is deployed.',
           img: 'https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=80',
           included: [
-            'Business process optimization & workflow automation',
-            'Enterprise Resource Planning (ERP) implementation',
-            'Digitization of manual and paper-based operations',
-            'Digital transformation consulting & strategy',
-            'Enterprise modernization & legacy system migration',
-            'Intelligent agent deployment (Power Automate, Copilot Studio)',
-            'Custom software development'
+            'AI Readiness Assessment',
+            'IT Strategy Development',
+            'Internal Process Optimization',
+            'Digital Maturity Benchmarking',
+            'Change Management Planning'
           ],
-          deliver: 'Faster, leaner operations with up to 80% less manual data entry, freeing your team from repetitive work and giving leadership the accurate, real-time picture they need to make confident decisions.',
-          deliverStat: '↑ 80% less manual work',
+          deliver: 'Roadmap aligned to your sector, budget, and growth stage, built on Microsoft tools you already own. Evaluate your data maturity, workflow gaps, and team capability before any AI deployment begins. Identification and prioritization of your top operational bottlenecks with clear, measurable improvement targets. Stakeholder mapping, adoption frameworks, and communication plans so the transformation sticks.',
+          deliverStat: '📋 Strategic roadmap',
           industries: ['Government MDAs', 'International NGOs', 'Private Sector Organizations', 'Financial Services', 'Healthcare']
         },
-        infrastructure: {
+        automation: {
           num: '02',
-          title: 'IT Infrastructure Support',
-          intro: 'We manage and modernize your entire technology environment — from cloud strategy and migration to cybersecurity and proactive monitoring — so your team focuses on the business, not on keeping the lights on.',
+          title: 'Business Process Automation',
+          intro: 'We design, deploy, and maintain automation systems that replace manual, repetitive, error-prone work with intelligent processes that run 24/7. From a single workflow to an organization-wide unified layer, every build is connected, measurable, and live within weeks of sign-off.',
           img: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
           included: [
-            'IT infrastructure modernization & managed support',
-            'Cloud strategy, migration & deployment (Azure)',
-            'Cloud cost optimization & governance',
-            'Proactive monitoring & 24/7 incident response',
-            'Information security management (ISO 27001 aligned)',
-            'Penetration testing & threat detection',
-            'Zero Trust architecture & cybersecurity frameworks'
+            'Agentic AI Deployment',
+            'Executive Intelligence Dashboard Build',
+            'Workflow Automation',
+            'Data Integration & Unification',
+            'Automated Reporting & Predictive Analytics'
           ],
-          deliver: 'A resilient, cost-optimized IT environment where threats are neutralized before they escalate, cloud spend stays in check, and leadership never has to worry whether the infrastructure holding the business together is safe.',
-          deliverStat: '🛡️ 24/7 threat monitoring',
+          deliver: 'Connect siloed systems into a single, clean data layer, so every report draws from one source of truth. Copilot Studio agents that handle approvals, responses, and workflows autonomously 24/7, inside your Microsoft tenant. Dashboards that surface live KPIs, budget tracking, and operational health for decision-makers to get answers in seconds, not weeks. Workflows that eliminate manual handoffs, approvals, notifications, data capture, and reporting in one connected system. Scheduled reports, donor summaries, audit trails, and board packs are generated automatically with zero manual effort.',
+          deliverStat: '⚡ Live within weeks',
           industries: ['Government Agencies', 'Healthcare Organizations', 'Financial Institutions', 'Educational Institutions', 'NGOs with sensitive data']
         },
-        data: {
+        security: {
           num: '03',
-          title: 'Data Unification',
-          intro: 'We build the architecture, pipelines, and intelligence layers that unify your data across every department — then surface it as real-time dashboards, predictive insights, and automated reports your leadership can actually act on.',
+          title: 'Information Security',
+          intro: 'Your people, data, and systems are valuable. Protect it like it is. We don\'t just audit and advise; we architect, implement, and maintain your security posture as a living system. Zero Trust principles, data loss prevention, identity management, and staff awareness programs work together to ensure your organization is protected at every layer: people, process, and technology.',
           img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
           included: [
-            'Enterprise data strategy, architecture & governance',
-            'Data integration & interoperability across systems',
-            'Executive intelligence dashboards (Power BI, Microsoft Fabric)',
-            'Microsoft Copilot — natural-language queries on live data',
-            'Predictive analytics & AI-powered automation',
-            'Automated board reporting & donor reporting',
-            'Data compliance, security & audit readiness'
+            'Security Audit & Risk Assessment',
+            'Zero Trust Architecture',
+            'Data Loss Prevention (DLP)',
+            'Compliance & Policy Management',
+            'Security Awareness Training'
           ],
-          deliver: 'Board reports that generate themselves. A single verified source of organizational truth. And leadership that can ask a question about last quarter\'s variance and gets the answer in seconds, not weeks.',
-          deliverStat: '📊 Reports that write themselves',
+          deliver: 'A full review of your current vulnerabilities, access controls, and data handling with a prioritized remediation plan. Implement identity-first security with conditional access, MFA, and least-privilege controls across your Microsoft 365 environment. Policies that prevent sensitive data from leaving your tenant across email, SharePoint, Teams, and OneDrive. NDPR, ISO 27001, and donor compliance frameworks embedded into your day-to-day operations, not bolted at audit time. Staff phishing simulations, policy briefings, and incident response drills, so your people are your first line of defense.',
+          deliverStat: '🔒 Protected at every layer',
           industries: ['Government Ministries', 'International Development Organizations', 'Corporate Enterprises', 'Donor-funded Organizations', 'Regulatory Bodies']
         },
-        capacity: {
+        itsm: {
           num: '04',
-          title: 'Capacity Building',
-          intro: 'Technology only delivers value when your people know how to use it. We close the skills gap across your organization — from executive digital literacy to hands-on technical certification — turning your team into confident, capable digital practitioners.',
+          title: 'IT Service Management',
+          intro: 'IT that works so your team can too. The infrastructure layer on which everything runs. Reliable, maintained, and supported so your team can focus on work, not IT problems. Reliable devices, a responsive helpdesk, and clean Managed Services.',
           img: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?w=800&q=80',
           included: [
-            'Microsoft ecosystem training — M365, Power Platform, Azure',
-            'IT & cloud certifications (Microsoft, Security, Azure)',
-            'AI workshops & applied Copilot training',
-            'Digital fluency programmes for executives & senior leaders',
-            'Digital competency frameworks & workforce planning',
-            'Workforce augmentation & change management support'
+            'IT Asset Setup & Onboarding',
+            'Helpdesk & Service Desk Support',
+            'Asset Lifecycle Management',
+            'Cloud Infrastructure Management',
+            'IT Policy & Documentation'
           ],
-          deliver: 'Organizations that invest in upskilling recover ROI faster on every technology deployment. Your people stop fearing new tools and start using them to lead. Skills they\'re proud to own; capabilities your organization keeps permanently.',
-          deliverStat: '🎓 Certified practitioners',
+          deliver: 'Device procurement, configuration, Microsoft 365 licensing, and user onboarding done right the first time. Responsive L1–L3 support for your team from ticket management, remote resolution, and escalation on a managed retainer. Track, maintain, and retire hardware and software across your organization with full visibility in a live asset register. Azure and Microsoft 365 tenant administration, user provisioning, storage, licensing, and performance monitoring. Acceptable use of policies, IT handbooks, and SLA frameworks that bring structure and accountability to your IT operations.',
+          deliverStat: '🖥️ IT that works',
           industries: ['Public Sector Organizations', 'NGO Staff', 'Corporate Teams', 'Educational Institutions', 'Parastatals']
         }
       };
@@ -3056,6 +3659,26 @@
       const panelClose = document.getElementById('panelClose');
       const serviceCards = document.querySelectorAll('.service-card, .pillar-item');
       const stickyCta = document.getElementById('stickyCta');
+
+      // Related services mapping
+      const relatedServices = {
+        advisory: [
+          { id: 'automation', icon: '⚡', name: 'Business Process Automation', desc: 'From plan to reality' },
+          { id: 'security', icon: '🔒', name: 'Information Security', desc: 'Protect your investment' }
+        ],
+        automation: [
+          { id: 'advisory', icon: '📋', name: 'Digital Transformation Advisory', desc: 'Strategic planning' },
+          { id: 'itsm', icon: '🖥️', name: 'IT Service Management', desc: 'Keep it running' }
+        ],
+        security: [
+          { id: 'automation', icon: '⚡', name: 'Business Process Automation', desc: 'Secure workflows' },
+          { id: 'advisory', icon: '📋', name: 'Digital Transformation Advisory', desc: 'Risk-aware planning' }
+        ],
+        itsm: [
+          { id: 'automation', icon: '⚡', name: 'Business Process Automation', desc: 'Automated IT ops' },
+          { id: 'security', icon: '🔒', name: 'Information Security', desc: 'Secure infrastructure' }
+        ]
+      };
 
       // Open panel
       function openPanel(serviceId) {
@@ -3076,7 +3699,32 @@
         const industriesList = document.getElementById('panelIndustriesList');
         industriesList.innerHTML = data.industries.map(item => `<li>${item}</li>`).join('');
 
-        document.querySelectorAll('.panel-section').forEach(s => s.classList.remove('active'));
+        // Reset tabs
+        document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.panel-tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelector('.panel-tab[data-tab="included"]').classList.add('active');
+        document.getElementById('tab-included').classList.add('active');
+
+        // Populate related services
+        const related = relatedServices[serviceId] || [];
+        const relatedList = document.getElementById('panelRelatedList');
+        relatedList.innerHTML = related.map(r => `
+          <div class="panel-related-item" data-service="${r.id}">
+            <div class="panel-related-icon">${r.icon}</div>
+            <div class="panel-related-info">
+              <h4>${r.name}</h4>
+              <p>${r.desc}</p>
+            </div>
+            <div class="panel-related-arrow">→</div>
+          </div>
+        `).join('');
+
+        // Add click handlers for related services
+        relatedList.querySelectorAll('.panel-related-item').forEach(item => {
+          item.addEventListener('click', () => {
+            openPanel(item.dataset.service);
+          });
+        });
 
         overlay.classList.add('active');
         panel.classList.add('open');
@@ -3103,10 +3751,14 @@
       overlay.addEventListener('click', closePanel);
       document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePanel(); });
 
-      // Accordion
-      document.querySelectorAll('.panel-section-header').forEach(header => {
-        header.addEventListener('click', () => {
-          header.parentElement.classList.toggle('active');
+      // Panel tabs
+      document.querySelectorAll('.panel-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const tabId = tab.dataset.tab;
+          document.querySelectorAll('.panel-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.panel-tab-content').forEach(c => c.classList.remove('active'));
+          tab.classList.add('active');
+          document.getElementById('tab-' + tabId).classList.add('active');
         });
       });
 
@@ -3126,6 +3778,85 @@
         });
       });
 
+      // FAQ Search
+      const faqSearchInput = document.getElementById('faqSearchInput');
+      const faqNoResults = document.getElementById('faqNoResults');
+      if (faqSearchInput) {
+        faqSearchInput.addEventListener('input', function() {
+          const query = this.value.toLowerCase().trim();
+          let visibleCount = 0;
+          
+          document.querySelectorAll('.faq-item').forEach(item => {
+            const question = item.querySelector('h3').textContent.toLowerCase();
+            const answer = item.querySelector('.faq-answer-inner').textContent.toLowerCase();
+            const keywords = (item.dataset.keywords || '').toLowerCase();
+            const matches = question.includes(query) || answer.includes(query) || keywords.includes(query);
+            
+            item.classList.toggle('hidden', !matches && query !== '');
+            if (matches) visibleCount++;
+          });
+
+          faqNoResults.style.display = visibleCount === 0 && query !== '' ? 'block' : 'none';
+        });
+      }
+
+      // FAQ Categories
+      document.querySelectorAll('.faq-category-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const category = btn.dataset.category;
+          document.querySelectorAll('.faq-category-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          document.querySelectorAll('.faq-group').forEach(group => {
+            if (category === 'all') {
+              group.style.display = 'block';
+            } else {
+              const items = group.querySelectorAll('.faq-item');
+              let hasVisible = false;
+              items.forEach(item => {
+                const visible = item.dataset.category === category;
+                item.classList.toggle('hidden', !visible);
+                if (visible) hasVisible = true;
+              });
+              group.style.display = hasVisible ? 'block' : 'none';
+            }
+          });
+        });
+      });
+
+      // Scroll Progress
+      const scrollProgressBar = document.getElementById('scrollProgressBar');
+      const stickyServiceNav = document.getElementById('stickyServiceNav');
+
+      window.addEventListener('scroll', () => {
+        // Progress bar
+        const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (winScroll / height) * 100;
+        scrollProgressBar.style.width = scrolled + '%';
+
+        // Sticky service nav
+        const servicesSection = document.getElementById('services');
+        if (servicesSection) {
+          const rect = servicesSection.getBoundingClientRect();
+          stickyServiceNav.classList.toggle('visible', rect.top <= 100);
+        }
+
+        // Active nav link
+        const sections = ['services', 'process', 'why', 'faq', 'discovery'];
+        sections.forEach(id => {
+          const section = document.getElementById(id);
+          if (section) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 150 && rect.bottom >= 150) {
+              document.querySelectorAll('.sticky-service-nav a').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+              });
+            }
+          }
+        });
+      });
+
       // Sticky CTA
       window.addEventListener('scroll', () => {
         stickyCta?.classList.toggle('show', window.scrollY > 500);
@@ -3135,6 +3866,36 @@
       const nav = document.getElementById('mainNav');
       window.addEventListener('scroll', () => {
         nav?.classList.toggle('scrolled', window.scrollY > 20);
+      });
+
+      // Hero tabs
+      document.querySelectorAll('.hero-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          const serviceId = tab.dataset.service;
+          document.querySelectorAll('.hero-tab').forEach(t => t.classList.remove('active'));
+          document.querySelectorAll('.pillar-preview').forEach(p => p.classList.remove('active'));
+          tab.classList.add('active');
+          const preview = document.getElementById('pillar-preview-' + serviceId);
+          if (preview) preview.classList.add('active');
+        });
+      });
+
+      // Service filters
+      document.querySelectorAll('.service-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const filter = btn.dataset.filter;
+          document.querySelectorAll('.service-filter-btn').forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          document.querySelectorAll('.service-card').forEach(card => {
+            const service = card.dataset.service;
+            const show = filter === 'all' || service === filter;
+            card.classList.toggle('hidden', !show);
+            if (show) {
+              card.classList.add('filtered');
+            }
+          });
+        });
       });
 
       // Mobile menu

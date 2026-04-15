@@ -53,6 +53,72 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ── Scroll Progress ──
+  const scrollProgressBar = document.getElementById("scrollProgressBar");
+  const stickySectionNav = document.getElementById("stickySectionNav");
+
+  if (scrollProgressBar || stickySectionNav) {
+    window.addEventListener("scroll", () => {
+      // Progress bar - extends to the bottom of the entire page
+      if (scrollProgressBar) {
+        const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+        const height = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+        scrollProgressBar.style.width = scrolled + "%";
+      }
+
+      // Sticky section nav - show from problem section to bottom
+      if (stickySectionNav) {
+        const problemSection = document.getElementById("problem");
+        if (problemSection) {
+          const problemRect = problemSection.getBoundingClientRect();
+          const showNav = problemRect.top <= 100;
+          stickySectionNav.classList.toggle("visible", showNav);
+        }
+      }
+
+      // Active nav link - check all sections
+      if (stickySectionNav) {
+        const sections = ["problem", "outcomes", "how", "cases", "client-voices", "our-team"];
+        let activeFound = false;
+        
+        sections.forEach((id) => {
+          const section = document.getElementById(id);
+          if (section && !activeFound) {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= 180 && rect.bottom >= 180) {
+              stickySectionNav.querySelectorAll("a").forEach((a) => {
+                const href = a.getAttribute("href");
+                a.classList.toggle("active", href === "#" + id);
+              });
+              activeFound = true;
+            }
+          }
+        });
+        
+        // If no section is active (e.g., at bottom), highlight last visible section
+        if (!activeFound) {
+          const lastSection = document.getElementById("our-team");
+          if (lastSection) {
+            const rect = lastSection.getBoundingClientRect();
+            // If our-team is visible on screen at all, highlight it
+            if (rect.top < window.innerHeight && rect.bottom > 0) {
+              stickySectionNav.querySelectorAll("a").forEach((a) => {
+                const href = a.getAttribute("href");
+                a.classList.toggle("active", href === "#our-team");
+              });
+            } else {
+              // Remove all active states
+              stickySectionNav.querySelectorAll("a").forEach((a) => {
+                a.classList.remove("active");
+              });
+            }
+          }
+        }
+      }
+    });
+  }
+
   // ── Coming Soon links ──
   document.querySelectorAll(".coming-soon-link").forEach((link) => {
     link.addEventListener("click", (e) => {
