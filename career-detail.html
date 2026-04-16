@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Details — TechSpecialist</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --heading: #2f2f2f;
+      --body: #5f6368;
+      --border: #e5e7eb;
+      --blue: #4584ed;
+      --blue-dark: #2d65c4;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "DM Sans", system-ui, sans-serif;
+      color: var(--heading);
+      background: #fff;
+      line-height: 1.6;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 0 48px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo img { display: block; height: 40px; width: auto; }
+
+    .nav-links { display: flex; align-items: center; gap: 24px; }
+    .nav-links a {
+      color: var(--body);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--blue); }
+    .nav-links a.active { color: var(--blue); font-weight: 600; }
+
+    .nav-social { display: flex; align-items: center; gap: 8px; margin-left: 8px; }
+    .nav-social a {
+      width: 34px; height: 34px;
+      border-radius: 8px;
+      border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--body);
+      text-decoration: none;
+      font-size: 13px; font-weight: 700;
+      transition: all 0.2s;
+    }
+    .nav-social a:hover {
+      border-color: var(--blue);
+      color: var(--blue);
+      background: rgba(69, 132, 237, 0.06);
+    }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--heading);
+      border-radius: 2px;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      z-index: 200;
+      padding: 100px 24px 40px;
+      flex-direction: column;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+
+    .mobile-menu a {
+      display: block;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--heading);
+      text-decoration: none;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu a:hover { color: var(--blue); }
+
+    .mobile-menu-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 44px;
+      height: 44px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--heading);
+    }
+
+    /* Page Header */
+    .page-header {
+      padding: 140px 80px 60px;
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .page-header-inner {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--body);
+      font-size: 14px;
+      text-decoration: none;
+      margin-bottom: 24px;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--blue); }
+
+    .job-department {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--blue);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .job-title {
+      font-family: "DM Serif Display", Georgia, serif;
+      font-size: clamp(32px, 5vw, 48px);
+      font-weight: 400;
+      color: var(--heading);
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .job-meta-list {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .job-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      color: var(--body);
+    }
+
+    .job-tag {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #f3f4f6;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--body);
+    }
+
+    .job-tag.type-full-time {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    .job-tag.type-contract {
+      background: #fef3c7;
+      color: #b45309;
+    }
+
+    /* Content Section */
+    .detail-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 64px 80px 120px;
+    }
+
+    /* Notice Banner */
+    .notice-banner {
+      background: #fef3c7;
+      border: 1px solid #fcd34d;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 40px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .notice-banner svg {
+      width: 20px;
+      height: 20px;
+      color: #b45309;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .notice-banner p {
+      font-size: 14px;
+      color: #92400e;
+      line-height: 1.5;
+    }
+
+    /* Placeholder Card */
+    .placeholder-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 64px;
+      text-align: center;
+      background: #fafbfc;
+    }
+
+    .placeholder-icon {
+      width: 80px;
+      height: 80px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 28px;
+    }
+
+    .placeholder-icon svg {
+      width: 40px;
+      height: 40px;
+      color: var(--body);
+    }
+
+    .placeholder-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--heading);
+      margin-bottom: 12px;
+    }
+
+    .placeholder-text {
+      font-size: 15px;
+      color: var(--body);
+      line-height: 1.7;
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+
+    .placeholder-features {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+
+    .placeholder-feature {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 16px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+
+    .placeholder-feature svg {
+      width: 16px;
+      height: 16px;
+      color: #047857;
+    }
+
+    .placeholder-feature span {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--heading);
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: var(--heading);
+      color: #fff;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover {
+      background: #000;
+    }
+
+    /* Footer */
+    footer {
+      background: #0d1f3c;
+      color: #fff;
+    }
+
+    .footer-top {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 64px 80px;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1fr 1fr;
+      gap: 48px;
+    }
+
+    .footer-brand { max-width: 320px; }
+
+    .footer-logo img { height: 40px; width: auto; margin-bottom: 16px; }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.6;
+    }
+
+    .footer-social { display: flex; gap: 12px; margin-top: 24px; }
+    .footer-social a {
+      width: 40px; height: 40px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 16px;
+      transition: all 0.2s;
+    }
+    .footer-social a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: #fff;
+    }
+
+    .footer-col-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+    }
+
+    .footer-col a {
+      display: block;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.55);
+      text-decoration: none;
+      padding: 6px 0;
+      transition: color 0.2s;
+    }
+    .footer-col a:hover { color: rgba(255, 255, 255, 0.9); }
+
+    .footer-contact-item {
+      display: flex !important;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 8px 0 !important;
+    }
+
+    .footer-contact-icon { font-size: 14px; opacity: 0.7; flex-shrink: 0; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px 80px;
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .footer-bottom a { color: rgba(255, 255, 255, 0.45); text-decoration: none; }
+    .footer-bottom a:hover { color: rgba(255, 255, 255, 0.8); }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .page-header { padding: 120px 40px 48px; }
+      .detail-content { padding: 48px 40px 80px; }
+      .footer-top { grid-template-columns: 1fr 1fr; padding: 48px 40px; }
+      .footer-brand { grid-column: 1 / -1; }
+      .footer-bottom { padding: 24px 40px; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+
+      .page-header { padding: 100px 20px 40px; }
+      .job-meta-list { gap: 12px; }
+
+      .detail-content { padding: 40px 20px 80px; }
+      .placeholder-card { padding: 40px 24px; }
+      .placeholder-features { flex-direction: column; align-items: center; }
+
+      .footer-top { grid-template-columns: 1fr; padding: 48px 20px; }
+      .footer-bottom { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav id="mainNav">
+    <div class="nav-logo">
+      <a href="/"><img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1772108889/WhatsApp_Image_2026-02-26_at_12.00.40-removebg-preview_qp8kjd.png" alt="TechSpecialist"></a>
+    </div>
+    <div class="nav-links">
+      <a href="/">Home</a>
+      <a href="/services">Services</a>
+      <a href="/careers" class="active">Careers</a>
+      <div class="nav-social">
+        <a href="https://www.linkedin.com/company/techspecialist-limited/posts/?feedView=all" target="_blank" rel="noopener" title="LinkedIn">in</a>
+        <a href="https://x.com/Tclafrica" target="_blank" rel="noopener" title="Twitter / X">𝕏</a>
+        <a href="mailto:info@techspecialistlimited.com" title="Email us">✉</a>
+      </div>
+    </div>
+    <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobileMenu">
+    <button class="mobile-menu-close" id="mobileMenuClose">×</button>
+    <a href="/">Home</a>
+    <a href="/services">Services</a>
+    <a href="/careers">Careers</a>
+    <a href="/#discovery">Contact</a>
+  </div>
+
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="page-header-inner">
+      <a href="/careers" class="back-link">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to Careers
+      </a>
+      <p class="job-department" id="job-department">Engineering</p>
+      <h1 class="job-title" id="job-title">Senior Software Engineer</h1>
+      <div class="job-meta-list">
+        <span class="job-meta-item" id="job-location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          On-site
+        </span>
+        <span class="job-meta-item" id="job-type">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/>
+            <line x1="8" y1="2" x2="8" y2="6"/>
+            <line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+          Full-time
+        </span>
+        <span class="job-tag type-full-time" id="type-badge">Full-time</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Content Section -->
+  <section class="detail-content">
+    <div class="notice-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="12" y1="8" x2="12" y2="12"/>
+        <line x1="12" y1="16" x2="12.01" y2="16"/>
+      </svg>
+      <p>This page is under construction. Full job details and application features are being finalized.</p>
+    </div>
+
+    <div class="placeholder-card">
+      <div class="placeholder-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14,2 14,8 20,8"/>
+          <line x1="16" y1="13" x2="8" y2="13"/>
+          <line x1="16" y1="17" x2="8" y2="17"/>
+        </svg>
+      </div>
+      <h2 class="placeholder-title">Job Details Coming Soon</h2>
+      <p class="placeholder-text">
+        This job detail page is coming soon. We are currently finalizing full role descriptions, 
+        requirements, and application features to ensure the best candidate experience.
+      </p>
+      <div class="placeholder-features">
+        <div class="placeholder-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+          <span>Role Requirements</span>
+        </div>
+        <div class="placeholder-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+          <span>Responsibilities</span>
+        </div>
+        <div class="placeholder-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+          <span>Benefits & Perks</span>
+        </div>
+        <div class="placeholder-feature">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="20,6 9,17 4,12"/>
+          </svg>
+          <span>Application Form</span>
+        </div>
+      </div>
+      <a href="/careers" class="back-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+        Back to All Positions
+      </a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <img src="https://res.cloudinary.com/daqmbfctv/image/upload/v1772108889/WhatsApp_Image_2026-02-26_at_12.00.40-removebg-preview_qp8kjd.png" alt="TechSpecialist">
+        </div>
+        <p class="footer-tagline">Automate the Work, Empower your Workforce</p>
+        <div class="footer-social">
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Facebook">f</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">What We Do</div>
+        <a href="/">About Us</a>
+        <a href="/services">Services</a>
+        <a href="/careers">Careers</a>
+        <a href="/#discovery">Contact</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Solutions</div>
+        <a href="/services">AI Automation</a>
+        <a href="/services">Cloud Services</a>
+        <a href="/services">Digital Transformation</a>
+        <a href="/services">Analytics</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Get in Touch</div>
+        <a href="https://maps.google.com/?q=2+Harare+Street+Wuse+Zone+6+Abuja" target="_blank" rel="noopener" class="footer-contact-item">
+          <span class="footer-contact-icon">📍</span>
+          2 Harare Street, Wuse Zone 6, Abuja
+        </a>
+        <a href="mailto:info@techspecialistlimited.com" class="footer-contact-item">
+          <span class="footer-contact-icon">✉️</span>
+          info@techspecialistlimited.com
+        </a>
+        <a href="tel:+23409291144" class="footer-contact-item">
+          <span class="footer-contact-icon">📞</span>
+          +234 092 911 44
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2025 TechSpecialist Limited. All rights reserved.</span>
+      <div>
+        <a href="#">Privacy Policy</a> · <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function getJobById(id) {
+      const jobs = [
+        { id: 1, title: "Senior Software Engineer", department: "Engineering", location: "On-site", type: "Full-time" },
+        { id: 2, title: "UI/UX Designer", department: "Design", location: "On-site", type: "Full-time" },
+        { id: 3, title: "DevOps Engineer", department: "Engineering", location: "On-site", type: "Full-time" }
+      ];
+      return jobs.find(job => job.id === parseInt(id));
+    }
+
+    function getTypeClass(type) {
+      return `type-${type.toLowerCase().replace(' ', '-')}`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const params = new URLSearchParams(window.location.search);
+      const jobId = params.get('id');
+      const job = getJobById(jobId);
+
+      if (job) {
+        document.getElementById('job-department').textContent = job.department;
+        document.getElementById('job-title').textContent = job.title;
+        document.getElementById('job-location').innerHTML = `
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+            <circle cx="12" cy="10" r="3"/>
+          </svg>
+          ${job.location}
+        `;
+        document.getElementById('type-badge').textContent = job.type;
+        document.getElementById('type-badge').className = `job-tag ${getTypeClass(job.type)}`;
+        
+        document.title = `${job.title} — TechSpecialist Careers`;
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      var hamburger = document.getElementById('navHamburger');
+      var mobileMenu = document.getElementById('mobileMenu');
+      var closeBtn = document.getElementById('mobileMenuClose');
+
+      if (hamburger && mobileMenu) {
+        hamburger.addEventListener('click', function() {
+          mobileMenu.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        });
+      }
+
+      if (closeBtn && mobileMenu) {
+        closeBtn.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      }
+
+      mobileMenu.querySelectorAll('a').forEach(function(link) {
+        link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+    });
+  </script>
+</body>
+</html>
