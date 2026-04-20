@@ -3,6 +3,25 @@
     { "source": "/home", "destination": "/index.html" },
     { "source": "/services", "destination": "/services.html" },
     { "source": "/careers", "destination": "/careers.html" },
-    { "source": "/careers/:id", "destination": "/career-detail.html" }
+    { "source": "/careers/:id", "destination": "/career-detail.html" },
+    { "source": "/admin", "destination": "/admin/index.html" },
+    { "source": "/admin/login", "destination": "/admin/login.html" },
+    { "source": "/admin/jobs", "destination": "/admin/jobs.html" },
+    { "source": "/admin/jobs/:action", "destination": "/admin/jobs.html" },
+    { "source": "/admin/applications", "destination": "/admin/applications.html" },
+    { "source": "/admin/logout", "destination": "/admin/login.html" },
+    { "source": "/apply", "destination": "/apply.html" },
+    { "source": "/apply/:id", "destination": "/apply.html" }
+  ],
+  "redirects": [
+    { "source": "/index.html", "destination": "/home", "statusCode": 301 },
+    { "source": "/services.html", "destination": "/services", "statusCode": 301 },
+    { "source": "/careers.html", "destination": "/careers", "statusCode": 301 },
+    { "source": "/career-detail.html", "destination": "/careers", "statusCode": 301 },
+    { "source": "/apply.html", "destination": "/apply", "statusCode": 301 },
+    { "source": "/admin/index.html", "destination": "/admin", "statusCode": 301 },
+    { "source": "/admin/login.html", "destination": "/admin/login", "statusCode": 301 },
+    { "source": "/admin/jobs.html", "destination": "/admin/jobs", "statusCode": 301 },
+    { "source": "/admin/applications.html", "destination": "/admin/applications", "statusCode": 301 }
   ]
 }
