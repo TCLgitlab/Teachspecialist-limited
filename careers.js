@@ -1,45 +1,24 @@
-const jobs = [
-  {
-    id: 1,
-    title: "Senior Software Engineer",
-    department: "Engineering",
-    location: "On-site",
-    type: "Full-time",
-    description: "Lead the development of scalable microservices architecture and mentor junior developers in modern development practices.",
-    posted: "2 days ago"
-  },
-  {
-    id: 2,
-    title: "UI/UX Designer",
-    department: "Design",
-    location: "On-site",
-    type: "Full-time",
-    description: "Create intuitive user experiences and beautiful interfaces for enterprise software solutions.",
-    posted: "1 week ago"
-  },
-  {
-    id: 3,
-    title: "DevOps Engineer",
-    department: "Engineering",
-    location: "On-site",
-    type: "Full-time",
-    description: "Build and maintain CI/CD pipelines, manage cloud infrastructure, and ensure 99.9% uptime for production systems.",
-    posted: "3 days ago"
-  }
-];
+// Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyD1151-t0RDGn1bz0GwMr4Uv0uA4E6bnoo",
+  authDomain: "techspecialist-careers.firebaseapp.com",
+  projectId: "techspecialist-careers",
+  storageBucket: "techspecialist-careers.firebasestorage.app",
+  messagingSenderId: "68286942864",
+  appId: "1:68286942864:web:06748d637d7422f0ccd215"
+};
 
-const departments = [...new Set(jobs.map(job => job.department))].sort();
-const locations = [...new Set(jobs.map(job => job.location))].sort();
+let jobs = [];
 
 function getJobById(id) {
-  return jobs.find(job => job.id === parseInt(id));
+  return jobs.find(job => job.id === id);
 }
 
 function filterJobs(searchTerm = '', department = '', location = '') {
   return jobs.filter(job => {
     const matchesSearch = searchTerm === '' || 
       job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      job.description.toLowerCase().includes(searchTerm.toLowerCase());
+      job.description?.toLowerCase().includes(searchTerm.toLowerCase());
     
     const matchesDepartment = department === '' || job.department === department;
     const matchesLocation = location === '' || job.location === location;
@@ -49,16 +28,17 @@ function filterJobs(searchTerm = '', department = '', location = '') {
 }
 
 function renderJobRow(job) {
+  const postedDate = job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently';
   return `
-    <a href="/careers/${job.id}" class="job-row">
+    <a href="/apply.html?id=${job.id}" class="job-row">
       <div class="job-info">
         <h3 class="job-title">${job.title}</h3>
-        <p class="job-description">${job.description}</p>
+        <p class="job-description">${job.description || ''}</p>
       </div>
       <div class="job-meta">
         <span class="job-tag">${job.department}</span>
         <span class="job-tag">${job.location}</span>
-        <span class="job-tag type-${job.type.toLowerCase().replace(' ', '-')}">${job.type}</span>
+        <span class="job-tag type-${(job.type || 'full-time').toLowerCase().replace(' ', '-')}">${job.type || 'Full-time'}</span>
       </div>
       <div class="job-arrow">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -131,6 +111,8 @@ function resetFilters() {
 function populateFilters() {
   const departmentSelect = document.getElementById('department-filter');
   const locationSelect = document.getElementById('location-filter');
+  const departments = [...new Set(jobs.map(job => job.department))].sort();
+  const locations = [...new Set(jobs.map(job => job.location))].sort();
   
   if (departmentSelect) {
     departments.forEach(dept => {
@@ -151,9 +133,65 @@ function populateFilters() {
   }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+// Load jobs from Firestore
+async function loadJobsFromFirestore() {
+  try {
+    // Dynamic import for Firebase
+    const { initializeApp } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js');
+    const { getFirestore, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js');
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Fetch only active jobs
+    const q = query(collection(db, 'jobs'), where('status', '==', 'active'));
+    const snapshot = await getDocs(q);
+    
+    jobs = snapshot.docs.map(d => ({
+      id: d.id,
+      ...d.data()
+    }));
+
+    // Also fetch jobs without status field (for backwards compatibility)
+    const allDocs = await getDocs(collection(db, 'jobs'));
+    allDocs.docs.forEach(d => {
+      const data = d.data();
+      if (!data.status || data.status === 'active') {
+        if (!jobs.find(j => j.id === d.id)) {
+          jobs.push({ id: d.id, ...data });
+        }
+      }
+    });
+
+  } catch (error) {
+    console.error('Error loading jobs from Firestore:', error);
+    // Fallback to empty array if Firebase fails
+    jobs = [];
+  }
+}
+
+// Update stats on page
+function updateStats() {
+  const activeJobs = jobs.filter(j => j.status !== 'closed');
+  const departments = [...new Set(activeJobs.map(job => job.department).filter(Boolean))];
+  const locations = [...new Set(activeJobs.map(job => job.location).filter(Boolean))];
+  
+  document.getElementById('stat-positions').textContent = activeJobs.length;
+  document.getElementById('stat-departments').textContent = departments.length;
+  document.getElementById('stat-locations').textContent = locations.length;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  // Show loading state
+  const container = document.getElementById('job-listings');
+  if (container) {
+    container.innerHTML = '<div class="no-jobs"><p>Loading positions...</p></div>';
+  }
+
+  await loadJobsFromFirestore();
   populateFilters();
   renderJobs(jobs);
+  updateStats();
   
   const searchInput = document.getElementById('search-input');
   const departmentFilter = document.getElementById('department-filter');
