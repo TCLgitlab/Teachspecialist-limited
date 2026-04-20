@@ -30,7 +30,7 @@ function filterJobs(searchTerm = '', department = '', location = '') {
 function renderJobRow(job) {
   const postedDate = job.createdAt ? new Date(job.createdAt).toLocaleDateString() : 'Recently';
   return `
-    <a href="/apply.html?id=${job.id}" class="job-row">
+    <a href="/apply?id=${job.id}" class="job-row">
       <div class="job-info">
         <h3 class="job-title">${job.title}</h3>
         <p class="job-description">${job.description || ''}</p>

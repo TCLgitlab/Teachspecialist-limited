@@ -446,7 +446,7 @@
     </div>
 
     <nav class="sidebar-nav">
-      <a href="index.html" class="nav-item active">
+      <a href="/admin" class="nav-item active">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <rect x="3" y="3" width="7" height="9" rx="1"/>
           <rect x="14" y="3" width="7" height="5" rx="1"/>
@@ -455,14 +455,14 @@
         </svg>
         <span>Dashboard</span>
       </a>
-      <a href="jobs.html" class="nav-item">
+      <a href="/admin/jobs" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>
           <rect x="8" y="2" width="8" height="4" rx="1"/>
         </svg>
         <span>Jobs</span>
       </a>
-      <a href="applications.html" class="nav-item">
+      <a href="/admin/applications" class="nav-item">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
           <circle cx="9" cy="7" r="4"/>
@@ -558,7 +558,7 @@
     <!-- Quick Actions -->
     <h2 class="section-title">Quick Actions</h2>
     <div class="actions-grid">
-      <a href="jobs.html?action=new" class="action-card">
+      <a href="/admin/jobs?action=new" class="action-card">
         <div class="action-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
             <circle cx="12" cy="12" r="10"/>
@@ -569,7 +569,7 @@
         <div class="action-title">Post New Job</div>
         <div class="action-desc">Create a new job opening</div>
       </a>
-      <a href="applications.html" class="action-card">
+      <a href="/admin/applications" class="action-card">
         <div class="action-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
@@ -580,7 +580,7 @@
         <div class="action-title">Review Applications</div>
         <div class="action-desc">View incoming applications</div>
       </a>
-      <a href="jobs.html" class="action-card">
+      <a href="/admin/jobs" class="action-card">
         <div class="action-icon">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
             <line x1="4" y1="9" x2="20" y2="9"/>
@@ -599,7 +599,7 @@
       <div class="recent-card">
         <div class="recent-header">
           <h3 class="recent-title">Recent Applications</h3>
-          <a href="applications.html" class="recent-link">View All →</a>
+          <a href="/admin/applications" class="recent-link">View All →</a>
         </div>
         <ul class="recent-list" id="recent-applications">
           <li class="empty-state">
@@ -631,7 +631,7 @@
     // Check auth
     onAuthStateChanged(auth, async (user) => {
       if (!user) {
-        window.location.href = 'login.html';
+        window.location.href = '/admin/login';
         return;
       }
 
@@ -647,7 +647,7 @@
     // Logout
     document.getElementById('logout-btn').addEventListener('click', async () => {
       await signOut(auth);
-      window.location.href = 'login.html';
+      window.location.href = '/admin/login';
     });
 
     // Load dashboard stats
