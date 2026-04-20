@@ -1090,6 +1090,8 @@
                   <option value="QA Engineer">QA Engineer</option>
                   <option value="Marketing Manager">Marketing Manager</option>
                   <option value="Sales Executive">Sales Executive</option>
+                  <option value="Growth Strategist">Growth Strategist</option>
+                  <option value="Front Desk Officer">Front Desk Officer</option>
                   <option value="Other">Other (specify)</option>
                 </select>
               </div>
@@ -1104,6 +1106,7 @@
                   <option value="DevOps">DevOps</option>
                   <option value="Marketing">Marketing</option>
                   <option value="Sales">Sales</option>
+                  <option value="Business Development">Business Development</option>
                   <option value="Operations">Operations</option>
                   <option value="Other">Other</option>
                 </select>
@@ -1203,7 +1206,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { getAuth, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, getDocs, getDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyD1151-t0RDGn1bz0GwMr4Uv0uA4E6bnoo",
@@ -1248,27 +1251,75 @@
 
     // Smart description templates based on job title
     const descriptionTemplates = {
-      'Senior Software Engineer': 'We are looking for an experienced Senior Software Engineer to lead our development team. You will architect scalable solutions, mentor junior developers, and collaborate with product and design teams to build enterprise-grade applications.\n\nKey Responsibilities:\n• Design and implement high-quality software solutions\n• Lead code reviews and mentor junior developers\n• Collaborate with cross-functional teams\n• Ensure code quality and best practices',
-      'Software Engineer': 'Join our engineering team to build innovative solutions. You will work on feature development, bug fixes, and collaborate with team members to deliver high-quality software.\n\nKey Responsibilities:\n• Develop and maintain software features\n• Write clean, testable code\n• Participate in code reviews\n• Debug and resolve issues',
-      'Junior Software Engineer': 'Start your career with us! We are looking for a motivated Junior Software Engineer eager to learn and grow in a supportive environment.\n\nKey Responsibilities:\n• Learn and apply best coding practices\n• Assist in feature development\n• Write unit tests\n• Ask questions and seek guidance',
-      'DevOps Engineer': 'We need a DevOps Engineer to manage our cloud infrastructure, CI/CD pipelines, and ensure system reliability.\n\nKey Responsibilities:\n• Maintain and improve CI/CD pipelines\n• Manage cloud infrastructure (AWS/Azure/GCP)\n• Monitor system health and performance\n• Implement automation solutions',
-      'Frontend Developer': 'Build beautiful, responsive user interfaces for our web applications.\n\nKey Responsibilities:\n• Develop responsive web interfaces\n• Collaborate with designers\n• Optimize performance\n• Ensure cross-browser compatibility',
-      'Backend Developer': 'Build robust APIs and server-side logic for our applications.\n\nKey Responsibilities:\n• Design and implement APIs\n• Optimize database queries\n• Ensure data security\n• Write efficient server code',
-      'Full Stack Developer': 'Work on both frontend and backend development for our applications.\n\nKey Responsibilities:\n• Develop full feature implementations\n• Design database schemas\n• Create RESTful APIs\n• Collaborate across teams',
-      'UI/UX Designer': 'Create intuitive and beautiful user experiences for our products.\n\nKey Responsibilities:\n• Design user interfaces\n• Create wireframes and prototypes\n• Conduct user research\n• Collaborate with developers',
-      'Product Designer': 'Design cohesive product experiences from concept to delivery.\n\nKey Responsibilities:\n• Define product design strategy\n• Create design systems\n• Lead design reviews\n• Mentor design team',
-      'Data Analyst': 'Analyze data to derive insights and drive business decisions.\n\nKey Responsibilities:\n• Analyze datasets\n• Create reports and dashboards\n• Present findings\n• Collaborate with stakeholders',
-      'Data Scientist': 'Apply machine learning and statistical analysis to solve business problems.\n\nKey Responsibilities:\n• Build ML models\n• Analyze data patterns\n• Present insights\n• Deploy models to production',
-      'Cloud Architect': 'Design and implement cloud infrastructure solutions.\n\nKey Responsibilities:\n• Design cloud architecture\n• Ensure scalability and reliability\n• Optimize costs\n• Implement best practices',
-      'Project Manager': 'Lead projects from planning to delivery.\n\nKey Responsibilities:\n• Plan project scope\n• Manage timelines and budgets\n• Coordinate teams\n• Report progress',
-      'Business Analyst': 'Bridge business needs and technical solutions.\n\nKey Responsibilities:\n• Gather requirements\n• Analyze processes\n• Create documentation\n• Facilitate communication',
-      'QA Engineer': 'Ensure quality through comprehensive testing.\n\nKey Responsibilities:\n• Write test cases\n• Execute tests\n• Report bugs\n• Improve testing processes',
-      'System Administrator': 'Manage and maintain our IT systems.\n\nKey Responsibilities:\n• Maintain servers\n• Manage access and security\n• Monitor systems\n• Resolve issues',
-      'IT Support Specialist': 'Provide technical support to our team.\n\nKey Responsibilities:\n• Troubleshoot issues\n• Provide technical guidance\n• Maintain equipment\n• Document solutions',
-      'Marketing Manager': 'Lead marketing initiatives and growth strategies.\n\nKey Responsibilities:\n• Plan marketing campaigns\n• Manage digital marketing\n• Analyze campaign performance\n• Coordinate with sales',
-      'Sales Executive': 'Drive sales and build client relationships.\n\nKey Responsibilities:\n• Generate leads\n• Close deals\n• Build relationships\n• Meet targets',
-      'HR Manager': 'Lead human resources and team development.\n\nKey Responsibilities:\n• Manage recruitment\n• Develop HR policies\n• Handle employee relations\n• Plan training',
-      'Accountant': 'Manage financial records and reporting.\n\nKey Responsibilities:\n• Maintain financial records\n• Prepare reports\n• Ensure compliance\n• Support audits'
+      'Senior Software Engineer': `The Role
+
+We are looking for an experienced Senior Software Engineer to lead our development team. You will architect scalable solutions, mentor junior developers, and collaborate with product and design teams to build enterprise-grade applications.`,
+      'Software Engineer': `The Role
+
+Join our engineering team to build innovative solutions. You will work on feature development, bug fixes, and collaborate with team members to deliver high-quality software.`,
+      'Junior Software Engineer': `The Role
+
+Start your career with us! We are looking for a motivated Junior Software Engineer eager to learn and grow in a supportive environment.`,
+      'DevOps Engineer': `The Role
+
+We need a DevOps Engineer to manage our cloud infrastructure, CI/CD pipelines, and ensure system reliability for our operations.`,
+      'Frontend Developer': `The Role
+
+Build beautiful, responsive user interfaces for our web applications. You'll work closely with designers to bring designs to life.`,
+      'Backend Developer': `The Role
+
+Build robust APIs and server-side logic for our applications. You'll design efficient database schemas and ensure data security.`,
+      'Full Stack Developer': `The Role
+
+Work on both frontend and backend development for our applications. You'll have the opportunity to work across the entire technology stack.`,
+      'UI/UX Designer': `The Role
+
+Create intuitive and beautiful user experiences for our products. You'll design interfaces that users love and that drive business value.`,
+      'Product Designer': `The Role
+
+Design cohesive product experiences from concept to delivery. You'll lead the design strategy and create comprehensive design systems.`,
+      'Data Analyst': `The Role
+
+Analyze data to derive insights and drive business decisions. You'll create reports and dashboards that inform strategic decisions.`,
+      'Data Scientist': `The Role
+
+Apply machine learning and statistical analysis to solve business problems. You'll build models that transform data into actionable insights.`,
+      'Cloud Architect': `The Role
+
+Design and implement cloud infrastructure solutions. You'll ensure our systems are scalable, reliable, and cost-effective.`,
+      'Project Manager': `The Role
+
+Lead projects from planning to delivery. You'll coordinate teams, manage timelines, and ensure successful project outcomes.`,
+      'Business Analyst': `The Role
+
+Bridge business needs and technical solutions. You'll gather requirements and facilitate communication between stakeholders.`,
+      'QA Engineer': `The Role
+
+Ensure quality through comprehensive testing. You'll identify bugs and improve our testing processes.`,
+      'System Administrator': `The Role
+
+Manage and maintain our IT systems. You'll ensure system uptime, security, and performance.`,
+      'IT Support Specialist': `The Role
+
+Provide technical support to our team. You'll troubleshoot issues and ensure smooth daily operations.`,
+      'Marketing Manager': `The Role
+
+Lead marketing initiatives and growth strategies. You'll plan campaigns and analyze performance metrics.`,
+      'Sales Executive': `The Role
+
+Drive sales and build client relationships. You'll generate leads, close deals, and meet targets.`,
+      'Growth Strategist': `The Role
+
+Own revenue growth by selling Techspecialist's digital transformation portfolio — with IT sales expertise combined with product management thinking. Reports directly to the Leadership Team.`,
+      'Front Desk Officer': `The Role
+
+Serve as the first point of contact for Techspecialist, delivering exceptional client and visitor experiences while managing administrative functions.`,
+      'HR Manager': `The Role
+
+Lead human resources and team development. You'll manage recruitment, develop policies, and handle employee relations.`,
+      'Accountant': `The Role
+
+Manage financial records and reporting. You'll ensure compliance and support audits.`
     };
 
     // Suggested requirements by job title
@@ -1292,6 +1343,8 @@
       'IT Support Specialist': ['Technical support experience', 'Hardware/software troubleshooting', 'Customer service skills', 'Knowledge of common issues', 'Patience and communication'],
       'Marketing Manager': ['Digital marketing experience', 'Campaign management', 'Content creation', 'Analytics tools', 'Team leadership'],
       'Sales Executive': ['Sales experience', 'CRM knowledge', 'Negotiation skills', 'Lead generation', 'Target-driven'],
+      'Growth Strategist': ['Proficient experience in IT / technology sales', 'Proven record selling digital transformation — cloud, ERP/CRM, managed services, or e-governance', 'Product management experience — go-to-market, positioning, and roadmap contribution', 'B2B sales across government, private sector, and/or NGO clients', 'Commercial acumen — pricing, margins, deal structuring', 'Executive-level communication, written and verbal', 'Data-driven; tracks pipeline health and conversion metrics', 'BSc — Business, IT, Marketing, or related field', 'MBA / postgraduate degree — advantage', 'Product Management certification (CSPO/CPM) — strong advantage'],
+      'Front Desk Officer': ['Proven experience as a front desk officer or similar customer service role', 'Professional appearance and excellent interpersonal skills', 'Strong verbal communication and telephone etiquette', 'Organisational and multitasking abilities', 'Proficiency in Microsoft Office and email platforms', 'Problem-solving mindset with a customer-focused approach', 'High school diploma; additional certification is a plus'],
       'HR Manager': ['HR management experience', 'Recruitment skills', 'Employee relations', 'Policy development', 'HR certifications']
     };
 
@@ -1316,6 +1369,8 @@
       'IT Support Specialist': ['Troubleshoot technical issues', 'Provide technical guidance to users', 'Maintain equipment and software', 'Document solutions', 'Escalate complex issues'],
       'Marketing Manager': ['Plan and execute marketing campaigns', 'Manage digital marketing channels', 'Analyze campaign performance', 'Coordinate with sales team', 'Manage marketing budget'],
       'Sales Executive': ['Generate and qualify leads', 'Close sales deals', 'Build client relationships', 'Meet sales targets', 'Maintain CRM records'],
+      'Growth Strategist': ['Own the full B2B sales cycle from prospecting to close', 'Build and manage a qualified pipeline across all client sectors', 'Meet quarterly revenue targets for digital products and services', 'Lead client conversations on cloud, ERP/CRM, and enterprise digitisation', 'Craft tailored proposals that align Techspecialist capabilities to client needs', 'Apply product management thinking to service packaging and pricing', 'Feed field insights into product development and offering roadmaps', 'Track competitor positioning, trends, and growth opportunities', 'Deliver concise briefs to leadership'],
+      'Front Desk Officer': ['Greet and assist visitors, clients, and employees professionally', 'Manage incoming calls and direct to appropriate personnel', 'Handle incoming emails and correspondence', 'Coordinate meeting room bookings', 'Maintain visitor logs and issue temporary access badges', 'Support office operations including mail handling', 'Assist with event coordination and client reception'],
       'HR Manager': ['Lead recruitment efforts', 'Develop HR policies', 'Handle employee relations', 'Plan training programs', 'Ensure compliance']
     };
 
@@ -1340,6 +1395,8 @@
       'IT Support Specialist': ['Helpdesk experience', 'Health insurance', 'Training opportunities', 'Flexible hours', 'Career path'],
       'Marketing Manager': ['Creative freedom', 'Marketing budget', 'Health insurance', 'Performance bonuses', 'Leadership role'],
       'Sales Executive': ['Competitive commission', 'Sales training', 'Health insurance', 'Career growth', 'Team culture'],
+      'Growth Strategist': ['Direct access to leadership team', 'Performance-based incentives', 'Health insurance', 'Career growth path', 'Professional development budget', 'Exposure to cutting-edge technology'],
+      'Front Desk Officer': ['Health insurance', 'Professional training', 'Career growth opportunities', 'Friendly team environment', 'Stable working hours'],
       'HR Manager': ['Leadership role', 'HR certification support', 'Health insurance', 'Flexible hours', 'Employee wellness programs']
     };
 
@@ -1348,66 +1405,19 @@
       document.getElementById('modal-title').textContent = job ? 'Edit Job' : 'Post New Job';
       document.getElementById('save-btn-text').textContent = job ? 'Update Job' : 'Post Job';
 
-      // Handle custom fields visibility
-      const titleSelect = document.getElementById('job-title');
-      const deptSelect = document.getElementById('job-department');
-      const customTitleGroup = document.getElementById('custom-title-group');
-      const customDeptGroup = document.getElementById('custom-department-group');
-
-      document.getElementById('job-title').addEventListener('change', function() {
-        if (this.value === 'Other') {
-          customTitleGroup.style.display = 'block';
-        } else {
-          customTitleGroup.style.display = 'none';
-          document.getElementById('job-title-custom').value = '';
-          
-          // Auto-fill description (not placeholder - actual value)
-          if (descriptionTemplates[this.value]) {
-            document.getElementById('job-description').value = descriptionTemplates[this.value];
-          } else {
-            document.getElementById('job-description').value = '';
-          }
-          
-          // Auto-fill suggested requirements
-          if (requirementsSuggestions[this.value]) {
-            requirements = [...requirementsSuggestions[this.value]];
-          } else {
-            requirements = [];
-          }
-          
-          // Auto-fill responsibilities
-          if (responsibilitiesSuggestions[this.value]) {
-            responsibilities = [...responsibilitiesSuggestions[this.value]];
-          } else {
-            responsibilities = [];
-          }
-          
-          // Auto-fill benefits
-          if (benefitsSuggestions[this.value]) {
-            benefits = [...benefitsSuggestions[this.value]];
-          } else {
-            benefits = [];
-          }
-          
-          renderArrayTags();
-        }
-      });
-
-      document.getElementById('job-department').addEventListener('change', function() {
-        if (this.value === 'Other') {
-          customDeptGroup.style.display = 'block';
-        } else {
-          customDeptGroup.style.display = 'none';
-          document.getElementById('job-department-custom').value = '';
-        }
-      });
-
       // Reset custom fields
-      customTitleGroup.style.display = 'none';
-      customDeptGroup.style.display = 'none';
+      document.getElementById('custom-title-group').style.display = 'none';
+      document.getElementById('custom-department-group').style.display = 'none';
+
+      // Clear validation errors
+      document.querySelectorAll('.form-error').forEach(el => el.remove());
+      document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.style.borderColor = '');
 
       if (job) {
         document.getElementById('job-id').value = job.id;
+        
+        const titleSelect = document.getElementById('job-title');
+        const deptSelect = document.getElementById('job-department');
         
         // Check if job title exists in options
         const titleOption = Array.from(titleSelect.options).find(opt => opt.value === job.title);
@@ -1415,7 +1425,7 @@
           titleSelect.value = job.title;
         } else {
           titleSelect.value = 'Other';
-          customTitleGroup.style.display = 'block';
+          document.getElementById('custom-title-group').style.display = 'block';
           document.getElementById('job-title-custom').value = job.title;
         }
         
@@ -1425,7 +1435,7 @@
           deptSelect.value = job.department;
         } else {
           deptSelect.value = 'Other';
-          customDeptGroup.style.display = 'block';
+          document.getElementById('custom-department-group').style.display = 'block';
           document.getElementById('job-department-custom').value = job.department;
         }
         
@@ -1435,12 +1445,18 @@
         requirements = job.requirements || [];
         responsibilities = job.responsibilities || [];
         benefits = job.benefits || [];
+        requirementsRef.current = requirements;
+        responsibilitiesRef.current = responsibilities;
+        benefitsRef.current = benefits;
       } else {
         jobForm.reset();
         document.getElementById('job-id').value = '';
         requirements = [];
         responsibilities = [];
         benefits = [];
+        requirementsRef.current = requirements;
+        responsibilitiesRef.current = responsibilities;
+        benefitsRef.current = benefits;
         // Reset dropdowns to default
         document.getElementById('job-title').value = '';
         document.getElementById('job-department').value = '';
@@ -1474,13 +1490,68 @@
       if (e.key === 'Escape') closeModal();
     });
 
-    function setupArrayInput(containerId, array, onChange) {
+    // Job title change handler
+    document.getElementById('job-title').addEventListener('change', function() {
+      const customTitleGroup = document.getElementById('custom-title-group');
+      if (this.value === 'Other') {
+        customTitleGroup.style.display = 'block';
+      } else {
+        customTitleGroup.style.display = 'none';
+        document.getElementById('job-title-custom').value = '';
+        
+        if (descriptionTemplates[this.value]) {
+          document.getElementById('job-description').value = descriptionTemplates[this.value];
+        } else {
+          document.getElementById('job-description').value = '';
+        }
+        
+        if (requirementsSuggestions[this.value]) {
+          requirements = [...requirementsSuggestions[this.value]];
+          requirementsRef.current = requirements;
+        } else {
+          requirements = [];
+          requirementsRef.current = requirements;
+        }
+        
+        if (responsibilitiesSuggestions[this.value]) {
+          responsibilities = [...responsibilitiesSuggestions[this.value]];
+          responsibilitiesRef.current = responsibilities;
+        } else {
+          responsibilities = [];
+          responsibilitiesRef.current = responsibilities;
+        }
+        
+        if (benefitsSuggestions[this.value]) {
+          benefits = [...benefitsSuggestions[this.value]];
+          benefitsRef.current = benefits;
+        } else {
+          benefits = [];
+          benefitsRef.current = benefits;
+        }
+        
+        renderArrayTags();
+      }
+    });
+
+    // Department change handler
+    document.getElementById('job-department').addEventListener('change', function() {
+      const customDeptGroup = document.getElementById('custom-department-group');
+      if (this.value === 'Other') {
+        customDeptGroup.style.display = 'block';
+      } else {
+        customDeptGroup.style.display = 'none';
+        document.getElementById('job-department-custom').value = '';
+      }
+    });
+
+    function setupArrayInput(containerId, arrayRef, onChange) {
       const inputContainer = document.getElementById(containerId);
       const input = inputContainer.querySelector('input');
       const chipsContainer = document.getElementById(containerId.replace('-input', '-chips'));
 
       function renderChips() {
         chipsContainer.innerHTML = '';
+        const array = arrayRef.current;
         array.forEach((item, index) => {
           const chip = document.createElement('span');
           chip.className = 'array-chip';
@@ -1491,7 +1562,7 @@
         chipsContainer.querySelectorAll('button').forEach(btn => {
           btn.addEventListener('click', () => {
             const index = parseInt(btn.dataset.index);
-            array.splice(index, 1);
+            arrayRef.current.splice(index, 1);
             renderChips();
             onChange();
           });
@@ -1503,7 +1574,7 @@
           e.preventDefault();
           const value = input.value.trim();
           if (value) {
-            array.push(value);
+            arrayRef.current.push(value);
             input.value = '';
             renderChips();
             onChange();
@@ -1514,11 +1585,18 @@
       return { renderChips };
     }
 
-    const reqHandler = setupArrayInput('requirements-input', requirements, () => {});
-    const respHandler = setupArrayInput('responsibilities-input', responsibilities, () => {});
-    const benHandler = setupArrayInput('benefits-input', benefits, () => {});
+    const requirementsRef = { current: requirements };
+    const responsibilitiesRef = { current: responsibilities };
+    const benefitsRef = { current: benefits };
+
+    const reqHandler = setupArrayInput('requirements-input', requirementsRef, () => {});
+    const respHandler = setupArrayInput('responsibilities-input', responsibilitiesRef, () => {});
+    const benHandler = setupArrayInput('benefits-input', benefitsRef, () => {});
 
     function renderArrayTags() {
+      requirementsRef.current = requirements;
+      responsibilitiesRef.current = responsibilities;
+      benefitsRef.current = benefits;
       reqHandler.renderChips();
       respHandler.renderChips();
       benHandler.renderChips();
@@ -1583,10 +1661,9 @@
 
     window.editJob = async function(id) {
       const docRef = doc(db, 'jobs', id);
-      const snapshot = await getDocs(collection(db, 'jobs'));
-      const job = snapshot.docs.find(d => d.id === id);
-      if (job) {
-        openModal({ id: job.id, ...job.data() });
+      const snapshot = await getDoc(docRef);
+      if (snapshot.exists()) {
+        openModal({ id: snapshot.id, ...snapshot.data() });
       }
     };
 
@@ -1630,7 +1707,28 @@
       });
     };
 
+    function showFieldError(fieldId, message) {
+      const field = document.getElementById(fieldId);
+      field.style.borderColor = '#dc2626';
+      
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'form-error';
+      errorDiv.style.color = '#dc2626';
+      errorDiv.style.fontSize = '12px';
+      errorDiv.style.marginTop = '4px';
+      errorDiv.textContent = message;
+      
+      field.parentNode.appendChild(errorDiv);
+    }
+
+    function clearValidationErrors() {
+      document.querySelectorAll('.form-error').forEach(el => el.remove());
+      document.querySelectorAll('.form-input, .form-select, .form-textarea').forEach(el => el.style.borderColor = '');
+    }
+
     saveBtn.addEventListener('click', async () => {
+      clearValidationErrors();
+      
       const id = document.getElementById('job-id').value;
       
       // Handle "Other" selections
@@ -1642,21 +1740,49 @@
       const title = titleSelect.value === 'Other' && customTitle ? customTitle : titleSelect.value;
       const department = deptSelect.value === 'Other' && customDept ? customDept : deptSelect.value;
       
+      const location = document.getElementById('job-location').value;
+      const type = document.getElementById('job-type').value;
+      const description = document.getElementById('job-description').value;
+      
       // Validate
-      if (!title || title === '' || !department || department === '') {
-        alert('Please select or enter job title and department');
-        return;
+      let hasErrors = false;
+      
+      if (!title || title === '') {
+        showFieldError('job-title', 'Please select or enter a job title');
+        hasErrors = true;
       }
+      
+      if (!department || department === '') {
+        showFieldError('job-department', 'Please select or enter a department');
+        hasErrors = true;
+      }
+      
+      if (!location || location === '') {
+        showFieldError('job-location', 'Please select a location');
+        hasErrors = true;
+      }
+      
+      if (!type || type === '') {
+        showFieldError('job-type', 'Please select an employment type');
+        hasErrors = true;
+      }
+      
+      if (!description || description.trim() === '') {
+        showFieldError('job-description', 'Please enter a job description');
+        hasErrors = true;
+      }
+      
+      if (hasErrors) return;
       
       const data = {
         title: title,
         department: department,
-        location: document.getElementById('job-location').value,
-        type: document.getElementById('job-type').value,
-        description: document.getElementById('job-description').value,
-        requirements,
-        responsibilities,
-        benefits,
+        location: location,
+        type: type,
+        description: description,
+        requirements: requirementsRef.current,
+        responsibilities: responsibilitiesRef.current,
+        benefits: benefitsRef.current,
         status: 'active',
         updatedAt: serverTimestamp()
       };
