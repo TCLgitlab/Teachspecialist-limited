@@ -1,6 +1,6 @@
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDa9LbXidgOEW0QVA3sptHiZ2Fh1UTa3lo",
+  apiKey: "AIzaSyD1151-t0RDGn1bz0GwMr4Uv0uA4E6bnoo",
   authDomain: "techspecialist-careers.firebaseapp.com",
   projectId: "techspecialist-careers",
   storageBucket: "techspecialist-careers.firebasestorage.app",
