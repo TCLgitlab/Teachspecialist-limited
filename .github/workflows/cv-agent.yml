@@ -1,0 +1,56 @@
+name: CV Parser Agent
+
+on:
+  schedule:
+    # Run every 30 minutes
+    - cron: '*/30 * * * *'
+  workflow_dispatch:
+    # Allow manual trigger from GitHub Actions UI
+  push:
+    # Also run when code is pushed (for testing)
+
+jobs:
+  parse-cv:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install firebase axios
+
+      - name: Run CV Parser Agent
+        run: node agent.js
+        env:
+          AFFINDA_API_KEY: ${{ secrets.AFFINDA_API_KEY }}
+          AFFINDA_WORKSPACE: ${{ secrets.AFFINDA_WORKSPACE }}
+        timeout-minutes: 15
+
+      - name: Report Results
+        if: always()
+        run: |
+          echo "CV Parser Agent execution completed"
+          echo "Check the logs above for results"
+          echo ""
+          echo "## Summary"
+          echo "- Total applications found"
+          echo "- Successfully parsed"
+          echo "- Errors"
+          echo "- Skipped"
+
+  notify-on-completion:
+    needs: parse-cv
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show completion
+        run: |
+          echo "========================================="
+          echo "Agent run completed at $(date)"
+          echo "========================================="
