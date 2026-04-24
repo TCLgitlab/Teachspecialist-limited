@@ -47,6 +47,22 @@
 }
 
 /* ============================================
+   PAGE HEADER DARK MODE
+   ============================================ */
+[data-theme="dark"] .page-header {
+  background: #0f1419 !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .page-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .page-subtitle {
+  color: #ffffff !important;
+}
+
+/* ============================================
    NAVIGATION DARK MODE
    ============================================ */
 [data-theme="dark"] nav {
