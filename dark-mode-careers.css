@@ -194,6 +194,7 @@
 [data-theme="dark"] .job-row {
   background: #1a1f2e !important;
   border-color: #2d3548 !important;
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] .job-row:hover {
@@ -203,6 +204,14 @@
 }
 
 [data-theme="dark"] .job-title-list {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .job-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .job-description {
   color: #ffffff !important;
 }
 
@@ -238,6 +247,7 @@
    ============================================ */
 [data-theme="dark"] .job-department {
   color: #60a5fa !important;
+
 }
 
 [data-theme="dark"] .job-tag {
@@ -252,6 +262,7 @@
 
 [data-theme="dark"] .content-section {
   background: #0f1419 !important;
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] .content-inner {
@@ -277,7 +288,7 @@
 }
 
 [data-theme="dark"] .no-jobs p {
-  color: #9ca3af !important;
+  color: #fff !important;
 }
 
 [data-theme="dark"] .no-jobs .reset-btn {
