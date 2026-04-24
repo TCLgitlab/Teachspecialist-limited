@@ -18,8 +18,7 @@
   <link rel="stylesheet" href="styles.css?v=5" />
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-      /* ── DESIGN SYSTEM ── */
-      :root {
+:root {
         --blue: #4584ed;
         --blue-dark: #2d65c4;
         --orange: #ef6526;
@@ -36,6 +35,7 @@
         --shadow-lg:
           0 12px 40px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
       }
+
       *,
       *::before,
       *::after {
@@ -3164,6 +3164,7 @@
         <a href="#cases">Use Cases</a>
         <a href="#our-team">Our Team</a>
         <div class="nav-social">
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">☀️</button>
           <a
             href="https://www.linkedin.com/company/techspecialist-limited/posts/?feedView=all"
             target="_blank"
@@ -3176,8 +3177,7 @@
             target="_blank"
             rel="noopener"
             title="Twitter / X"
-            >𝕏</a
-          >
+            >𝕏</a>
           <a href="mailto:info@techspecialistlimited.com" title="Email us">✉</a>
         </div>
       </div>
@@ -3898,23 +3898,7 @@
                 <div class="author-avatar">AO</div>
                 <div>
                   <div class="author-name">Director General</div>
-                  <div class="author-title">Federal Ministry — Abuja</div>
-                </div>
-              </div>
-            </div>
-            <div class="testimonial">
-              <div class="testimonial-badge">International NGO</div>
-              <div class="testimonial-text">
-                "Our quarterly donor report used to consume three weeks of my
-                program team's time. Now it generates itself the morning before
-                I need it. I honestly didn't believe it was possible on our
-                existing Microsoft licences."
-              </div>
-              <div class="testimonial-author">
-                <div class="author-avatar">FM</div>
-                <div>
-                  <div class="author-name">Country Director</div>
-                  <div class="author-title">INGO — Lagos & Abuja</div>
+                  <div class="author-title">Federal Ministry</div>
                 </div>
               </div>
             </div>
@@ -3930,27 +3914,12 @@
                 <div>
                   <div class="author-name">CEO</div>
                   <div class="author-title">
-                    Financial Services Group — Lagos
+                    Financial Services Group
                   </div>
                 </div>
               </div>
             </div>
-            <div class="testimonial">
-              <div class="testimonial-badge">Government Parastatal</div>
-              <div class="testimonial-text">
-                "The Copilot integration changed everything. I asked it a
-                question about our Q2 variance during a board presentation and
-                it answered in real time. The board asked who our data analyst
-                was. The answer is — Microsoft AI."
-              </div>
-              <div class="testimonial-author">
-                <div class="author-avatar">NK</div>
-                <div>
-                  <div class="author-name">Executive Director</div>
-                  <div class="author-title">Federal Parastatal — Nigeria</div>
-                </div>
-              </div>
-            </div>
+           
           </div>
         </div>
         <button class="carousel-arrow carousel-next" id="testimonialNext">
@@ -4039,15 +4008,7 @@
         <div class="team-header-v2">
           <div>
             <div class="team-tag-v2">Our Team</div>
-            <!-- <h2 class="team-h2-v2">
-              The people behind<br />your <em>transformation.</em>
-            </h2> -->
           </div>
-          <!-- <p class="team-sub-v2">
-            A tight-knit team of Microsoft-certified engineers, data architects,
-            and transformation specialists — built specifically for Africa's
-            most complex organisations.
-          </p> -->
         </div>
 
         <!-- Featured 3 -->
@@ -4055,12 +4016,12 @@
           <div class="team-card-founder">
             <div class="founder-photo" id="founderPhoto" onclick="revealFounderBio()">
               <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_3291,w_3428/TBS_7478_1.jpg_p7ahff.jpg"
+src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_3291,w_3428/TBS_7478_1.jpg_p7ahff.jpg"
                 alt="Kadir Salami"
               />
             </div>
             <div class="founder-body">
-              <!-- <div class="fc-role-tag">Founder</div> -->
+             
               <div class="fc-name">Kadir Salami</div>
               <div class="fc-title">CEO & Founder</div>
               <div class="fc-divider"></div>
@@ -4090,14 +4051,11 @@
               <div class="lc-divider"></div>
             </div>
           </div>
-          <div class="team-card-large">
+<div class="team-card-large">
             <div class="large-photo">
-             <img
-                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2930,w_3106/TBS_7248.jpg_ipltwe.jpg"
+             <img   src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_2930,w_3106/TBS_7248.jpg_ipltwe.jpg"
                 alt="Joy Adah"
               /> 
-            </div>
-            <div class="large-body">
             </div>
             <div class="large-body">
               <div class="sc-role">People & Culture Manager </div>
@@ -4117,7 +4075,7 @@
               />
             </div>
             <div class="small-body">
-               <div class="lc-role">Project Management</div>
+            <div class="lc-role">Project Management</div>
               <div class="lc-name">Suleman Olalomi</div>
               <div class="sc-divider"></div>
             </div>
@@ -4158,6 +4116,19 @@
             <div class="small-body">
               <div class="sc-role">Microsoft 365 Solutions Engineer</div>
               <div class="sc-name">Charles Onyeso</div>
+              <div class="sc-divider"></div>
+            </div>
+          </div>
+          <div class="team-card-small hidden" data-team-card="true">
+            <div class="small-photo">
+              <img
+                src="https://res.cloudinary.com/daqmbfctv/image/upload/c_crop,g_north_west,h_1115,w_1024/ChatGPT_Image_Mar_23_2026_02_41_23_PM_cuwmuf.png"
+                alt="Abbas Taofeeq"
+              />
+            </div>
+            <div class="small-body">
+              <div class="sc-role">Business Automation Associate</div>
+              <div class="sc-name">Abbas Taofeeq</div>
               <div class="sc-divider"></div>
             </div>
           </div>
@@ -4569,9 +4540,9 @@
     <!-- EmailJS -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script>
-      const EMAILJS_PUBLIC_KEY = "6rRXLq1IpQrsJRJdk";
-      const EMAILJS_SERVICE_ID = "service_mjlvchb";
-      const EMAILJS_TEMPLATE_ID = "template_cd0j0k6";
+      const EMAILJS_PUBLIC_KEY = "c3dGcTMwnlYoZt1QQ";
+      const EMAILJS_SERVICE_ID = "service_fmpndgn";
+      const EMAILJS_TEMPLATE_ID = "template_z47v9aq";
       emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
       (function () {
@@ -4642,6 +4613,53 @@
           else toggleElement.classList.remove("expanded");
         }
       }
+
+      // Theme Toggle
+      (function() {
+        const toggle = document.getElementById('themeToggle');
+        if (!toggle) return;
+
+        let darkLink = null;
+
+        function loadDarkCSS() {
+          if (!darkLink) {
+            darkLink = document.createElement('link');
+            darkLink.rel = 'stylesheet';
+            darkLink.href = 'dark-mode.css';
+          }
+          document.head.appendChild(darkLink);
+        }
+
+        function unloadDarkCSS() {
+          if (darkLink) {
+            darkLink.remove();
+          }
+        }
+
+        // Check saved preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          toggle.textContent = '🌙';
+          loadDarkCSS();
+        }
+
+        toggle.addEventListener('click', function() {
+          const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+          
+          if (isDark) {
+            document.documentElement.removeAttribute('data-theme');
+            localStorage.setItem('theme', 'light');
+            toggle.textContent = '☀️';
+            unloadDarkCSS();
+          } else {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            toggle.textContent = '🌙';
+            loadDarkCSS();
+          }
+        });
+      })();
     </script>
   </body>
 </html>

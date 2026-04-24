@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="dark-mode-careers.css">
   <style>
     :root {
       --heading: #2f2f2f;
@@ -846,16 +847,24 @@
       <a href="/">Home</a>
       <a href="/services">Services</a>
       <a href="/careers" class="active">Careers</a>
-      <div class="nav-social">
-        <a href="https://www.linkedin.com/company/techspecialist-limited/posts/?feedView=all" target="_blank" rel="noopener" title="LinkedIn">in</a>
-        <a href="https://x.com/Tclafrica" target="_blank" rel="noopener" title="Twitter / X">𝕏</a>
-        <a href="mailto:info@techspecialistlimited.com" title="Email us">✉</a>
-      </div>
+     <div class="nav-social">
+       <a href="https://twitter.com" target="_blank">X</a>
+       <a href="https://linkedin.com" target="_blank">in</a>
+        
+     </div>
+     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme" title="Toggle light/dark mode">
+       <span id="themeIcon">🌙</span>
+     </button>
     </div>
     <button class="nav-hamburger" id="navHamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
-  </nav>
+   </nav>
+
+  <!-- Scroll Progress -->
+  <div class="scroll-progress">
+    <div class="scroll-progress-bar" id="scrollProgress"></div>
+  </div>
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobileMenu">
@@ -1118,7 +1127,57 @@
 
     // Close modal on escape key
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
+       if (e.key === 'Escape') closeModal();
+     });
+
+    // Theme Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.getElementById('themeToggle');
+      const themeIcon = document.getElementById('themeIcon');
+      if (!toggle || !themeIcon) return;
+
+      // Check for saved theme preference or respect OS preference
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        themeIcon.textContent = '☀️';
+      }
+
+      toggle.addEventListener('click', () => {
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        
+        if (isDark) {
+          document.documentElement.removeAttribute('data-theme');
+          localStorage.setItem('theme', 'light');
+          themeIcon.textContent = '🌙';
+        } else {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          localStorage.setItem('theme', 'dark');
+          themeIcon.textContent = '☀️';
+        }
+      });
+    });
+
+    // Scroll Progress
+    const scrollProgress = document.getElementById('scrollProgress');
+    
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      scrollProgress.style.width = scrolled + '%';
+    });
+
+    // Show/hide scroll progress based on scroll position
+    const progressContainer = document.querySelector('.scroll-progress');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 100) {
+        progressContainer.style.display = 'block';
+      } else {
+        progressContainer.style.display = 'none';
+      }
     });
   </script>
 </body>

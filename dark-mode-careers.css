@@ -1,0 +1,365 @@
+/* Dark Mode CSS - Careers Page */
+
+/* ============================================
+   THEME TOGGLE BUTTON
+   ============================================ */
+.theme-toggle {
+  background: none;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  margin-left: 8px;
+  transition: all 0.2s;
+}
+.theme-toggle:hover {
+  border-color: #4584ed;
+  background: rgba(69, 132, 237, 0.06);
+}
+
+[data-theme="dark"] .theme-toggle {
+  border-color: #2d3548;
+}
+[data-theme="dark"] .theme-toggle:hover {
+  border-color: #4584ed;
+  background: rgba(69, 132, 237, 0.1);
+}
+
+/* ============================================
+   DARK MODE VARIABLES
+   ============================================ */
+[data-theme="dark"] {
+  --heading: #f3f4f6;
+  --body: #ffffff;
+  --border: #2d3548;
+  --blue: #60a5fa;
+  --blue-dark: #3b82f6;
+}
+
+/* Open Positions heading - black in dark mode */
+[data-theme="dark"] .jobs-section h2 {
+  color: #000000 !important;
+}
+
+/* ============================================
+   NAVIGATION DARK MODE
+   ============================================ */
+[data-theme="dark"] nav {
+  background: #0f1419 !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .nav-links a {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .nav-links a:hover {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .nav-social a {
+  border-color: #2d3548 !important;
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .nav-social a:hover {
+  border-color: #60a5fa !important;
+  color: #60a5fa !important;
+  background: rgba(69, 132, 237, 0.06) !important;
+}
+
+[data-theme="dark"] .nav-hamburger span {
+  background: #f3f4f6 !important;
+}
+
+/* Mobile Menu */
+[data-theme="dark"] .mobile-menu {
+  background: #0f1419 !important;
+}
+
+[data-theme="dark"] .mobile-menu a {
+  color: #ffffff !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .mobile-menu-close {
+  color: #f3f4f6 !important;
+}
+
+/* ============================================
+   PAGE HEADER DARK MODE
+   ============================================ */
+[data-theme="dark"] .page-header {
+  background: #0f1419 !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .page-label {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .back-link {
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .back-link:hover {
+  color: #60a5fa !important;
+}
+
+/* ============================================
+   QUICK STATS DARK MODE
+   ============================================ */
+[data-theme="dark"] .quick-stats {
+  background: #1a1f2e !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .stat-number {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .stat-label {
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .stat-divider {
+  background: #2d3548 !important;
+}
+
+/* ============================================
+   FILTER BAR DARK MODE
+   ============================================ */
+[data-theme="dark"] .filter-bar {
+  background: #0f1419 !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .filter-field {
+  background: #1a1f2e !important;
+  border-color: #0000 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .filter-field::placeholder {
+  color: #000000 !important;
+}
+
+[data-theme="dark"] .filter-field:focus {
+  border-color: #60a5fa !important;
+  box-shadow: 0 0 0 3px rgba(16, 22, 31, 0.826) !important;
+}
+
+[data-theme="dark"] .filter-tag {
+  background: rgba(96, 165, 250, 0.15) !important;
+  border-color: rgba(96, 165, 250, 0.3) !important;
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .filter-tag:hover {
+  background: rgba(96, 165, 250, 0.25) !important;
+}
+
+[data-theme="dark"] .filter-clear {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .filter-clear:hover {
+  color: #93c5fd !important;
+}
+
+/* ============================================
+   JOB ROWS DARK MODE
+   ============================================ */
+[data-theme="dark"] .job-row {
+  background: #1a1f2e !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .job-row:hover {
+  background: #252b3d !important;
+  border-color: #4584ed !important;
+}
+
+[data-theme="dark"] .job-title-list {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .job-location {
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .job-type {
+  background: rgba(69, 132, 237, 0.15) !important;
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .job-type.full-time {
+  background: rgba(34, 197, 94, 0.15) !important;
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .job-type.contract {
+  background: rgba(239, 101, 38, 0.15) !important;
+  color: #f97316 !important;
+}
+
+[data-theme="dark"] .job-arrow {
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .job-row:hover .job-arrow {
+  color: #60a5fa !important;
+}
+
+/* ============================================
+   JOB DETAIL PAGE DARK MODE
+   ============================================ */
+[data-theme="dark"] .job-department {
+  color: #60a5fa !important;
+}
+
+[data-theme="dark"] .job-tag {
+  background: #2d3548 !important;
+  color: #000 !important;
+}
+
+[data-theme="dark"] .job-tag.type-full-time {
+  background: rgba(34, 197, 94, 0.15) !important;
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .content-section {
+  background: #0f1419 !important;
+}
+
+[data-theme="dark"] .content-inner {
+  color: #ffffff !important;
+}
+
+/* Apply Button */
+[data-theme="dark"] .btn-apply {
+  background: #3b6fd1 !important;
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .btn-apply:hover {
+  background: #1e4a8f !important;
+}
+
+/* ============================================
+   NO JOBS STATE DARK MODE
+   ============================================ */
+[data-theme="dark"] .no-jobs {
+  background: #1a1f2e !important;
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .no-jobs p {
+  color: #9ca3af !important;
+}
+
+[data-theme="dark"] .no-jobs .reset-btn {
+  background: #3b6fd1 !important;
+  border-color: #3b6fd1 !important;
+}
+
+[data-theme="dark"] .no-jobs .reset-btn:hover {
+  background: #1e4a8f !important;
+}
+
+/* ============================================
+   FOOTER DARK MODE
+   ============================================ */
+[data-theme="dark"] footer {
+  background: #0a0e1e !important;
+}
+
+[data-theme="dark"] .footer-social a {
+  border-color: rgba(255, 255, 255, 0.15) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="dark"] .footer-social a:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+}
+
+/* Footer columns */
+[data-theme="dark"] .footer-col-title {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .footer-col a {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+[data-theme="dark"] .footer-col a:hover {
+  color: #ffffff !important;
+}
+
+[data-theme="dark"] .footer-contact-icon {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+[data-theme="dark"] .footer-bottom {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+[data-theme="dark"] .footer-bottom a {
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+[data-theme="dark"] .footer-bottom a:hover {
+  color: #ffffff !important;
+}
+
+/* Partners section in footer */
+[data-theme="dark"] .footer-partners {
+  border-color: #2d3548 !important;
+}
+
+[data-theme="dark"] .footer-partner-logo {
+  filter: grayscale(0%) brightness(0.9) !important;
+  opacity: 0.7 !important;
+}
+
+[data-theme="dark"] .footer-partner-logo:hover {
+  opacity: 1 !important;
+  filter: grayscale(0%) brightness(1.1) !important;
+}
+
+/* ============================================
+   SCROLL PROGRESS
+   ============================================ */
+.scroll-progress {
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 99;
+  background: rgba(69, 132, 237, 0.1);
+  display: none;
+}
+
+[data-theme="dark"] .scroll-progress {
+  background: rgba(69, 132, 237, 0.1) !important;
+}
+
+.scroll-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #4584ed, #ef6526);
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+[data-theme="dark"] .scroll-progress-bar {
+  background: linear-gradient(90deg, #60a5fa, #f97316) !important;
+}
