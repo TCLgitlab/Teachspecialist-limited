@@ -199,6 +199,7 @@
 [data-theme="dark"] .job-row:hover {
   background: #252b3d !important;
   border-color: #4584ed !important;
+  color: #ffffff !important;
 }
 
 [data-theme="dark"] .job-title-list {
@@ -241,7 +242,7 @@
 
 [data-theme="dark"] .job-tag {
   background: #2d3548 !important;
-  color: #000 !important;
+  color: #fff !important;
 }
 
 [data-theme="dark"] .job-tag.type-full-time {
