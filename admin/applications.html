@@ -280,6 +280,21 @@
 
     .detail-link:hover { text-decoration: underline; }
 
+    .upload-pending {
+      color: var(--warning);
+      font-weight: 500;
+      padding: 8px 12px;
+      background: #fffbeb;
+      border-radius: 6px;
+      border-left: 3px solid var(--warning);
+    }
+
+    .upload-hint {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
     .application-actions {
       display: flex;
       gap: 12px;
@@ -344,6 +359,63 @@
 
     .modal-overlay.active .modal-container {
       transform: scale(1);
+    }
+
+    .resume-modal-container {
+      background: #fff;
+      border-radius: 16px;
+      width: 95%;
+      max-width: 900px;
+      height: 90vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .resume-modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resume-close-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-muted);
+      padding: 8px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .resume-close-btn:hover {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .resume-modal-body {
+      flex: 1;
+      overflow: hidden;
+      background: #525659;
+      padding: 16px;
+    }
+
+    .resume-modal-body iframe {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .resume-modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
     }
 
     .modal-icon {
@@ -578,6 +650,25 @@
         <div class="modal-actions" id="modalActions"></div>
       </div>
     </div>
+
+    <div class="modal-overlay" id="resumeModal">
+      <div class="resume-modal-container">
+        <div class="resume-modal-header">
+          <h3 class="modal-title">Resume Preview</h3>
+          <button onclick="closeResumePreview()" class="resume-close-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+              <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+          </button>
+        </div>
+        <div class="resume-modal-body">
+          <iframe id="resumeFrame" src="" frameborder="0"></iframe>
+        </div>
+        <div class="resume-modal-footer">
+          <a id="resumeDownloadLink" href="" target="_blank" class="btn btn-primary">Download PDF</a>
+        </div>
+      </div>
+    </div>
   </main>
 
   <script type="module">
@@ -602,6 +693,42 @@
       document.getElementById('premiumModal').classList.remove('active');
       document.body.style.overflow = '';
     }
+
+    window.openResumePreview = function(url) {
+      const urlLower = url.toLowerCase();
+      const isPdf = urlLower.includes('.pdf');
+      const isWord = urlLower.includes('.doc') || urlLower.includes('.docx');
+      
+      if (isWord) {
+        showModal({
+          title: 'Word Document',
+          subtitle: 'Preview not available',
+          body: '<p>Word documents cannot be previewed in the browser.</p><p>Click the button below to download the file.</p>',
+          iconType: 'info',
+          buttons: [
+            { text: 'Cancel', className: 'modal-btn-secondary', onClick: closeModal },
+            { text: 'Download Resume', className: 'modal-btn-primary', onClick: () => { window.open(url, '_blank'); closeModal(); } }
+          ]
+        });
+        return;
+      }
+      
+      if (isPdf) {
+        window.open(url, '_blank');
+        return;
+      }
+      
+      document.getElementById('resumeFrame').src = url;
+      document.getElementById('resumeDownloadLink').href = url;
+      document.getElementById('resumeModal').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    window.closeResumePreview = function() {
+      document.getElementById('resumeModal').classList.remove('active');
+      document.getElementById('resumeFrame').src = '';
+      document.body.style.overflow = '';
+    };
 
     function showModal(options) {
       const modal = document.getElementById('premiumModal');
@@ -647,8 +774,15 @@
       if (e.target === this) closeModal();
     });
 
+    document.getElementById('resumeModal').addEventListener('click', function(e) {
+      if (e.target === this) closeResumePreview();
+    });
+
     document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
+      if (e.key === 'Escape') {
+        closeModal();
+        closeResumePreview();
+      }
     });
 
     let allApplications = [];
@@ -802,7 +936,9 @@
                 <div class="detail-title">Resume</div>
                 <div class="detail-content">
                   ${app.resumeUrl 
-                    ? `<a href="${app.resumeUrl}" target="_blank" class="detail-link">${app.resumeUrl}</a>` 
+                    ? (app.resumeUrl.startsWith('http') 
+                        ? `<button onclick="openResumePreview('${app.resumeUrl}')" class="btn btn-primary detail-link">View Resume</button>`
+                        : `<p class="upload-pending">${app.resumeUrl}</p><p class="upload-hint">Resume may be pending upload. Please check Cloudinary for the original file.</p>`)
                     : '<p>No resume link provided</p>'}
                 </div>
               </div>

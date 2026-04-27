@@ -1,0 +1,121 @@
+.partners-section {
+  padding: 32px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: #fff;
+  overflow: hidden;
+}
+
+.dark .partners-section {
+  background: var(--bg-soft);
+  border-color: var(--border);
+}
+
+.partners-inner {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 0 64px;
+}
+
+.partners-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--body);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  min-width: 110px;
+  line-height: 1.5;
+}
+
+.partners-slider-wrap {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.partners-track {
+  display: flex;
+  align-items: center;
+  gap: 56px;
+  width: max-content;
+  animation: partnersScroll 45s linear infinite;
+}
+
+.partners-track:hover {
+  animation-play-state: paused;
+}
+
+.partner-logo {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+.partner-logo img {
+  display: block;
+  height: 52px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  opacity: 0.7;
+  filter: grayscale(30%);
+  transition: opacity 0.3s, filter 0.3s, transform 0.3s;
+}
+
+.partner-logo img:hover {
+  opacity: 1;
+  filter: grayscale(0%);
+  transform: scale(1.08);
+}
+
+@keyframes partnersScroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 1024px) {
+  .partners-inner {
+    padding: 0 32px;
+    gap: 24px;
+  }
+  
+  .partners-label {
+    min-width: auto;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 768px) {
+  .partners-section {
+    padding: 24px 0;
+  }
+  
+  .partners-inner {
+    flex-direction: column;
+    padding: 0 20px;
+    gap: 16px;
+  }
+  
+  .partners-slider-wrap {
+    width: 100%;
+  }
+  
+  .partners-track {
+    gap: 40px;
+  }
+  
+  .partner-logo img {
+    height: 40px;
+    max-width: 120px;
+  }
+}
